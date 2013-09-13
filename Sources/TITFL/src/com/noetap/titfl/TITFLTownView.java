@@ -1,6 +1,7 @@
 package com.noetap.titfl;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -11,6 +12,8 @@ import android.view.View;
 
 public class TITFLTownView  extends View 
 {
+	public static Activity m_activity;
+	
 	public TITFLTownView(Context context, AttributeSet attrs)
 	{
 		super(context);
@@ -19,7 +22,7 @@ public class TITFLTownView  extends View
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) 
-	{
+	{		
 		return true;
 	}
 	
@@ -29,13 +32,16 @@ public class TITFLTownView  extends View
 	{
 		super.onDraw(canvas);
 
+		Rect viewRect = new Rect();
+		this.getWindowVisibleDisplayFrame(viewRect);
+
 		Rect rectDst = new Rect();		
 		Paint paint = new Paint();
-		paint.setARGB(255, 0, 0, 255);
+		paint.setARGB(255, 192, 192, 255);
 		rectDst.top = 0;
 		rectDst.left = 0;
-		rectDst.right = 480;
-		rectDst.bottom = 640;
+		rectDst.right = viewRect.width();
+		rectDst.bottom = viewRect.height();
 		canvas.drawRect(rectDst, paint);		
 	}
 }
