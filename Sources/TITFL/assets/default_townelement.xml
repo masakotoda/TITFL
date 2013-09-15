@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TITFL>
+    <townelement
+        townelement_id="townelement_apartment"
+        name="Apartment"
+        slot="0"
+        />
+    
+    <townelement
+        townelement_id="townelement_house"
+        name="House"
+        slot="1"
+        />
+    
+    <townelement
+        townelement_id="townelement_realtor"
+        name="Real Estate Agent"
+        slot="2"
+	    />
+        
+    <townelement
+        townelement_id="townelement_insurance"
+        name="Insurance Agent"
+        slot="3"
+	    />
+
+    <townelement
+        townelement_id="townelement_employment"
+        name="Employment Office"
+        slot="4"
+        />
+        
+    <townelement
+        townelement_id="townelement_police"
+        name="Police Station"
+        slot="5"
+        />
+        
+    <townelement
+        townelement_id="townelement_hospital"
+        name="Hospital"
+        slot="6"
+        />
+
+    <townelement
+        townelement_id="townelement_bank"
+        name="Bank"
+        slot="7"
+        />
+        
+    <townelement
+        townelement_id="townelement_park"
+        name="Park"
+        slot="8"
+        />
+        
+    <townelement
+        townelement_id="townelement_school"
+        name="College"
+        slot="9"
+        />
+        
+    <townelement
+        townelement_id="townelement_grocery"
+        name="Grocery Store"
+        slot="10"
+        />
+        
+    <townelement
+        townelement_id="townelement_fastfood"
+        name="Fast Food"
+        slot="11"
+        />
+
+    <townelement
+        townelement_id="townelement_restaurant"
+        name="Restaurant/Bar"
+        slot="12"
+        />
+        
+    <townelement
+        townelement_id="townelement_church"
+        name="Church"
+        slot="13"
+        />
+        
+    <townelement
+        townelement_id="townelement_pawnshop"
+        name="Pawn Shop"
+        slot="14"
+        />
+        
+    <townelement
+        townelement_id="townelement_electric"
+        name="Electronic Outlet"
+        slot="15"
+        />
+        
+    <townelement
+        townelement_id="townelement_mall"
+        name="Mall"
+        slot="16"
+        />
+        
+    <townelement
+        townelement_id="townelement_cardealer"
+        name="Car Dealer"
+        slot="17"
+        />
+        
+    <townelement
+        townelement_id="townelement_factory"
+        name="Factory"
+        slot="18"
+        />
+        
+	<townelement
+        townelement_id="townelement_tattoo"
+        name="Tattoo parlor"
+        slot="-1"
+    	/>
+
+    <townelement
+        townelement_id="townelement_flower"
+        name="Flower Shop"
+        slot="-1"
+    	/>
+    
+    <townelement
+        townelement_id="townelement_whorehouse"
+        name="Whore House"
+        slot="-1"
+    	/>
+
+    <townelement
+        townelement_id="townelement_dollarstore"
+        name="Dollar Store"
+        slot="-1"
+    	/>
+
+</TITFL>

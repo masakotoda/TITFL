@@ -1,6 +1,5 @@
 package com.noetap.titfl;
 
-public class TITFLEvent 
+interface TITFLEvent 
 {
-
 }

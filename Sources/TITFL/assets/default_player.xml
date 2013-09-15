@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TITFL>
+
+    <player
+	    name="The Suit"
+	    alias="Hillary Clinton"
+	    factor_intelligent="7"
+	    factor_hardworking="10"
+	    factor_goodlooking="1"
+	    factor_physical="1"
+	    factor_lucky="2"
+	    />
+    
+	<player
+	    name="The Nerd"
+	    alias="Bill Gates"
+	    factor_intelligent="10"
+	    factor_hardworking="7"
+	    factor_goodlooking="1"
+	    factor_physical="1"
+	    factor_lucky="2"
+	    />
+	
+	<player
+	    name="Socialite"
+	    alias="Paris Hilton"
+	    factor_intelligent="1"
+	    factor_hardworking="1"
+	    factor_goodlooking="10"
+	    factor_physical="3"
+	    factor_lucky="6"
+	    />
+	
+	<player
+	    name="Redneck"
+	    alias="John Wayne"
+	    factor_intelligent="2"
+	    factor_hardworking="5"
+	    factor_goodlooking="3"
+	    factor_physical="10"
+	    factor_lucky="1"
+	    />
+	
+	<player
+	    name="Addict"
+	    alias="Lindsay Lohan"
+	    factor_intelligent="3"
+	    factor_hardworking="1"
+	    factor_goodlooking="4"
+	    factor_physical="1"
+	    factor_lucky="12"
+	    />
+	
+</TITFL>

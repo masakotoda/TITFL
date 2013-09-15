@@ -1,7 +1,6 @@
 package com.noetap.titfl;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -12,8 +11,6 @@ import android.view.View;
 
 public class TITFLTownView  extends View 
 {
-	public static Activity m_activity;
-	
 	public TITFLTownView(Context context, AttributeSet attrs)
 	{
 		super(context);
@@ -22,7 +19,19 @@ public class TITFLTownView  extends View
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) 
-	{		
+	{	
+		final TITFLActivity activity = (TITFLActivity)getContext();
+		int action = event.getAction();
+		switch (action)
+		{
+			case MotionEvent.ACTION_DOWN:
+				activity.getTown().handleActionDown(event);
+				invalidate();
+				break;
+			default:
+				break;
+		}
+		
 		return true;
 	}
 	
@@ -32,16 +41,27 @@ public class TITFLTownView  extends View
 	{
 		super.onDraw(canvas);
 
+		// Fill background
 		Rect viewRect = new Rect();
 		this.getWindowVisibleDisplayFrame(viewRect);
 
-		Rect rectDst = new Rect();		
+		Rect rectDst = new Rect(0, 0, viewRect.width(), viewRect.height());
 		Paint paint = new Paint();
 		paint.setARGB(255, 192, 192, 255);
-		rectDst.top = 0;
-		rectDst.left = 0;
-		rectDst.right = viewRect.width();
-		rectDst.bottom = viewRect.height();
 		canvas.drawRect(rectDst, paint);		
+
+		// Draw town
+		try
+		{
+			final TITFLActivity activity = (TITFLActivity)getContext();
+			if (activity == null)
+				return;
+	
+			if (activity.getTown() != null)
+				activity.getTown().draw(canvas, rectDst);
+		}
+		catch (Exception e)
+		{			
+		}
 	}
 }

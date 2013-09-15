@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TITFL>
+    <goods
+        goods_id="goods_bicycle"
+        name="Bicycle"
+        price="0"
+        speed="5"
+    	/>
+    
+    <goods
+        goods_id="goods_bus"
+        name="Bus"
+        townelement_id="townelement_grocery"
+        price="50"
+        <expire>4</expire>
+        speed="20"
+    	/>
+
+    <goods
+        goods_id="goods_mopet"
+        name="Mopet"
+        townelement_id="townelement_cardealer"
+        price="500"
+        maintenance_fee="50"
+        maintenance_cycle="12"
+        speed="30"
+    	/>
+
+    <goods
+        goods_id="goods_crappy_car"
+        name="Crappy Car"
+        townelement_id="townelement_cardealer"
+        price="2000"
+        maintenance_fee="300"
+        maintenance_cycle="12"
+        speed="40"
+    	/>
+
+    <goods
+        goods_id="goods_fancy_car"
+        name="Fancy Car"
+        townelement_id="townelement_cardealer"
+        price="50000"
+        maintenance_fee="200"
+        maintenance_cycle="12"
+        speed="50"
+    	/>
+</TITFL>

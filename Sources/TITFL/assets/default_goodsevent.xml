@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TITFL>
+    <goodsevent
+        goodsevent_id="goodsevent1"
+        description="Oil Change"
+        goods_id="goods_mopet"
+        cycle="4"
+        price="20"
+        />
+</TITFL>
