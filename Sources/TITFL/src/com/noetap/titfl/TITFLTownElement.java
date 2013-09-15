@@ -1,10 +1,13 @@
 package com.noetap.titfl;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
 import org.xmlpull.v1.XmlPullParser;
 import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -19,6 +22,7 @@ public class TITFLTownElement
 	private String m_name;
 	private String m_id;
 	private int m_slot;
+	private Bitmap m_bitmap;
 
 	private static String tag_root = "TITFL";
 	private static String tag_item = "townelement";
@@ -135,19 +139,63 @@ public class TITFLTownElement
 		}
 	}
 
+	Bitmap getBitmap()
+	{
+		if (m_bitmap != null)
+			return m_bitmap;
+		
+		AssetManager am = m_town.getAssets();
+		InputStream bitmap = null;
+
+		try 
+		{
+			String png = m_id + ".png";
+		    bitmap = am.open(png);
+		    m_bitmap = BitmapFactory.decodeStream(bitmap);
+		} 
+		catch (IOException e)
+		{
+		    e.printStackTrace();
+		} 
+		finally 
+		{
+		    if (bitmap != null)
+		    {
+				try 
+				{
+					bitmap.close();
+				} 
+				catch (IOException e) 
+				{
+					e.printStackTrace();
+				}
+		    }
+		}		
+		
+		return m_bitmap;
+	}
+	
 	public void draw(Canvas canvas)
 	{
 		//TODO
-		Paint paint = new Paint();
-		paint.setColor(Color.BLACK);
-		paint.setTextSize(48);
+		if (m_slot < 0)
+			return;
 
-		if (m_slot >= 0)
+		Paint paint = new Paint();
+		Rect rect = m_town.slotToPosition(m_slot);
+			
+		paint.setARGB(50, 50, 50, 255);
+		canvas.drawRect(rect, paint);
+
+		Bitmap bitmap = getBitmap();
+		if (bitmap != null)
 		{
-			Rect rect = m_town.slotToPosition(m_slot);
-			canvas.drawText(m_name, rect.left, (rect.top + rect.bottom) / 2, paint);
-			paint.setARGB(50, 50, 50, 255);
-			canvas.drawRect(rect, paint);
+			Rect src = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+			canvas.drawBitmap(bitmap, src, rect, null);
 		}
+			
+		paint.setColor(Color.BLACK);
+		paint.setTextSize(32);
+		canvas.drawText(m_name, rect.left, (rect.bottom), paint);			
 	}
 }

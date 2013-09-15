@@ -3,6 +3,7 @@ package com.noetap.titfl;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.res.AssetManager;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -29,6 +30,11 @@ public class TITFLTown
 	void setActivePlayer(TITFLPlayer player)
 	{
 		m_activePlayer = player;
+	}
+	
+	AssetManager getAssets()
+	{
+		return m_activity.getAssets();
 	}
 	
 	void draw(Canvas canvas, Rect rect)
