@@ -6,6 +6,7 @@ import org.xmlpull.v1.XmlPullParser;
 import android.app.Activity;
 import android.content.res.AssetManager;
 import android.graphics.Rect;
+import android.graphics.drawable.AnimationDrawable;
 import android.util.Xml;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -115,6 +116,10 @@ public class TITFLPlayer
 		ImageView marbleImg = (ImageView) activity.findViewById(R.id.imageView1);
 		Animation anim = AnimationUtils.loadAnimation(activity, R.anim.anim_test);
 
+		final ImageView playerImg = (ImageView) activity.findViewById(R.id.imageView2);
+		playerImg.setBackgroundResource(R.drawable.frame_anim_test);
+		final AnimationDrawable playerWalk = (AnimationDrawable) playerImg.getBackground(); 
+
 		final TITFLTownElement fDest = destination;
 		final Activity fActivity = activity;
 				
@@ -133,6 +138,7 @@ public class TITFLPlayer
 
 				if (m_slot == fDest.slot())
 				{
+					playerWalk.stop();
 					NoEtapUtility.showAlert(fActivity, fDest.name(), fDest.id());
 				}
 				else
@@ -154,6 +160,7 @@ public class TITFLPlayer
 			}
 		});
 
+		playerWalk.start();		
 		marbleImg.startAnimation(anim);
 	}
 }
