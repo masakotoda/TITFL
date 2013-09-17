@@ -119,7 +119,7 @@ public class TITFLPlayer
 		final ImageView playerImg = (ImageView) activity.findViewById(R.id.imageView2);
 		playerImg.setBackgroundResource(R.drawable.frame_anim_test);
 		final AnimationDrawable playerWalk = (AnimationDrawable) playerImg.getBackground(); 
-
+		
 		final TITFLTownElement fDest = destination;
 		final Activity fActivity = activity;
 				
@@ -142,7 +142,7 @@ public class TITFLPlayer
 					NoEtapUtility.showAlert(fActivity, fDest.name(), fDest.id());
 				}
 				else
-				{			        
+				{
 					Animation anim = AnimationUtils.loadAnimation(fActivity, R.anim.anim_test);
 					anim.setAnimationListener(this);
 					marbleImg.startAnimation(anim);
@@ -157,10 +157,12 @@ public class TITFLPlayer
 			@Override
 			public void onAnimationStart(Animation arg0) 
 			{
+				Rect rect = TITFLTownView.getPlayerRect();
+				playerImg.layout(rect.left, rect.top, rect.right, rect.bottom);
 			}
 		});
-
-		playerWalk.start();		
+		
+		playerWalk.start();
 		marbleImg.startAnimation(anim);
 	}
 }

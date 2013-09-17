@@ -11,12 +11,72 @@ import android.view.View;
 
 public class TITFLTownView  extends View 
 {
+	static Rect m_rect;
+	
 	public TITFLTownView(Context context, AttributeSet attrs)
 	{
 		super(context);
 		setFocusable(true);
 	}
+	
+	static public Rect getPlayerRect()
+	{
+		Rect rect = new Rect();
+		int w = m_rect.width() * 4 / 16;
+		int h = m_rect.width() * 3 / 16;
+		rect.left = w;
+		rect.right = w * 2;
+		rect.top = (int)(h * 2.5);
+		rect.bottom = (int)(h * 6);
+		return rect;
+	}
 
+	static private Rect getGoodsRect(int index)
+	{
+		Rect rect = new Rect();
+		int anchorW = m_rect.width() * 4 / 16;
+		int anchorH = m_rect.width() * 3 * 7 / 16;
+		int w = m_rect.width() / 10;
+		if (index < 5)
+		{
+			rect.left = anchorW + w * index;
+			rect.right = rect.left + w;
+			rect.bottom = anchorH - w;
+			rect.top = rect.bottom - w;
+		}
+		else
+		{
+			index -= 5;
+			rect.left = anchorW + w * index;
+			rect.right = rect.left + w;
+			rect.bottom = anchorH;
+			rect.top = rect.bottom - w;
+		}
+
+		rect.top++;
+		rect.bottom--;
+		rect.left++;
+		rect.right--;
+		return rect;
+	}
+	
+	static Rect getClockRect()
+	{
+		Rect rect = new Rect();
+		int w = m_rect.width() * 4 / 16;
+		int h = m_rect.width() * 3 / 16;
+		rect.left = w;
+		rect.right = rect.left + h;
+		rect.top = h;
+		rect.bottom = rect.top + h;
+
+		rect.top += 10;
+		rect.bottom -= 10;
+		rect.left += 10;
+		rect.right -= 10;
+		return rect;
+	}
+	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) 
 	{	
@@ -42,13 +102,16 @@ public class TITFLTownView  extends View
 		super.onDraw(canvas);
 
 		// Fill background
-		Rect viewRect = new Rect();
-		this.getWindowVisibleDisplayFrame(viewRect);
-
-		Rect rectDst = new Rect(0, 0, viewRect.width(), viewRect.height());
+		if (m_rect == null)
+		{
+			Rect viewRect = new Rect();
+			this.getWindowVisibleDisplayFrame(viewRect);
+			m_rect = new Rect(0, 0, viewRect.width(), viewRect.height());
+		}
+		
 		Paint paint = new Paint();
 		paint.setARGB(255, 192, 192, 255);
-		canvas.drawRect(rectDst, paint);		
+		canvas.drawRect(m_rect, paint);		
 
 		// Draw town
 		try
@@ -58,10 +121,23 @@ public class TITFLTownView  extends View
 				return;
 	
 			if (activity.getTown() != null)
-				activity.getTown().draw(canvas, rectDst);
+				activity.getTown().draw(canvas, m_rect);
 		}
 		catch (Exception e)
 		{			
+		}
+		
+		// Draw items
+		for (int i = 0; i < 10; i++)
+		{			
+			paint.setARGB(255, 255, 192, 255);
+			canvas.drawRect(getGoodsRect(i), paint);
+		}
+		
+		// Draw clock
+		{
+			Rect rect = getClockRect();
+			canvas.drawCircle((rect.left + rect.right) / 2, (rect.top + rect.bottom) / 2, rect.width() / 2, paint);
 		}
 	}
 }
