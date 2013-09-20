@@ -1,8 +1,12 @@
 package com.noetap.titfl;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Point;
+import android.view.Display;
 
 //In future, we may want to move this to library
 public class NoEtapUtility 
@@ -30,4 +34,20 @@ public class NoEtapUtility
   		AlertDialog alertDialog = alertDialogBuilder.create();  	 
   		alertDialog.show();	
 	}
+	
+	@SuppressLint("NewApi")
+	public static int getScreenWidth(Activity activity)
+	{
+		Display display = activity.getWindowManager().getDefaultDisplay();
+		Point size = new Point();
+		display.getSize(size);
+		if (size.x < size.y)
+		{
+			return size.x;
+		}
+		else
+		{
+			return size.y;
+		}
+	}		
 }

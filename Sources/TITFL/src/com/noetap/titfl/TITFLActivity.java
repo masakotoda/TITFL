@@ -6,22 +6,30 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 
 public class TITFLActivity extends Activity 
 {
 	private TITFL m_game;
+	public static int m_width;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
 		super.onCreate(savedInstanceState);
 
-		//Set orientation (we support only portrait for now).
-		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		//Set orientation (we support only landscape for now).
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
 		//Remove title bar (if we hide it, we won't have default action bar. do we want hide it??)
-		//this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+		//Remove notification bar
+		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+		TITFLActivity.m_width = NoEtapUtility.getScreenWidth(this);
+
 		setContentView(R.layout.activity_titfl);
 
 		runGame();

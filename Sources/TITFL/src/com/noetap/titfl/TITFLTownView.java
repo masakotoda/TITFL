@@ -8,6 +8,7 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 
 public class TITFLTownView  extends View 
 {
@@ -103,10 +104,14 @@ public class TITFLTownView  extends View
 
 		// Fill background
 		if (m_rect == null)
-		{
-			Rect viewRect = new Rect();
-			this.getWindowVisibleDisplayFrame(viewRect);
-			m_rect = new Rect(0, 0, viewRect.width(), viewRect.height());
+		{			
+			int w = TITFLActivity.m_width;
+			m_rect = new Rect(0, 0, w, w);
+
+			ViewGroup.LayoutParams params = this.getLayoutParams();
+			params.width = w;
+			params.height = w;
+			this.setLayoutParams(params);
 		}
 		
 		Paint paint = new Paint();
@@ -131,13 +136,13 @@ public class TITFLTownView  extends View
 		for (int i = 0; i < 10; i++)
 		{			
 			paint.setARGB(255, 255, 192, 255);
-			canvas.drawRect(getGoodsRect(i), paint);
+			//canvas.drawRect(getGoodsRect(i), paint);
 		}
 		
 		// Draw clock
 		{
 			Rect rect = getClockRect();
-			canvas.drawCircle((rect.left + rect.right) / 2, (rect.top + rect.bottom) / 2, rect.width() / 2, paint);
+			//canvas.drawCircle((rect.left + rect.right) / 2, (rect.top + rect.bottom) / 2, rect.width() / 2, paint);
 		}
 	}
 }

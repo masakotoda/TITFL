@@ -23,6 +23,8 @@ public class TITFLTownElement
 	private String m_id;
 	private int m_slot;
 	private Bitmap m_bitmap;
+	private TITFLPlayer m_visitor;
+	private TITFLTownMapNode m_node;
 
 	private static String tag_root = "TITFL";
 	private static String tag_item = "townelement";
@@ -50,6 +52,25 @@ public class TITFLTownElement
 		return m_town;
 	}
 
+	TITFLTownMapNode getNode()
+	{
+		return m_node;
+	}
+	
+	public void setNode(ArrayList<TITFLTownMapNode> nodes)
+	{
+		Rect rSlot = m_town.slotToPosition(m_slot);
+		for (int i = 0; i < nodes.size(); i++)
+		{
+			Rect rNode = m_town.nodeToPosition(nodes.get(i).m_index);
+			if (rSlot.left == rNode.left && rSlot.top == rNode.top)
+			{
+				m_node = nodes.get(i);
+				return;
+			}
+		}
+	}
+	
 	public static ArrayList<TITFLTownElement> loadTownElements(AssetManager am, TITFLTown town)
 	{
 		ArrayList<TITFLTownElement> ret = new ArrayList<TITFLTownElement>();		
@@ -183,9 +204,12 @@ public class TITFLTownElement
 
 		Paint paint = new Paint();
 		Rect rect = m_town.slotToPosition(m_slot);
-			
-		paint.setARGB(50, 50, 50, 255);
-		canvas.drawRect(rect, paint);
+
+		if (m_visitor != null)
+		{
+			paint.setARGB(100, 50, 255, 255);		
+			canvas.drawRect(rect, paint);
+		}
 
 		Bitmap bitmap = getBitmap();
 		if (bitmap != null)
@@ -197,5 +221,10 @@ public class TITFLTownElement
 		paint.setColor(Color.BLACK);
 		paint.setTextSize(32);
 		canvas.drawText(m_name, rect.left, (rect.bottom), paint);			
+	}
+	
+	public void setVisitor(TITFLPlayer player)
+	{
+		m_visitor = player;
 	}
 }

@@ -15,7 +15,6 @@ import android.widget.ImageView;
 
 public class TITFLPlayer 
 {
-	private int m_slot = TITFLTown.m_maxSlot;
 	private String m_name;
 	private String m_alias;
 	private int m_factor_intelligent;
@@ -23,6 +22,8 @@ public class TITFLPlayer
 	private int m_factor_goodlooking;
 	private int m_factor_physical;
 	private int m_factor_lucky;
+	private TITFLTownElement m_currentLocation;
+	private int m_counter = 0;
 	
 	private static String tag_root = "TITFL";
 	private static String tag_item = "player";
@@ -105,13 +106,35 @@ public class TITFLPlayer
 		m_factor_lucky = other.m_factor_lucky;
 	}
 	
-	public void goTo(Activity activity, TITFLTownElement destination)
+	private void setLocation(TITFLTownElement destination)
+	{
+		if (m_currentLocation != null)
+			m_currentLocation.setVisitor(null);
+		m_currentLocation = destination;
+		destination.setVisitor(this);
+	}
+	
+	public TITFLTownElement getLocation()
+	{
+		return m_currentLocation;
+	}
+			
+	public void goTo(Activity activity, TITFLTownElement destination, ArrayList<TITFLTownMapNode> route1)
 	{
 		if (destination == null)
 			return;
-		
-		if (m_slot == destination.slot())
+
+		if (route1.size() == 0)
 			return;
+		
+		m_counter = 0;
+		
+		final ArrayList<TITFLTownMapNode> route = route1;
+		
+		setLocation(destination);
+		TITFLTownView view = (TITFLTownView) activity.findViewById(R.id.townView);
+		if (view != null)
+			view.invalidate();
 		
 		ImageView marbleImg = (ImageView) activity.findViewById(R.id.imageView1);
 		Animation anim = AnimationUtils.loadAnimation(activity, R.anim.anim_test);
@@ -119,26 +142,20 @@ public class TITFLPlayer
 		final ImageView playerImg = (ImageView) activity.findViewById(R.id.imageView2);
 		playerImg.setBackgroundResource(R.drawable.frame_anim_test);
 		final AnimationDrawable playerWalk = (AnimationDrawable) playerImg.getBackground(); 
-		
+
 		final TITFLTownElement fDest = destination;
 		final Activity fActivity = activity;
-				
 		anim.setAnimationListener(new AnimationListener() 
 		{
 			@Override
 		    public void onAnimationEnd(Animation arg0) 
 			{
-				m_slot++;
-				if (m_slot >= TITFLTown.m_maxSlot)
-					m_slot = 0;		
-
 				ImageView marbleImg = (ImageView) fActivity.findViewById(R.id.imageView1);
-				Rect rect = fDest.town().slotToPosition(m_slot);
-				marbleImg.layout(rect.left, rect.top, rect.left + rect.width() / 2, rect.top + rect.height() / 2);
 
-				if (m_slot == fDest.slot())
+				m_counter++;
+				if (m_counter == route.size())
 				{
-					playerWalk.stop();
+					playerWalk.stop();					
 					NoEtapUtility.showAlert(fActivity, fDest.name(), fDest.id());
 				}
 				else
@@ -157,8 +174,13 @@ public class TITFLPlayer
 			@Override
 			public void onAnimationStart(Animation arg0) 
 			{
-				Rect rect = TITFLTownView.getPlayerRect();
-				playerImg.layout(rect.left, rect.top, rect.right, rect.bottom);
+				//Rect rect = TITFLTownView.getPlayerRect();
+				//playerImg.layout(rect.left, rect.top, rect.right, rect.bottom);
+
+				ImageView marbleImg = (ImageView) fActivity.findViewById(R.id.imageView1);
+				int slot = route.get(m_counter).m_index;
+				Rect rect = fDest.town().nodeToPosition(slot);
+				marbleImg.layout(rect.left, rect.top, rect.left + rect.width() / 2, rect.top + rect.height() / 2);
 			}
 		});
 		
