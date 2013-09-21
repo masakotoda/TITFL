@@ -10,9 +10,9 @@ import android.util.Xml;
 
 public class TITFLTownMap 
 {
-	ArrayList<TITFLTownMapNode> m_nodes;
-	String m_name;
-	int m_id;
+	private ArrayList<TITFLTownMapNode> m_nodes;
+	private String m_name;
+	private int m_id;
 	
 	final static int num_columns = 4;
 	final static int num_rows = 6;
@@ -23,13 +23,18 @@ public class TITFLTownMap
 	private static String atr_id = "townmap_id";
 	private static String atr_name = "name";
 
-	TITFLTownMap()
+	public TITFLTownMap()
 	{
 		m_nodes = new ArrayList<TITFLTownMapNode>();
 		for (int i = 0; i < num_nodes; i++)
 		{
 			m_nodes.add(new TITFLTownMapNode());
 		}
+	}
+	
+	public ArrayList<TITFLTownMapNode> nodes()
+	{
+		return m_nodes;
 	}
 	
 	public static ArrayList<TITFLTownMap> loadTownMaps(AssetManager am)
@@ -57,6 +62,7 @@ public class TITFLTownMap
 	    		ArrayList<String> rows_up = new ArrayList<String>();
 	    		ArrayList<String> rows_lr = new ArrayList<String>();
 	    		ArrayList<String> rows_dn = new ArrayList<String>();
+	    		ArrayList<String> slots = new ArrayList<String>();
 
 		    	TITFLTownMap townMap = new TITFLTownMap();
 		    	for (int i = 0; i < parser.getAttributeCount(); i++)
@@ -73,45 +79,49 @@ public class TITFLTownMap
 		    			rows_lr.add(attribValue);
 		    		else if (attribName.equals("rowdn"))
 		    			rows_dn.add(attribValue);
+		    		else if (attribName.equals("slot"))
+		    			slots.add(attribValue);
 		    	}
 		    	
 
 		    	for (int i = 0; i < num_nodes; i++)
 		    	{
-		    		TITFLTownMapNode slot = townMap.m_nodes.get(i);
+		    		TITFLTownMapNode node = townMap.m_nodes.get(i);
 		    		int x = i % num_columns;
 		    		int y = i / num_columns;
-		    		slot.m_x = x;
-		    		slot.m_y = y;
-		    		slot.m_index = i;
+		    		node.setX(x);
+		    		node.setY(y);
+		    		node.setIndex(i);
 		    		boolean up = getFlag(rows_up.get(y), 2 * x);
 		    		boolean left = getFlag(rows_lr.get(y), 2 * x);
 		    		boolean right = getFlag(rows_lr.get(y), 2 * x + 1);
 		    		boolean down = getFlag(rows_dn.get(y), 2 * x);
+		    		boolean slot = getFlag(slots.get(y), 2 * x);
 		    		if (up)
 		    		{
 		    			TITFLTownMapNode link = townMap.getUp(x, y);
 		    			if (link != null)
-		    				slot.m_link.add(link);
+		    				node.link().add(link);
 		    		}
 		    		if (left)
 		    		{
 		    			TITFLTownMapNode link = townMap.getLeft(x, y);
 		    			if (link != null)
-		    				slot.m_link.add(link);
+		    				node.link().add(link);
 		    		}
 		    		if (right)
 		    		{
 		    			TITFLTownMapNode link = townMap.getRight(x, y);
 		    			if (link != null)
-		    				slot.m_link.add(link);
+		    				node.link().add(link);
 		    		}
 		    		if (down)
 		    		{
 		    			TITFLTownMapNode link = townMap.getDown(x, y);
 		    			if (link != null)
-		    				slot.m_link.add(link);
+		    				node.link().add(link);
 		    		}
+		    		node.setOccupied(slot);
 		    	}
 		    	ret.add(townMap);
 		    	parser.next();
@@ -133,12 +143,12 @@ public class TITFLTownMap
 			return true;
 	}
 	
-	int xyToIndex(int x, int y)
+	private int xyToIndex(int x, int y)
 	{
 		return (y * num_columns + x);		
 	}
 	
-	TITFLTownMapNode getUp(int x, int y)
+	private TITFLTownMapNode getUp(int x, int y)
 	{
 		TITFLTownMapNode slot = null;
 		if (y > 0)
@@ -149,7 +159,7 @@ public class TITFLTownMap
 		return slot;
 	}
 
-	TITFLTownMapNode getLeft(int x, int y)
+	private TITFLTownMapNode getLeft(int x, int y)
 	{
 		TITFLTownMapNode slot = null;
 		if (x > 0)
@@ -160,7 +170,7 @@ public class TITFLTownMap
 		return slot;
 	}
 
-	TITFLTownMapNode getDown(int x, int y)
+	private TITFLTownMapNode getDown(int x, int y)
 	{
 		TITFLTownMapNode slot = null;
 		if (y < num_rows - 1)
@@ -171,7 +181,7 @@ public class TITFLTownMap
 		return slot;
 	}
 
-	TITFLTownMapNode getRight(int x, int y)
+	private TITFLTownMapNode getRight(int x, int y)
 	{
 		TITFLTownMapNode slot = null;
 		if (x < num_columns - 1)

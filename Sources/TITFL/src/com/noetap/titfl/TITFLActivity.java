@@ -12,7 +12,6 @@ import android.view.WindowManager;
 public class TITFLActivity extends Activity 
 {
 	private TITFL m_game;
-	public static int m_width;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -27,8 +26,6 @@ public class TITFLActivity extends Activity
 
 		//Remove notification bar
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-		TITFLActivity.m_width = NoEtapUtility.getScreenWidth(this);
 
 		setContentView(R.layout.activity_titfl);
 

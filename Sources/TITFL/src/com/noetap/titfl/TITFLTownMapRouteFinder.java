@@ -6,14 +6,14 @@ import java.util.Queue;
 
 public class TITFLTownMapRouteFinder
 {
-    ArrayList<TITFLTownMapNode> m_nodes;
+    private ArrayList<TITFLTownMapNode> m_nodes;
 
-    TITFLTownMapRouteFinder(ArrayList<TITFLTownMapNode> nodes)
+    public TITFLTownMapRouteFinder(ArrayList<TITFLTownMapNode> nodes)
     {
         m_nodes = nodes;
     }
 
-    ArrayList<TITFLTownMapNode> findRoute(TITFLTownMapNode origination, TITFLTownMapNode destination)
+    public ArrayList<TITFLTownMapNode> findRoute(TITFLTownMapNode origination, TITFLTownMapNode destination)
     {
         unvisit();
 
@@ -25,13 +25,13 @@ public class TITFLTownMapRouteFinder
         while (current != null)
         {
             route.add(current);
-            current = current.m_parent;
+            current = current.parent();
         }
 
         return route;
     }
 
-    void unvisit()
+    private void unvisit()
     {
         for (int i = 0; i < m_nodes.size(); i++)
         {
@@ -39,7 +39,7 @@ public class TITFLTownMapRouteFinder
         }
     }    
 
-    TITFLTownMapNode travel(TITFLTownMapNode origination, TITFLTownMapNode destination)
+    private TITFLTownMapNode travel(TITFLTownMapNode origination, TITFLTownMapNode destination)
     {
         if (origination == null)
             return null;
@@ -54,20 +54,20 @@ public class TITFLTownMapRouteFinder
             if (p == destination)
                 return p;
 
-            if (p.m_visited)
+            if (p.visited())
                 continue;
 
-            for (int i = 0; i < p.m_link.size(); i++)
+            for (int i = 0; i < p.link().size(); i++)
             {
-                TITFLTownMapNode link = p.m_link.get(i);
-                if (link.m_visited)
+                TITFLTownMapNode link = p.link().get(i);
+                if (link.visited())
                     continue;
 
-                link.m_parent = p;
+                link.setParent(p);
                 q.add(link);                
             }
 
-            p.m_visited = true;
+            p.setVisited(true);
         }
 
         return null;

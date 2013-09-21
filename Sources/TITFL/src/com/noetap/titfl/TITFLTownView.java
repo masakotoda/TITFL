@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 public class TITFLTownView  extends View 
 {
-	static Rect m_rect;
+	private static Rect m_rect;
 	
 	public TITFLTownView(Context context, AttributeSet attrs)
 	{
@@ -102,47 +102,49 @@ public class TITFLTownView  extends View
 	{
 		super.onDraw(canvas);
 
-		// Fill background
-		if (m_rect == null)
-		{			
-			int w = TITFLActivity.m_width;
-			m_rect = new Rect(0, 0, w, w);
-
-			ViewGroup.LayoutParams params = this.getLayoutParams();
-			params.width = w;
-			params.height = w;
-			this.setLayoutParams(params);
-		}
-		
-		Paint paint = new Paint();
-		paint.setARGB(255, 192, 192, 255);
-		canvas.drawRect(m_rect, paint);		
-
-		// Draw town
 		try
 		{
-			final TITFLActivity activity = (TITFLActivity)getContext();
+			TITFLActivity activity = (TITFLActivity)getContext();
 			if (activity == null)
 				return;
+			
+			// Fill background
+			if (m_rect == null)
+			{			
+				int w = NoEtapUtility.getScreenWidth(activity);
+				m_rect = new Rect(0, 0, w, w);
 	
+				ViewGroup.LayoutParams params = this.getLayoutParams();
+				params.width = w;
+				params.height = w;
+				this.setLayoutParams(params);
+			}
+			
+			Paint paint = new Paint();
+			paint.setARGB(255, 192, 192, 255);
+			canvas.drawRect(m_rect, paint);		
+	
+			// Draw town	
 			if (activity.getTown() != null)
 				activity.getTown().draw(canvas, m_rect);
+		
+			paint.setARGB(255, 255, 192, 255);
+
+			// Draw items
+			for (int i = 0; i < 10; i++)
+			{
+				Rect rect = getGoodsRect(i);
+				//canvas.drawRect(rect, paint);
+			}
+			
+			// Draw clock
+			{
+				Rect rect = getClockRect();
+				//canvas.drawCircle((rect.left + rect.right) / 2, (rect.top + rect.bottom) / 2, rect.width() / 2, paint);
+			}
 		}
 		catch (Exception e)
 		{			
-		}
-		
-		// Draw items
-		for (int i = 0; i < 10; i++)
-		{			
-			paint.setARGB(255, 255, 192, 255);
-			//canvas.drawRect(getGoodsRect(i), paint);
-		}
-		
-		// Draw clock
-		{
-			Rect rect = getClockRect();
-			//canvas.drawCircle((rect.left + rect.right) / 2, (rect.top + rect.bottom) / 2, rect.width() / 2, paint);
 		}
 	}
 }

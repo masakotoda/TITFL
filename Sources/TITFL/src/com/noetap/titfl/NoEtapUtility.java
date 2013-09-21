@@ -49,5 +49,12 @@ public class NoEtapUtility
 		{
 			return size.y;
 		}
-	}		
+	}
+	
+	public static float getFactor(Activity activity)
+	{
+		int width = getScreenWidth(activity);
+		float factor = width / 1080.f;
+		return factor;		
+	}
 }

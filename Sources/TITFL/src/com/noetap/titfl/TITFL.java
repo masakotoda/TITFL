@@ -1,6 +1,7 @@
 package com.noetap.titfl;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import android.app.Activity;
 
@@ -13,6 +14,7 @@ public class TITFL
 
 	private ArrayList<TITFLPlayer> m_defaultPlayers;
 	private ArrayList<TITFLEvent> m_randomEvents;
+	private ArrayList<TITFLTownMap> m_townmaps;
 	
 	TITFL(Activity activity)
 	{
@@ -23,6 +25,7 @@ public class TITFL
 	{
 		m_defaultPlayers = TITFLPlayer.loadDefaultPlayers(m_activity.getAssets());
 		m_randomEvents = TITFLRandomEvent.loadRandomEvents(m_activity.getAssets());
+		m_townmaps = TITFLTownMap.loadTownMaps(m_activity.getAssets());
 		m_players = new ArrayList<TITFLPlayer>();		
 		
 		// TODO
@@ -35,13 +38,13 @@ public class TITFL
 		// 7. Initialize TITFLTown
 		m_players.add(new TITFLPlayer(m_defaultPlayers.get(0))); // <- This should be done in the steps above
 		NoEtapUtility.showAlert(m_activity, "TODO", "Initiate game");
-
+		
 		shuffleRandomEvent();
 		
 		m_layout = new TITFLTownLayout(m_activity);
 		m_layout.initialize();
 		
-		m_town = new TITFLTown(m_activity);		
+		m_town = new TITFLTown(m_activity, m_townmaps.get(mapType()));
 		m_town.setActivePlayer(m_players.get(0));
 	}
 	
@@ -64,5 +67,14 @@ public class TITFL
 		{
 			;
 		}
+	}
+	
+	private int mapType()
+	{
+		Random random = new Random();
+		int type = (int)(random.nextFloat() * m_townmaps.size());
+		if (type == m_townmaps.size())
+			type--;
+		return type;
 	}
 }

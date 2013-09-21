@@ -1,72 +1,94 @@
 package com.noetap.titfl;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import android.app.Activity;
 import android.content.res.AssetManager;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.util.SparseArray;
 import android.view.MotionEvent;
 
 public class TITFLTown 
 {
 	final static int m_maxSlot = 20;
+	final int m_roadWidth = 60;
 	
-	private SparseArray<Rect> m_slotRect;
 	private ArrayList<Rect> m_nodeRect;
 	private Activity m_activity;
 	private int m_currentWeek;
 	private ArrayList<TITFLTownElement> m_elements;
+	private ArrayList<TITFLTownElement> m_fixedElements;
+	private ArrayList<TITFLTownElement> m_randomElements;
 	private TITFLPlayer m_activePlayer;
-	private ArrayList<TITFLTownMap> m_townmaps;
+	private TITFLTownMap m_townMap;
 	
-	private int m_mapId;
-			
-	TITFLTown(Activity activity)
-	{
-		m_mapId = 4; // map is 0,1,2,3,4 for now. see assets\default_townmap.xml
-		
+	public TITFLTown(Activity activity, TITFLTownMap townMap)
+	{		
 		m_activity = activity;
+		m_townMap = townMap;
 		m_elements = TITFLTownElement.loadTownElements(m_activity.getAssets(), this);
-		m_townmaps = TITFLTownMap.loadTownMaps(m_activity.getAssets());
+
+		m_fixedElements = new ArrayList<TITFLTownElement>();
+		m_randomElements = new ArrayList<TITFLTownElement>();
+		for (int i = 0; i < m_elements.size(); i++)
+		{
+			TITFLTownElement element = m_elements.get(i);
+			if (element.slot() < 0)
+				m_randomElements.add(element);
+			else
+				m_fixedElements.add(element);
+		}
 	}
 	
-	void setActivePlayer(TITFLPlayer player)
+	public void setActivePlayer(TITFLPlayer player)
 	{
 		m_activePlayer = player;
 	}
 	
-	AssetManager getAssets()
+	public AssetManager getAssets()
 	{
 		return m_activity.getAssets();
 	}
 	
-	void draw(Canvas canvas, Rect rect)
+	public Activity getActivity()
 	{
-		initializeSlotRect(rect);
+		return m_activity;
+	}
+	
+	public void draw(Canvas canvas, Rect rect)
+	{
+		initialize(rect);
 		
 		Paint paint = new Paint();
-		paint.setColor(Color.BLACK);
+		paint.setARGB(255, 128, 128, 128);
 
 		int w = m_nodeRect.get(0).width();
 		int h = m_nodeRect.get(0).height();
+		
+		// Draw roads
 		for (int i = 0; i < TITFLTownMap.num_nodes; i++)
 		{
-			TITFLTownMapNode slot = m_townmaps.get(m_mapId).m_nodes.get(i);
-			for (int j = 0; j < slot.m_link.size(); j++)
+			TITFLTownMapNode slot = m_townMap.nodes().get(i);
+			for (int j = 0; j < slot.link().size(); j++)
 			{
-				int startX = slot.m_x * w + w / 2;
-				int stopX = slot.m_link.get(j).m_x * w + w / 2;
-				int startY = slot.m_y * h + h / 2;
-				int stopY = slot.m_link.get(j).m_y * h + h / 2;
-				paint.setStrokeWidth(20);
+				int startX = slot.x() * w + w / 2;
+				int stopX = slot.link().get(j).x() * w + w / 2;
+				int startY = slot.y() * h + h / 2;
+				int stopY = slot.link().get(j).y() * h + h / 2;
+				
+				paint.setStrokeWidth(m_roadWidth * NoEtapUtility.getFactor(getActivity()));
 				canvas.drawLine(startX, startY, stopX, stopY, paint);
+
+				int halfRoad = (m_roadWidth / 2) - 1;
+				paint.setStrokeWidth(1);				
+				canvas.drawCircle(startX, startY, halfRoad * NoEtapUtility.getFactor(getActivity()), paint);
+				canvas.drawCircle(stopX, stopY, halfRoad * NoEtapUtility.getFactor(getActivity()), paint);
 			}
 		}
 		
+		// Draw elements
 		for (int i = 0; i < m_elements.size(); i++)
 		{
 			m_elements.get(i).draw(canvas);
@@ -93,7 +115,7 @@ public class TITFLTown
 		{	
 			TITFLTownElement destination = getTownElement(slot);
 			
-			TITFLTownMapRouteFinder finder = new TITFLTownMapRouteFinder(m_townmaps.get(m_mapId).m_nodes);
+			TITFLTownMapRouteFinder finder = new TITFLTownMapRouteFinder(m_townMap.nodes());
 			TITFLTownElement location = m_activePlayer.getLocation();
 			if (location == null)
 				location = m_elements.get(0);
@@ -106,78 +128,72 @@ public class TITFLTown
 	
 	int positionToSlot(int x, int y)
 	{
-		for (int i = 0; i < m_slotRect.size(); i++)
+		for (int i = 0; i < m_nodeRect.size(); i++)
 		{
-			int key = m_slotRect.keyAt(i);
-			if (m_slotRect.get(key).contains(x, y))
-				return key;
-		}			
+			if (m_nodeRect.get(i).contains(x, y))
+			{
+				for (int j = 0; j < m_elements.size(); j++)
+				{
+					int index = m_elements.get(j).node().index();
+					if (i == index)
+					{
+						return j;
+					}
+				}
+			}
+		}
 		return -1;
 	}
 	
-	TITFLTownElement getTownElement(int slot)
+	public TITFLTownElement getTownElement(int slot)
 	{
-		for (int i = 0; i < m_elements.size(); i++)
-		{
-			if (m_elements.get(i).slot() == slot)
-				return m_elements.get(i);
-		}
+		if (slot < m_elements.size())
+			return m_elements.get(slot);
 		return null;
 	}
 	
-	Rect slotToPosition(int slot)
+	public Rect slotToPosition(int slot)
 	{
-		return m_slotRect.get(slot);
+		int index = m_elements.get(slot).node().index();
+		return m_nodeRect.get(index);
 	}
 	
-	Rect nodeToPosition(int slot)
+	public Rect nodeToPosition(int slot)
 	{
 		return m_nodeRect.get(slot);
 	}
 
-	private void initializeSlotRect(Rect rect)
+	private TITFLTownElement getRandomElement()
+	{
+		Random random = new Random();		
+		int remaining = m_randomElements.size();
+		int next = (int)(remaining * random.nextFloat());
+		if (next == remaining)
+			next--;
+		return m_randomElements.get(next);
+	}
+	
+	public void changeRandomElement()
+	{
+		TITFLTownElement randomElement = getRandomElement();
+		int maxIndex = m_maxSlot - 1;
+		TITFLTownElement outOfBusiness = m_elements.get(maxIndex);
+		randomElement.setSlot(outOfBusiness.slot());
+		randomElement.setNode(outOfBusiness.node());
+		m_elements.set(maxIndex, randomElement);
+	}
+	
+	private void initialize(Rect rect)
 	{		
-		if (m_slotRect != null)
+		if (m_nodeRect != null)
 			return;
 				
-		m_slotRect = new SparseArray<Rect>();
 		m_nodeRect = new ArrayList<Rect>();
 		
-		int w = rect.width();
-		
+		int w = rect.width();		
 		int eachW = w / 4;
 		int eachH = (eachW * 2) / 3;
-
-		m_slotRect.append(0, new Rect(eachW * 0, eachH * 0, eachW * 1, eachH * 1));
-		m_slotRect.append(1, new Rect(eachW * 1, eachH * 0, eachW * 2, eachH * 1));
-		m_slotRect.append(2, new Rect(eachW * 2, eachH * 0, eachW * 3, eachH * 1));
-		m_slotRect.append(3, new Rect(eachW * 3, eachH * 0, eachW * 4, eachH * 1));
-
-		m_slotRect.append(4, new Rect(eachW * 0, eachH * 1, eachW * 1, eachH * 2));
-		m_slotRect.append(5, new Rect(eachW * 1, eachH * 1, eachW * 2, eachH * 2));
-		m_slotRect.append(6, new Rect(eachW * 2, eachH * 1, eachW * 3, eachH * 2));
-		m_slotRect.append(7, new Rect(eachW * 3, eachH * 1, eachW * 4, eachH * 2));
-
-		m_slotRect.append(8, new Rect(eachW * 0, eachH * 2, eachW * 1, eachH * 3));
-		//blank
-		m_slotRect.append(9, new Rect(eachW * 2, eachH * 2, eachW * 3, eachH * 3));
-		//blank
-
-		//blank
-		m_slotRect.append(10, new Rect(eachW * 1, eachH * 3, eachW * 2, eachH * 4));
-		//blank
-		m_slotRect.append(11, new Rect(eachW * 3, eachH * 3, eachW * 4, eachH * 4));
 		
-		m_slotRect.append(12, new Rect(eachW * 0, eachH * 4, eachW * 1, eachH * 5));
-		m_slotRect.append(13, new Rect(eachW * 1, eachH * 4, eachW * 2, eachH * 5));
-		m_slotRect.append(14, new Rect(eachW * 2, eachH * 4, eachW * 3, eachH * 5));
-		m_slotRect.append(15, new Rect(eachW * 3, eachH * 4, eachW * 4, eachH * 5));
-		
-		m_slotRect.append(16, new Rect(eachW * 0, eachH * 5, eachW * 1, eachH * 6));
-		m_slotRect.append(17, new Rect(eachW * 1, eachH * 5, eachW * 2, eachH * 6));
-		m_slotRect.append(18, new Rect(eachW * 2, eachH * 5, eachW * 3, eachH * 6));
-		m_slotRect.append(19, new Rect(eachW * 3, eachH * 5, eachW * 4, eachH * 6));
-
 		for (int i = 0; i < TITFLTownMap.num_rows; i++)
 		{
 			for (int j = 0; j < TITFLTownMap.num_columns; j++)
@@ -186,9 +202,38 @@ public class TITFLTown
 			}
 		}
 
-		for (int i = 0; i < m_elements.size(); i++)
+		m_elements.clear();
+
+		int maxIndex = m_maxSlot - 1;
+		Random random = new Random();		
+		TITFLTownElement randomElement = getRandomElement();
+		
+		int remaining = m_fixedElements.size();
+		for (int i = 0; i < m_townMap.nodes().size(); i++)
 		{
-			m_elements.get(i).setNode(m_townmaps.get(m_mapId).m_nodes);
+			TITFLTownMapNode node = m_townMap.nodes().get(i);
+			if (node.occupied())
+			{
+				if (m_elements.size() == maxIndex)
+				{
+					randomElement.setSlot(maxIndex);
+					randomElement.setNode(node);
+					m_elements.add(randomElement);
+				}
+				else
+				{
+					int next = (int)(remaining * random.nextFloat());
+					if (next == remaining)
+						next--;
+	
+					TITFLTownElement element = m_fixedElements.get(next);
+					element.setSlot(m_elements.size());
+					element.setNode(node);
+					m_elements.add(element);
+					m_fixedElements.remove(element);
+					remaining--;
+				}
+			}
 		}
 	}
 }

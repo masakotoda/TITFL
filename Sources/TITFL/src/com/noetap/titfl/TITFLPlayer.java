@@ -132,14 +132,12 @@ public class TITFLPlayer
 		final ArrayList<TITFLTownMapNode> route = route1;
 		
 		setLocation(destination);
-		TITFLTownView view = (TITFLTownView) activity.findViewById(R.id.townView);
-		if (view != null)
-			view.invalidate();
 		
 		ImageView marbleImg = (ImageView) activity.findViewById(R.id.imageView1);
 		Animation anim = AnimationUtils.loadAnimation(activity, R.anim.anim_test);
 
 		final ImageView playerImg = (ImageView) activity.findViewById(R.id.imageView2);
+		playerImg.setImageBitmap(null);
 		playerImg.setBackgroundResource(R.drawable.frame_anim_test);
 		final AnimationDrawable playerWalk = (AnimationDrawable) playerImg.getBackground(); 
 
@@ -178,7 +176,7 @@ public class TITFLPlayer
 				//playerImg.layout(rect.left, rect.top, rect.right, rect.bottom);
 
 				ImageView marbleImg = (ImageView) fActivity.findViewById(R.id.imageView1);
-				int slot = route.get(m_counter).m_index;
+				int slot = route.get(m_counter).index();
 				Rect rect = fDest.town().nodeToPosition(slot);
 				marbleImg.layout(rect.left, rect.top, rect.left + rect.width() / 2, rect.top + rect.height() / 2);
 			}

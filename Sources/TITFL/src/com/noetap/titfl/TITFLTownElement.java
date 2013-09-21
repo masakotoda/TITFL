@@ -32,45 +32,6 @@ public class TITFLTownElement
 	private static String atr_name = "name";
 	private static String atr_slot = "slot";
 	
-	public int slot()
-	{
-		return m_slot;
-	}
-	
-	public String name()
-	{
-		return m_name;
-	}
-	
-	public String id()
-	{
-		return m_id;
-	}
-	
-	TITFLTown town()
-	{
-		return m_town;
-	}
-
-	TITFLTownMapNode getNode()
-	{
-		return m_node;
-	}
-	
-	public void setNode(ArrayList<TITFLTownMapNode> nodes)
-	{
-		Rect rSlot = m_town.slotToPosition(m_slot);
-		for (int i = 0; i < nodes.size(); i++)
-		{
-			Rect rNode = m_town.nodeToPosition(nodes.get(i).m_index);
-			if (rSlot.left == rNode.left && rSlot.top == rNode.top)
-			{
-				m_node = nodes.get(i);
-				return;
-			}
-		}
-	}
-	
 	public static ArrayList<TITFLTownElement> loadTownElements(AssetManager am, TITFLTown town)
 	{
 		ArrayList<TITFLTownElement> ret = new ArrayList<TITFLTownElement>();		
@@ -160,7 +121,52 @@ public class TITFLTownElement
 		}
 	}
 
-	Bitmap getBitmap()
+	public int slot()
+	{
+		return m_slot;
+	}
+	
+	public void setSlot(int slot)
+	{
+		m_slot = slot;
+	}
+	
+	public String name()
+	{
+		return m_name;
+	}
+	
+	public String id()
+	{
+		return m_id;
+	}
+	
+	public TITFLTown town()
+	{
+		return m_town;
+	}
+
+	public TITFLTownMapNode getNode()
+	{
+		return m_node;
+	}
+
+	public void setNode(TITFLTownMapNode node)
+	{
+		m_node = node;
+	}
+	
+	public TITFLTownMapNode node()
+	{
+		return m_node;
+	}
+		
+	public void setVisitor(TITFLPlayer player)
+	{
+		m_visitor = player;
+	}
+
+	private Bitmap getBitmap()
 	{
 		if (m_bitmap != null)
 			return m_bitmap;
@@ -219,12 +225,7 @@ public class TITFLTownElement
 		}
 			
 		paint.setColor(Color.BLACK);
-		paint.setTextSize(32);
+		paint.setTextSize(32 * NoEtapUtility.getFactor(m_town.getActivity()));
 		canvas.drawText(m_name, rect.left, (rect.bottom), paint);			
-	}
-	
-	public void setVisitor(TITFLPlayer player)
-	{
-		m_visitor = player;
 	}
 }

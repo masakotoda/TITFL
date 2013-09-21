@@ -13,22 +13,71 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/imageView2" />
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/ButtonTonyTest1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_height="40dp"
         android:layout_alignParentBottom="true"
-        android:text="@string/test" />
+        android:layout_alignParentRight="true"
+        android:text="t.t.1" />
+
+    <Button
+        android:id="@+id/ButtonTonyTest2"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_above="@+id/ButtonTonyTest1"
+        android:layout_alignParentRight="true"
+        android:text="t.t.2" />
+    
+    <Button
+        android:id="@+id/ButtonWillieTest1"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_above="@+id/ButtonTonyTest2"
+        android:layout_alignParentRight="true"
+        android:text="w.p.1" />
+
+    <Button
+        android:id="@+id/ButtonWillieTest2"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_above="@+id/ButtonWillieTest1"
+        android:layout_alignParentRight="true"
+        android:text="w.p.2" />
+
+    <Button
+        android:id="@+id/ButtonMasakoTest1"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_above="@+id/ButtonWillieTest2"
+        android:layout_alignParentRight="true"
+        android:text="m.t.1" />
+
+    <Button
+        android:id="@+id/ButtonMasakoTest2"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_above="@+id/ButtonMasakoTest1"
+        android:layout_alignParentRight="true"
+        android:text="m.t.2" />
+
+    <Button
+        android:id="@+id/ButtonMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="menu" />
 
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/button1"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/ButtonTonyTest1"
         android:contentDescription="@string/blank_string"
         android:src="@drawable/ic_launcher" />
 
@@ -36,8 +85,9 @@
         android:id="@+id/imageView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:contentDescription="@string/blank_string" />
+        android:layout_alignTop="@+id/ButtonMasakoTest2"
+        android:layout_toLeftOf="@+id/ButtonTonyTest2"
+        android:contentDescription="@string/blank_string"
+        android:src="@drawable/player_a_frm0" />
 
 </RelativeLayout>
