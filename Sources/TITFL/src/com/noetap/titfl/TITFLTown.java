@@ -24,6 +24,10 @@ public class TITFLTown
 	private TITFLPlayer m_activePlayer;
 	private TITFLTownMap m_townMap;
 	
+	private Rect m_rectTown;
+	private Rect m_rectAvatar;
+	private Rect m_rectPlayerInfo;
+
 	public TITFLTown(Activity activity, TITFLTownMap townMap)
 	{		
 		m_activity = activity;
@@ -40,6 +44,8 @@ public class TITFLTown
 			else
 				m_fixedElements.add(element);
 		}
+
+		initialize();
 	}
 	
 	public void setActivePlayer(TITFLPlayer player)
@@ -56,12 +62,39 @@ public class TITFLTown
 	{
 		return m_activity;
 	}
-	
-	public void draw(Canvas canvas, Rect rect)
+
+	public void setTownRect(Rect rect)
 	{
-		initialize(rect);
-		
-		Paint paint = new Paint();
+		m_rectTown = rect;
+	}
+
+	public Rect townRect()
+	{
+		return m_rectTown;
+	}
+
+	public void setAvatarRect(Rect rect)
+	{
+		m_rectAvatar = rect;
+	}
+
+	public Rect avatarRect()
+	{
+		return m_rectAvatar;
+	}
+
+	public void setPlayerInfoRect(Rect rect)
+	{
+		m_rectPlayerInfo = rect;		
+	}
+
+	public Rect playerInfoRect()
+	{
+		return m_rectPlayerInfo;		
+	}
+
+	public void draw(Canvas canvas, Paint paint)
+	{
 		paint.setARGB(255, 128, 128, 128);
 
 		int w = m_nodeRect.get(0).width();
@@ -91,7 +124,13 @@ public class TITFLTown
 		// Draw elements
 		for (int i = 0; i < m_elements.size(); i++)
 		{
-			m_elements.get(i).draw(canvas);
+			m_elements.get(i).draw(canvas, paint);
+		}
+		
+		// Draw player
+		if (m_activePlayer != null)
+		{
+			m_activePlayer.draw(canvas, paint);
 		}
 	}
 	
@@ -118,7 +157,10 @@ public class TITFLTown
 			TITFLTownMapRouteFinder finder = new TITFLTownMapRouteFinder(m_townMap.nodes());
 			TITFLTownElement location = m_activePlayer.getLocation();
 			if (location == null)
+			{
 				location = m_elements.get(0);
+				m_activePlayer.setLocation(location);
+			}
 			ArrayList<TITFLTownMapNode> route1 = finder.findRoute(location.getNode(), destination.getNode());
 			ArrayList<TITFLTownMapNode> route2 = finder.findRoute(destination.getNode(), location.getNode());
 			// route1 and route2 may be different. We can pick the shorter route if we want.
@@ -183,14 +225,11 @@ public class TITFLTown
 		m_elements.set(maxIndex, randomElement);
 	}
 	
-	private void initialize(Rect rect)
+	private void initialize()
 	{		
-		if (m_nodeRect != null)
-			return;
-				
 		m_nodeRect = new ArrayList<Rect>();
 		
-		int w = rect.width();		
+		int w = NoEtapUtility.getScreenWidth(m_activity);		
 		int eachW = w / 4;
 		int eachH = (eachW * 2) / 3;
 		

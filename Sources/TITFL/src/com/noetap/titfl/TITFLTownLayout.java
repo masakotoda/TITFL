@@ -94,6 +94,7 @@ public class TITFLTownLayout
 			public void onClick(View v) 
 			{
 				m_activity.getTown().changeRandomElement();
+				m_activity.findViewById(R.id.townView).invalidate();
 			}
 		});
 	}

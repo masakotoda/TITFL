@@ -28,7 +28,7 @@ public class TITFLActivity extends Activity
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 		setContentView(R.layout.activity_titfl);
-
+		
 		runGame();
 	}
 
@@ -76,6 +76,10 @@ public class TITFLActivity extends Activity
 	{
 		m_game = new TITFL(this);
 		m_game.run();		
+
+		TITFLTownView townView = (TITFLTownView)findViewById(R.id.townView);
+		townView.initialize();
+		townView.invalidate();
 	}
 	
 	private void showAbout()

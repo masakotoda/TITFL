@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import org.xmlpull.v1.XmlPullParser;
 import android.app.Activity;
 import android.content.res.AssetManager;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.AnimationDrawable;
 import android.util.Xml;
@@ -24,6 +26,8 @@ public class TITFLPlayer
 	private int m_factor_lucky;
 	private TITFLTownElement m_currentLocation;
 	private int m_counter = 0;
+	private float m_speedFactor = 0.5f; // 1 is default. 0.5 is x2 faster. 2 is x2 slower.
+	private int m_hour = 0;
 	
 	private static String tag_root = "TITFL";
 	private static String tag_item = "player";
@@ -91,7 +95,7 @@ public class TITFLPlayer
 	
 	// Default constructor
 	public TITFLPlayer()
-	{	
+	{
 	}
 	
 	// Copy constructor
@@ -104,9 +108,13 @@ public class TITFLPlayer
 		m_factor_goodlooking = other.m_factor_goodlooking;
 		m_factor_physical = other.m_factor_physical;
 		m_factor_lucky = other.m_factor_lucky;
+		m_currentLocation = other.m_currentLocation;
+		m_counter = other.m_counter;
+		m_speedFactor = other.m_speedFactor;
+		m_hour = other.m_hour;
 	}
 	
-	private void setLocation(TITFLTownElement destination)
+	public void setLocation(TITFLTownElement destination)
 	{
 		if (m_currentLocation != null)
 			m_currentLocation.setVisitor(null);
@@ -118,7 +126,41 @@ public class TITFLPlayer
 	{
 		return m_currentLocation;
 	}
-			
+	
+	public int hour()
+	{
+		return m_hour;
+	}
+	
+	public void draw(Canvas canvas, Paint paint)
+	{
+		if (m_currentLocation == null)
+			return;
+		
+		TITFLTown town = m_currentLocation.town();
+		Rect r = town.playerInfoRect();
+
+		paint.setARGB(255, 128, 192, 128);
+		canvas.drawRect(r, paint);
+
+		paint.setARGB(255, 0, 0, 0);
+		canvas.drawText(Integer.toString(m_hour), r.left, r.bottom - 100, paint);
+	}
+	
+	private int getAnim(TITFLTownMapNode current, TITFLTownMapNode next)
+	{
+		if (next.x() < current.x())
+			return R.anim.anim_marble_left;
+		else if (next.x() > current.x())
+			return R.anim.anim_marble_right;
+		else if (next.y() < current.y())
+			return R.anim.anim_marble_up;
+		else if (next.y() > current.y())
+			return R.anim.anim_marble_down;
+		else
+			return R.anim.anim_marble_stay;
+	}
+	
 	public void goTo(Activity activity, TITFLTownElement destination, ArrayList<TITFLTownMapNode> route1)
 	{
 		if (destination == null)
@@ -127,39 +169,53 @@ public class TITFLPlayer
 		if (route1.size() == 0)
 			return;
 		
-		m_counter = 0;
-		
-		final ArrayList<TITFLTownMapNode> route = route1;
+		float hour = (route1.size() - 1) * m_speedFactor;
+		m_hour += hour;
 		
 		setLocation(destination);
 		
-		ImageView marbleImg = (ImageView) activity.findViewById(R.id.imageView1);
-		Animation anim = AnimationUtils.loadAnimation(activity, R.anim.anim_test);
-
-		final ImageView playerImg = (ImageView) activity.findViewById(R.id.imageView2);
-		playerImg.setImageBitmap(null);
-		playerImg.setBackgroundResource(R.drawable.frame_anim_test);
-		final AnimationDrawable playerWalk = (AnimationDrawable) playerImg.getBackground(); 
-
+		final ArrayList<TITFLTownMapNode> route = route1;
 		final TITFLTownElement fDest = destination;
 		final Activity fActivity = activity;
+
+		final ImageView avatarImg = (ImageView) activity.findViewById(R.id.imageView2);
+		avatarImg.setImageBitmap(null);
+		avatarImg.setBackgroundResource(R.drawable.frame_anim_test);
+		final AnimationDrawable avatarWalk = (AnimationDrawable) avatarImg.getBackground(); 
+		
+		m_counter = 0;
+		TITFLTownMapNode current = route.get(m_counter);
+		TITFLTownMapNode nextStop = (route.size() > m_counter + 1) ? route.get(m_counter + 1) : route.get(m_counter);
+		
+		ImageView marbleImg = (ImageView) activity.findViewById(R.id.imageView1);
+		Animation anim = AnimationUtils.loadAnimation(activity, getAnim(current, nextStop));
 		anim.setAnimationListener(new AnimationListener() 
 		{
 			@Override
 		    public void onAnimationEnd(Animation arg0) 
 			{
-				ImageView marbleImg = (ImageView) fActivity.findViewById(R.id.imageView1);
-
 				m_counter++;
+				
 				if (m_counter == route.size())
 				{
-					playerWalk.stop();					
+					avatarWalk.stop();					
 					NoEtapUtility.showAlert(fActivity, fDest.name(), fDest.id());
 				}
 				else
 				{
-					Animation anim = AnimationUtils.loadAnimation(fActivity, R.anim.anim_test);
+					ImageView marbleImg = (ImageView) fActivity.findViewById(R.id.imageView1);
+
+					TITFLTownMapNode current = route.get(m_counter);
+					TITFLTownMapNode nextStop = (route.size() > m_counter + 1) ? route.get(m_counter + 1) : route.get(m_counter);
+
+			        Animation anim = AnimationUtils.loadAnimation(fActivity, getAnim(current, nextStop));
 					anim.setAnimationListener(this);
+
+					int slot = route.get(m_counter).index();
+					Rect rect = fDest.town().nodeToPosition(slot);
+					marbleImg.layout(rect.left, rect.top, rect.left + rect.width(), rect.top + rect.height());
+
+					anim.scaleCurrentDuration(m_speedFactor);
 					marbleImg.startAnimation(anim);
 				}
 			}
@@ -172,17 +228,19 @@ public class TITFLPlayer
 			@Override
 			public void onAnimationStart(Animation arg0) 
 			{
-				//Rect rect = TITFLTownView.getPlayerRect();
-				//playerImg.layout(rect.left, rect.top, rect.right, rect.bottom);
-
-				ImageView marbleImg = (ImageView) fActivity.findViewById(R.id.imageView1);
-				int slot = route.get(m_counter).index();
-				Rect rect = fDest.town().nodeToPosition(slot);
-				marbleImg.layout(rect.left, rect.top, rect.left + rect.width() / 2, rect.top + rect.height() / 2);
+				ImageView avatarImg = (ImageView) fActivity.findViewById(R.id.imageView2);
+				Rect rectAvatar = m_currentLocation.town().avatarRect();
+				avatarImg.layout(rectAvatar.left, rectAvatar.top, rectAvatar.right, rectAvatar.bottom);
 			}
 		});
 		
-		playerWalk.start();
+		avatarWalk.start();
+
+		int slot = route.get(m_counter).index();
+		Rect rect = fDest.town().nodeToPosition(slot);
+		marbleImg.layout(rect.left, rect.top, rect.left + rect.width(), rect.top + rect.height());
+
+		anim.scaleCurrentDuration(m_speedFactor);
 		marbleImg.startAnimation(anim);
 	}
 }

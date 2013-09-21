@@ -202,13 +202,12 @@ public class TITFLTownElement
 		return m_bitmap;
 	}
 	
-	public void draw(Canvas canvas)
+	public void draw(Canvas canvas, Paint paint)
 	{
 		//TODO
 		if (m_slot < 0)
 			return;
 
-		Paint paint = new Paint();
 		Rect rect = m_town.slotToPosition(m_slot);
 
 		if (m_visitor != null)

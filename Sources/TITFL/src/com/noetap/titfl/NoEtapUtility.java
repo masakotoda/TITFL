@@ -51,6 +51,22 @@ public class NoEtapUtility
 		}
 	}
 	
+	@SuppressLint("NewApi")
+	public static int getScreenHeight(Activity activity)
+	{
+		Display display = activity.getWindowManager().getDefaultDisplay();
+		Point size = new Point();
+		display.getSize(size);
+		if (size.x < size.y)
+		{
+			return size.y;
+		}
+		else
+		{
+			return size.x;
+		}
+	}
+	
 	public static float getFactor(Activity activity)
 	{
 		int width = getScreenWidth(activity);

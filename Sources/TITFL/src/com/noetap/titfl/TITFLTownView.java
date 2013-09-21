@@ -12,71 +12,47 @@ import android.view.ViewGroup;
 
 public class TITFLTownView  extends View 
 {
-	private static Rect m_rect;
+	private Rect m_rect;
+	private TITFLActivity m_activity;
 	
 	public TITFLTownView(Context context, AttributeSet attrs)
 	{
-		super(context);
+		super(context, attrs); // Do not call super(context). Always pass attrs. Otherwise findViewById will NOT work!
 		setFocusable(true);
 	}
 	
-	static public Rect getPlayerRect()
+	public void initialize()
 	{
-		Rect rect = new Rect();
-		int w = m_rect.width() * 4 / 16;
-		int h = m_rect.width() * 3 / 16;
-		rect.left = w;
-		rect.right = w * 2;
-		rect.top = (int)(h * 2.5);
-		rect.bottom = (int)(h * 6);
-		return rect;
-	}
+		m_activity = (TITFLActivity)getContext();
+		int w = NoEtapUtility.getScreenWidth(m_activity);
+		int h = NoEtapUtility.getScreenHeight(m_activity);
 
-	static private Rect getGoodsRect(int index)
-	{
-		Rect rect = new Rect();
-		int anchorW = m_rect.width() * 4 / 16;
-		int anchorH = m_rect.width() * 3 * 7 / 16;
-		int w = m_rect.width() / 10;
-		if (index < 5)
-		{
-			rect.left = anchorW + w * index;
-			rect.right = rect.left + w;
-			rect.bottom = anchorH - w;
-			rect.top = rect.bottom - w;
-		}
-		else
-		{
-			index -= 5;
-			rect.left = anchorW + w * index;
-			rect.right = rect.left + w;
-			rect.bottom = anchorH;
-			rect.top = rect.bottom - w;
-		}
+		m_rect = new Rect(0, 0, h, w);
 
-		rect.top++;
-		rect.bottom--;
-		rect.left++;
-		rect.right--;
-		return rect;
-	}
-	
-	static Rect getClockRect()
-	{
-		Rect rect = new Rect();
-		int w = m_rect.width() * 4 / 16;
-		int h = m_rect.width() * 3 / 16;
-		rect.left = w;
-		rect.right = rect.left + h;
-		rect.top = h;
-		rect.bottom = rect.top + h;
+		ViewGroup.LayoutParams params = this.getLayoutParams();
+		params.width = h;
+		params.height = w;
+		this.setLayoutParams(params);
 
-		rect.top += 10;
-		rect.bottom -= 10;
-		rect.left += 10;
-		rect.right -= 10;
-		return rect;
-	}
+		Rect rectTown;
+		Rect rectAvatar;
+		Rect rectPlayerInfo;
+
+		int playerInfoW = (int)(0.6 * w);
+		int playerInfoH = w;
+		int playerInfoLeft = h - playerInfoW;
+		rectPlayerInfo = new Rect(playerInfoLeft, 0, h, playerInfoH);
+		m_activity.getTown().setPlayerInfoRect(rectPlayerInfo);
+
+		int avatarW = playerInfoW / 2;
+		int avatarH = playerInfoH / 2;
+		int avatarLeft = playerInfoLeft;
+		rectAvatar = new Rect(avatarLeft, 0, avatarLeft + avatarW, avatarH);
+		m_activity.getTown().setAvatarRect(rectAvatar);
+
+		rectTown = new Rect(0, 0, h - playerInfoW, w);
+		m_activity.getTown().setTownRect(rectTown);
+	}	
 	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) 
@@ -102,46 +78,18 @@ public class TITFLTownView  extends View
 	{
 		super.onDraw(canvas);
 
+		if (m_activity == null)
+			return;
+		
 		try
 		{
-			TITFLActivity activity = (TITFLActivity)getContext();
-			if (activity == null)
-				return;
-			
-			// Fill background
-			if (m_rect == null)
-			{			
-				int w = NoEtapUtility.getScreenWidth(activity);
-				m_rect = new Rect(0, 0, w, w);
-	
-				ViewGroup.LayoutParams params = this.getLayoutParams();
-				params.width = w;
-				params.height = w;
-				this.setLayoutParams(params);
-			}
-			
 			Paint paint = new Paint();
 			paint.setARGB(255, 192, 192, 255);
 			canvas.drawRect(m_rect, paint);		
 	
 			// Draw town	
-			if (activity.getTown() != null)
-				activity.getTown().draw(canvas, m_rect);
-		
-			paint.setARGB(255, 255, 192, 255);
-
-			// Draw items
-			for (int i = 0; i < 10; i++)
-			{
-				Rect rect = getGoodsRect(i);
-				//canvas.drawRect(rect, paint);
-			}
-			
-			// Draw clock
-			{
-				Rect rect = getClockRect();
-				//canvas.drawCircle((rect.left + rect.right) / 2, (rect.top + rect.bottom) / 2, rect.width() / 2, paint);
-			}
+			if (m_activity.getTown() != null)
+				m_activity.getTown().draw(canvas, paint);		
 		}
 		catch (Exception e)
 		{			
