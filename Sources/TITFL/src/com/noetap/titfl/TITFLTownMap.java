@@ -37,6 +37,16 @@ public class TITFLTownMap
 		return m_nodes;
 	}
 	
+	public String name()
+	{
+		 return m_name;
+	}
+	
+	public int id()
+	{
+		return m_id;
+	}
+	
 	public static ArrayList<TITFLTownMap> loadTownMaps(AssetManager am)
 	{
 		ArrayList<TITFLTownMap> ret = new ArrayList<TITFLTownMap>();		
@@ -73,13 +83,13 @@ public class TITFLTownMap
 		    			townMap.m_id = Integer.parseInt(attribValue);
 		    		else if (attribName.equals(atr_name))
 		    			townMap.m_name = attribValue;
-		    		else if (attribName.equals("rowup"))
+		    		else if (attribName.contains("rowup"))
 		    			rows_up.add(attribValue);
-		    		else if (attribName.equals("rowlr"))
+		    		else if (attribName.contains("rowlr"))
 		    			rows_lr.add(attribValue);
-		    		else if (attribName.equals("rowdn"))
+		    		else if (attribName.contains("rowdn"))
 		    			rows_dn.add(attribValue);
-		    		else if (attribName.equals("slot"))
+		    		else if (attribName.contains("slot"))
 		    			slots.add(attribValue);
 		    	}
 		    	

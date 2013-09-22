@@ -2,6 +2,8 @@ package com.noetap.titfl;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Iterator;
+
 import org.xmlpull.v1.XmlPullParser;
 import android.app.Activity;
 import android.content.res.AssetManager;
@@ -9,7 +11,9 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.AnimationDrawable;
+import android.os.Handler;
 import android.util.Xml;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Animation.AnimationListener;
@@ -30,6 +34,7 @@ public class TITFLPlayer
 	private int m_counter = -1;
 	private float m_speedFactor = 0.5f; // 1 is default. 0.5 is x2 faster. 2 is x2 slower.
 	private float m_hour = 0;
+	private ArrayList<TITFLGoods> m_belongings;
 	
 	private static String tag_root = "TITFL";
 	private static String tag_item = "player";
@@ -98,6 +103,7 @@ public class TITFLPlayer
 	// Default constructor
 	public TITFLPlayer()
 	{
+		m_belongings = new ArrayList<TITFLGoods>();
 	}
 	
 	// Copy constructor
@@ -114,6 +120,13 @@ public class TITFLPlayer
 		m_counter = other.m_counter;
 		m_speedFactor = other.m_speedFactor;
 		m_hour = other.m_hour;
+
+		m_belongings = new ArrayList<TITFLGoods>();
+		Iterator<TITFLGoods> it = other.m_belongings.iterator();
+		while (it.hasNext())
+		{
+			m_belongings.add(it.next());
+		}
 	}
 	
 	public void setLocation(TITFLTownElement destination)
@@ -138,16 +151,58 @@ public class TITFLPlayer
 	{
 		if (m_currentLocation == null)
 			return;
-		
-		TITFLTown town = m_currentLocation.town();
-		Rect r = town.playerInfoRect();
 
-		paint.setARGB(255, 128, 192, 128);
-		canvas.drawRect(r, paint);
+		// Change theme color depending on the character?
+		if (m_factor_hardworking > m_factor_intelligent)
+			paint.setARGB(255, 255, 192, 192);
+		else
+			paint.setARGB(255, 192, 255, 192);
+
+		int w = canvas.getWidth();
+		int h = canvas.getHeight();
+		canvas.drawRect(0, 0, w, h, paint);
+
+		float factor = NoEtapUtility.getFactor(m_currentLocation.town().getActivity());
+		float textSize = 48 * factor;
 
 		paint.setARGB(255, 0, 0, 0);
-		paint.setTextSize(48 * NoEtapUtility.getFactor(town.getActivity()));
-		canvas.drawText(Float.toString(m_hour) + " " + this.m_alias, r.left, r.bottom - 100, paint);
+		paint.setTextSize(textSize);
+
+		float top = 0;
+		float left = textSize;
+		
+		top += textSize;
+		canvas.drawText(Float.toString(m_hour) + " " + this.m_alias, left, top, paint);
+		top += textSize;
+		
+		left += w / 2;
+		top += textSize;
+		textSize = 32 * factor;
+		paint.setTextSize(textSize);
+
+		top += textSize;
+		canvas.drawText("Wealth: " + Float.toString(getWealthLevel()), left, top, paint);
+		top += textSize;
+
+		top += textSize;
+		canvas.drawText("Education: " + Float.toString(getEducationLevel()), left, top, paint);
+		top += textSize;
+
+		top += textSize;
+		canvas.drawText("Carrier: " + Float.toString(getCarrierLevel()), left, top, paint);
+		top += textSize;
+
+		top += textSize;
+		canvas.drawText("Life: " + Float.toString(getLifeLevel()), left, top, paint);
+		top += textSize;
+
+		top += textSize;
+		canvas.drawText("Health: " + Float.toString(getHealthLevel()), left, top, paint);
+		top += textSize;
+
+		top += textSize;
+		canvas.drawText("Happiness: " + Float.toString(getHappinessLevel()), left, top, paint);
+		top += textSize;
 	}
 	
 	private int getAnim(TITFLTownMapNode current, TITFLTownMapNode next)
@@ -194,8 +249,6 @@ public class TITFLPlayer
 		final ArrayList<TITFLTownMapNode> route = route1;
 
 		final ImageView avatarImg = (ImageView) activity.findViewById(R.id.imageView2);
-		avatarImg.setImageBitmap(null);
-		avatarImg.setBackgroundResource(R.drawable.frame_anim_test);
 		final AnimationDrawable avatarWalk = (AnimationDrawable) avatarImg.getBackground(); 
 		
 		m_counter = 0;
@@ -214,9 +267,18 @@ public class TITFLPlayer
 				if (m_counter == route.size())
 				{					
 					avatarWalk.stop();
-					if (openDestination)
-						NoEtapUtility.showAlert(activity, destination.name(), destination.id());
 					m_counter = -1;
+					if (openDestination)
+					{
+						int delay = 10; // One of Masako's slow device doesn't work without delay.
+					    Handler handler = new Handler();
+					    handler.postDelayed(new Runnable() {
+					        @Override
+					        public void run() {
+					        	destination.open();
+					        }
+					    }, delay);					    
+					}						
 				}
 				else
 				{
@@ -245,9 +307,9 @@ public class TITFLPlayer
 			@Override
 			public void onAnimationStart(Animation arg0) 
 			{
-				ImageView avatarImg = (ImageView) activity.findViewById(R.id.imageView2);
-				Rect rectAvatar = m_currentLocation.town().avatarRect();
-				avatarImg.layout(rectAvatar.left, rectAvatar.top, rectAvatar.right, rectAvatar.bottom);
+				//ImageView avatarImg = (ImageView) activity.findViewById(R.id.imageView2);
+				//Rect rectAvatar = m_currentLocation.town().avatarRect();
+				//avatarImg.layout(rectAvatar.left, rectAvatar.top, rectAvatar.right, rectAvatar.bottom);
 			}
 		});
 		
@@ -256,6 +318,7 @@ public class TITFLPlayer
 		int slot = route.get(m_counter).index();
 		Rect rect = destination.town().nodeToPosition(slot);
 		marbleImg.layout(rect.left, rect.top, rect.left + rect.width(), rect.top + rect.height());
+		marbleImg.setVisibility(View.VISIBLE);
 
 		anim.scaleCurrentDuration(m_speedFactor);
 		marbleImg.startAnimation(anim);
@@ -269,5 +332,46 @@ public class TITFLPlayer
 			return false;
 		else
 			return true;			
+	}
+	
+	private float getWealthLevel()
+	{
+		//TODO - calc wealth level based on what the player owns.
+		return 0;
+	}
+
+	private float getEducationLevel()
+	{
+		//TODO - calc wealth level based on what the player owns.
+		return 0;
+	}
+
+	private float getCarrierLevel()
+	{
+		//TODO - calc wealth level based on what the player owns.
+		return 0;
+	}
+
+	private float getLifeLevel()
+	{
+		//TODO - calc wealth level based on what the player owns.
+		return 0;
+	}
+
+	private float getHealthLevel()
+	{
+		//TODO - calc wealth level based on what the player owns.
+		return 0;
+	}
+
+	private float getHappinessLevel()
+	{
+		//TODO - calc wealth level based on what the player owns.
+		return 0;
+	}
+	
+	public void work()
+	{
+		//TODO
 	}
 }

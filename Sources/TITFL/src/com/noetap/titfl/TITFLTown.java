@@ -25,10 +25,6 @@ public class TITFLTown
 	private TITFLTownMap m_townMap;
 	private TITFL m_game;
 	
-	private Rect m_rectTown;
-	private Rect m_rectAvatar;
-	private Rect m_rectPlayerInfo;
-
 	public TITFLTown(Activity activity, TITFL game, TITFLTownMap townMap)
 	{		
 		m_activity = activity;
@@ -48,6 +44,11 @@ public class TITFLTown
 		}
 
 		initialize();
+	}
+	
+	public TITFLPlayer activePlayer()
+	{
+		return m_activePlayer;
 	}
 	
 	public void setActivePlayer(TITFLPlayer player)
@@ -76,36 +77,6 @@ public class TITFLTown
 	public Activity getActivity()
 	{
 		return m_activity;
-	}
-
-	public void setTownRect(Rect rect)
-	{
-		m_rectTown = rect;
-	}
-
-	public Rect townRect()
-	{
-		return m_rectTown;
-	}
-
-	public void setAvatarRect(Rect rect)
-	{
-		m_rectAvatar = rect;
-	}
-
-	public Rect avatarRect()
-	{
-		return m_rectAvatar;
-	}
-
-	public void setPlayerInfoRect(Rect rect)
-	{
-		m_rectPlayerInfo = rect;		
-	}
-
-	public Rect playerInfoRect()
-	{
-		return m_rectPlayerInfo;		
 	}
 	
 	public TITFLTownMap townMap()
@@ -145,13 +116,7 @@ public class TITFLTown
 		for (int i = 0; i < m_elements.size(); i++)
 		{
 			m_elements.get(i).draw(canvas, paint);
-		}
-		
-		// Draw player
-		if (m_activePlayer != null)
-		{
-			m_activePlayer.draw(canvas, paint);
-		}
+		}		
 	}
 	
 	void addWeek()

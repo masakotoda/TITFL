@@ -9,7 +9,6 @@ import android.app.Activity;
 public class TITFL 
 {
 	private Activity m_activity;
-	private TITFLTownLayout m_layout;
 	private TITFLTown m_town;
 	private ArrayList<TITFLPlayer> m_players;
 
@@ -42,9 +41,6 @@ public class TITFL
 		NoEtapUtility.showAlert(m_activity, "TODO", "Initiate game");
 		
 		shuffleRandomEvent();
-		
-		m_layout = new TITFLTownLayout(m_activity);
-		m_layout.initialize();
 		
 		m_town = new TITFLTown(m_activity, this, m_townmaps.get(mapType()));
 		m_town.setActivePlayer(m_players.get(0));

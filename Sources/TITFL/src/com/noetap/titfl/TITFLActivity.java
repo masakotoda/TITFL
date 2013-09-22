@@ -12,6 +12,7 @@ import android.view.WindowManager;
 public class TITFLActivity extends Activity 
 {
 	private TITFL m_game;
+	private TITFLLayout m_layout;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -75,11 +76,29 @@ public class TITFLActivity extends Activity
 	private void runGame()
 	{
 		m_game = new TITFL(this);
-		m_game.run();		
+		m_game.run();
 
-		TITFLTownView townView = (TITFLTownView)findViewById(R.id.townView);
-		townView.initialize();
-		townView.invalidate();
+		m_layout = new TITFLTownLayout(this);
+		m_layout.initialize();		
+	}
+	
+	public void openTownElement(TITFLTownElement element)
+	{
+		setContentView(R.layout.townelement);
+		m_layout = new TITFLTownElementLayout(this, element);
+		m_layout.initialize();		
+	}
+	
+	public void closeTownElement()
+	{
+		setContentView(R.layout.activity_titfl);
+		m_layout = new TITFLTownLayout(this);
+		m_layout.initialize();		
+	}
+	
+	public void invalidate()
+	{
+		m_layout.invalidate();
 	}
 	
 	private void showAbout()

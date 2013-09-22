@@ -35,12 +35,23 @@ public class NoEtapUtility
   		alertDialog.show();	
 	}
 	
+	@SuppressWarnings("deprecation")
 	@SuppressLint("NewApi")
 	public static int getScreenWidth(Activity activity)
 	{
+		int sdkVer = android.os.Build.VERSION.SDK_INT;
+
 		Display display = activity.getWindowManager().getDefaultDisplay();
 		Point size = new Point();
-		display.getSize(size);
+		if (sdkVer < 13)
+		{
+			size.x = display.getHeight();
+			size.y = display.getWidth();
+		}
+		else
+		{
+			display.getSize(size);
+		}
 		if (size.x < size.y)
 		{
 			return size.x;
@@ -51,12 +62,23 @@ public class NoEtapUtility
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	@SuppressLint("NewApi")
 	public static int getScreenHeight(Activity activity)
 	{
+		int sdkVer = android.os.Build.VERSION.SDK_INT;
+
 		Display display = activity.getWindowManager().getDefaultDisplay();
 		Point size = new Point();
-		display.getSize(size);
+		if (sdkVer < 13)
+		{
+			size.x = display.getHeight();
+			size.y = display.getWidth();
+		}
+		else
+		{
+			display.getSize(size);
+		}
 		if (size.x < size.y)
 		{
 			return size.y;

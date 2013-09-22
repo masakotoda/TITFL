@@ -161,6 +161,11 @@ public class TITFLTownElement
 		return m_node;
 	}
 		
+	public TITFLPlayer visitor()
+	{
+		return m_visitor;
+	}
+	
 	public void setVisitor(TITFLPlayer player)
 	{
 		m_visitor = player;
@@ -226,5 +231,11 @@ public class TITFLTownElement
 		paint.setColor(Color.BLACK);
 		paint.setTextSize(32 * NoEtapUtility.getFactor(m_town.getActivity()));
 		canvas.drawText(m_name, rect.left, (rect.bottom), paint);			
+	}
+	
+	public void open()
+	{
+		TITFLActivity activity = (TITFLActivity) m_town.getActivity();
+		activity.openTownElement(this);
 	}
 }
