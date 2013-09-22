@@ -1,6 +1,7 @@
 package com.noetap.titfl;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 
 import android.app.Activity;
@@ -37,6 +38,7 @@ public class TITFL
 		// 6. Repeat 4 & 5
 		// 7. Initialize TITFLTown
 		m_players.add(new TITFLPlayer(m_defaultPlayers.get(0))); // <- This should be done in the steps above
+		m_players.add(new TITFLPlayer(m_defaultPlayers.get(1))); // <- This should be done in the steps above
 		NoEtapUtility.showAlert(m_activity, "TODO", "Initiate game");
 		
 		shuffleRandomEvent();
@@ -44,7 +46,7 @@ public class TITFL
 		m_layout = new TITFLTownLayout(m_activity);
 		m_layout.initialize();
 		
-		m_town = new TITFLTown(m_activity, m_townmaps.get(mapType()));
+		m_town = new TITFLTown(m_activity, this, m_townmaps.get(mapType()));
 		m_town.setActivePlayer(m_players.get(0));
 	}
 	
@@ -58,6 +60,20 @@ public class TITFL
 	TITFLTown getTown()
 	{
 		return m_town;
+	}
+	
+	void setNextPlayer(TITFLPlayer oldPlayer)	
+	{		
+		Iterator<TITFLPlayer> it = m_players.iterator();
+		while (it.hasNext())
+		{
+			if (it.next() == oldPlayer)
+				break;
+		}
+		if (it.hasNext())
+			m_town.setActivePlayer(it.next());
+		else
+			m_town.setActivePlayer(m_players.get(0));
 	}
 	
 	private void shuffleRandomEvent()

@@ -23,14 +23,16 @@ public class TITFLTown
 	private ArrayList<TITFLTownElement> m_randomElements;
 	private TITFLPlayer m_activePlayer;
 	private TITFLTownMap m_townMap;
+	private TITFL m_game;
 	
 	private Rect m_rectTown;
 	private Rect m_rectAvatar;
 	private Rect m_rectPlayerInfo;
 
-	public TITFLTown(Activity activity, TITFLTownMap townMap)
+	public TITFLTown(Activity activity, TITFL game, TITFLTownMap townMap)
 	{		
 		m_activity = activity;
+		m_game = game;
 		m_townMap = townMap;
 		m_elements = TITFLTownElement.loadTownElements(m_activity.getAssets(), this);
 
@@ -51,6 +53,19 @@ public class TITFLTown
 	public void setActivePlayer(TITFLPlayer player)
 	{
 		m_activePlayer = player;
+	}
+	
+	public void setNextPlayer()
+	{
+		m_game.setNextPlayer(m_activePlayer);
+		
+		TITFLTownElement location = m_activePlayer.getLocation();
+		if (location == null)
+		{
+			location = m_elements.get(0);
+			m_activePlayer.setLocation(location);
+		}		
+		m_activePlayer.goTo(m_activity, location, false);
 	}
 	
 	public AssetManager getAssets()
@@ -91,6 +106,11 @@ public class TITFLTown
 	public Rect playerInfoRect()
 	{
 		return m_rectPlayerInfo;		
+	}
+	
+	public TITFLTownMap townMap()
+	{
+		return m_townMap;
 	}
 
 	public void draw(Canvas canvas, Paint paint)
@@ -149,23 +169,22 @@ public class TITFLTown
 		if (m_activePlayer == null)
 			return;
 		
+		if (m_activePlayer.isMoving())
+			return;
+		
 		int slot = positionToSlot((int)event.getX(), (int)event.getY());
-		if (slot >= 0)
-		{	
-			TITFLTownElement destination = getTownElement(slot);
+		if (slot < 0)
+			return;
+
+		TITFLTownElement destination = getTownElement(slot);
 			
-			TITFLTownMapRouteFinder finder = new TITFLTownMapRouteFinder(m_townMap.nodes());
-			TITFLTownElement location = m_activePlayer.getLocation();
-			if (location == null)
-			{
-				location = m_elements.get(0);
-				m_activePlayer.setLocation(location);
-			}
-			ArrayList<TITFLTownMapNode> route1 = finder.findRoute(location.getNode(), destination.getNode());
-			ArrayList<TITFLTownMapNode> route2 = finder.findRoute(destination.getNode(), location.getNode());
-			// route1 and route2 may be different. We can pick the shorter route if we want.
-			m_activePlayer.goTo(m_activity, destination, route2);
+		TITFLTownElement location = m_activePlayer.getLocation();
+		if (location == null)
+		{
+			location = m_elements.get(0);
+			m_activePlayer.setLocation(location);
 		}
+		m_activePlayer.goTo(m_activity, destination, true);
 	}
 	
 	int positionToSlot(int x, int y)

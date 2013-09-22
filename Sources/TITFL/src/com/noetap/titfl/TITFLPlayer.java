@@ -17,6 +17,8 @@ import android.widget.ImageView;
 
 public class TITFLPlayer 
 {
+	private final float m_maxHour = 24;
+	
 	private String m_name;
 	private String m_alias;
 	private int m_factor_intelligent;
@@ -25,9 +27,9 @@ public class TITFLPlayer
 	private int m_factor_physical;
 	private int m_factor_lucky;
 	private TITFLTownElement m_currentLocation;
-	private int m_counter = 0;
+	private int m_counter = -1;
 	private float m_speedFactor = 0.5f; // 1 is default. 0.5 is x2 faster. 2 is x2 slower.
-	private int m_hour = 0;
+	private float m_hour = 0;
 	
 	private static String tag_root = "TITFL";
 	private static String tag_item = "player";
@@ -127,7 +129,7 @@ public class TITFLPlayer
 		return m_currentLocation;
 	}
 	
-	public int hour()
+	public float hour()
 	{
 		return m_hour;
 	}
@@ -144,7 +146,8 @@ public class TITFLPlayer
 		canvas.drawRect(r, paint);
 
 		paint.setARGB(255, 0, 0, 0);
-		canvas.drawText(Integer.toString(m_hour), r.left, r.bottom - 100, paint);
+		paint.setTextSize(48 * NoEtapUtility.getFactor(town.getActivity()));
+		canvas.drawText(Float.toString(m_hour) + " " + this.m_alias, r.left, r.bottom - 100, paint);
 	}
 	
 	private int getAnim(TITFLTownMapNode current, TITFLTownMapNode next)
@@ -161,22 +164,34 @@ public class TITFLPlayer
 			return R.anim.anim_marble_stay;
 	}
 	
-	public void goTo(Activity activity, TITFLTownElement destination, ArrayList<TITFLTownMapNode> route1)
+	public boolean goTo(final Activity activity, final TITFLTownElement destination, final boolean openDestination)
 	{
 		if (destination == null)
-			return;
+			return true;
+
+		TITFLTownMapRouteFinder finder = new TITFLTownMapRouteFinder(m_currentLocation.town().townMap().nodes());
+		ArrayList<TITFLTownMapNode> route2 = finder.findRoute(m_currentLocation.getNode(), destination.getNode());
+		ArrayList<TITFLTownMapNode> route1 = finder.findRoute(destination.getNode(), m_currentLocation.getNode());
+		// route1 and route2 may be different. We can pick the shorter route if we want.
 
 		if (route1.size() == 0)
-			return;
+			return true;
 		
 		float hour = (route1.size() - 1) * m_speedFactor;
-		m_hour += hour;
 		
+		if (m_hour + hour > m_maxHour)
+		{
+			m_hour = 0;
+			m_currentLocation.setVisitor(null);
+			m_currentLocation.town().setNextPlayer();
+			return false;
+		}
+		
+		m_hour += hour;
+
 		setLocation(destination);
 		
 		final ArrayList<TITFLTownMapNode> route = route1;
-		final TITFLTownElement fDest = destination;
-		final Activity fActivity = activity;
 
 		final ImageView avatarImg = (ImageView) activity.findViewById(R.id.imageView2);
 		avatarImg.setImageBitmap(null);
@@ -197,22 +212,24 @@ public class TITFLPlayer
 				m_counter++;
 				
 				if (m_counter == route.size())
-				{
-					avatarWalk.stop();					
-					NoEtapUtility.showAlert(fActivity, fDest.name(), fDest.id());
+				{					
+					avatarWalk.stop();
+					if (openDestination)
+						NoEtapUtility.showAlert(activity, destination.name(), destination.id());
+					m_counter = -1;
 				}
 				else
 				{
-					ImageView marbleImg = (ImageView) fActivity.findViewById(R.id.imageView1);
+					ImageView marbleImg = (ImageView) activity.findViewById(R.id.imageView1);
 
 					TITFLTownMapNode current = route.get(m_counter);
 					TITFLTownMapNode nextStop = (route.size() > m_counter + 1) ? route.get(m_counter + 1) : route.get(m_counter);
 
-			        Animation anim = AnimationUtils.loadAnimation(fActivity, getAnim(current, nextStop));
+			        Animation anim = AnimationUtils.loadAnimation(activity, getAnim(current, nextStop));
 					anim.setAnimationListener(this);
 
 					int slot = route.get(m_counter).index();
-					Rect rect = fDest.town().nodeToPosition(slot);
+					Rect rect = destination.town().nodeToPosition(slot);
 					marbleImg.layout(rect.left, rect.top, rect.left + rect.width(), rect.top + rect.height());
 
 					anim.scaleCurrentDuration(m_speedFactor);
@@ -228,7 +245,7 @@ public class TITFLPlayer
 			@Override
 			public void onAnimationStart(Animation arg0) 
 			{
-				ImageView avatarImg = (ImageView) fActivity.findViewById(R.id.imageView2);
+				ImageView avatarImg = (ImageView) activity.findViewById(R.id.imageView2);
 				Rect rectAvatar = m_currentLocation.town().avatarRect();
 				avatarImg.layout(rectAvatar.left, rectAvatar.top, rectAvatar.right, rectAvatar.bottom);
 			}
@@ -237,10 +254,20 @@ public class TITFLPlayer
 		avatarWalk.start();
 
 		int slot = route.get(m_counter).index();
-		Rect rect = fDest.town().nodeToPosition(slot);
+		Rect rect = destination.town().nodeToPosition(slot);
 		marbleImg.layout(rect.left, rect.top, rect.left + rect.width(), rect.top + rect.height());
 
 		anim.scaleCurrentDuration(m_speedFactor);
 		marbleImg.startAnimation(anim);
+		
+		return true;
+	}
+	
+	public boolean isMoving()
+	{
+		if (m_counter < 0)
+			return false;
+		else
+			return true;			
 	}
 }
