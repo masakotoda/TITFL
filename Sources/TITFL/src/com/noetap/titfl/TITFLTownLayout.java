@@ -37,7 +37,7 @@ public class TITFLTownLayout implements TITFLLayout
 		
 		ImageView avatarImg = (ImageView) m_activity.findViewById(R.id.imageView2);
 		avatarImg.setImageBitmap(null);
-		avatarImg.setBackgroundResource(R.drawable.frame_anim_test);
+		//avatarImg.setBackgroundResource(R.drawable.frame_anim_test);
 
 		ImageView marbleImg = (ImageView) m_activity.findViewById(R.id.imageView1);
 		marbleImg.setVisibility(View.INVISIBLE);

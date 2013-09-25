@@ -5,12 +5,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.xmlpull.v1.XmlPullParser;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.res.AssetManager;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.util.Xml;
 import android.view.View;
@@ -35,6 +37,10 @@ public class TITFLPlayer
 	private float m_speedFactor = 0.5f; // 1 is default. 0.5 is x2 faster. 2 is x2 slower.
 	private float m_hour = 0;
 	private ArrayList<TITFLGoods> m_belongings;
+	private String m_avatar_frm_01;
+	private String m_avatar_frm_02;
+	private String m_avatar_frm_03;
+	private String m_avatar_frm_04;
 	
 	private static String tag_root = "TITFL";
 	private static String tag_item = "player";
@@ -45,6 +51,10 @@ public class TITFLPlayer
 	private static String atr_factor_goodlooking = "factor_goodlooking";
 	private static String atr_factor_physical = "factor_physical";
 	private static String atr_factor_lucky = "factor_lucky";
+	private static String atr_avatar_frm_01 = "avatar_frm_01";
+	private static String atr_avatar_frm_02 = "avatar_frm_02";
+	private static String atr_avatar_frm_03 = "avatar_frm_03";
+	private static String atr_avatar_frm_04 = "avatar_frm_04";
 
 	public static ArrayList<TITFLPlayer> loadDefaultPlayers(AssetManager am)
 	{
@@ -87,6 +97,14 @@ public class TITFLPlayer
 		    			element.m_factor_physical = Integer.parseInt(attribValue);
 		    		else if (attribName.equals(atr_factor_lucky))
 		    			element.m_factor_lucky = Integer.parseInt(attribValue);
+		    		else if (attribName.equals(atr_avatar_frm_01))
+		    			element.m_avatar_frm_01 = attribValue;
+		    		else if (attribName.equals(atr_avatar_frm_02))
+		    			element.m_avatar_frm_02 = attribValue;
+		    		else if (attribName.equals(atr_avatar_frm_03))
+		    			element.m_avatar_frm_03 = attribValue;
+		    		else if (attribName.equals(atr_avatar_frm_04))
+		    			element.m_avatar_frm_04 = attribValue;
 		    	}
 		    	
 		    	ret.add(element);
@@ -120,6 +138,10 @@ public class TITFLPlayer
 		m_counter = other.m_counter;
 		m_speedFactor = other.m_speedFactor;
 		m_hour = other.m_hour;
+		m_avatar_frm_01 = other.m_avatar_frm_01;
+		m_avatar_frm_02 = other.m_avatar_frm_02;
+		m_avatar_frm_03 = other.m_avatar_frm_03;
+		m_avatar_frm_04 = other.m_avatar_frm_04;
 
 		m_belongings = new ArrayList<TITFLGoods>();
 		Iterator<TITFLGoods> it = other.m_belongings.iterator();
@@ -219,6 +241,39 @@ public class TITFLPlayer
 			return R.anim.anim_marble_stay;
 	}
 	
+	@SuppressWarnings("deprecation")
+	@SuppressLint("NewApi")
+	public void notifyActive(Activity activity)
+	{
+		ImageView avatarImg = (ImageView) activity.findViewById(R.id.imageView2);
+		//avatarImg.setBackgroundResource(R.drawable.frame_anim_empty);
+		//AnimationDrawable avatarWalk = (AnimationDrawable)avatarImg.getBackground();
+		AnimationDrawable avatarWalk = new AnimationDrawable(); 
+		avatarWalk.setOneShot(false);
+
+		int sdkVer = android.os.Build.VERSION.SDK_INT;
+		if (sdkVer < 16)
+			avatarImg.setBackgroundDrawable(avatarWalk);
+		else
+			avatarImg.setBackground(avatarWalk);
+
+		if (avatarWalk.getNumberOfFrames() == 0)
+		{
+			float factor = NoEtapUtility.getFactor(activity);
+			int w = (int)(360 * factor);
+			int h = (int)(700 * factor);
+			Drawable d1 = NoEtapUtility.createDrawableFromAsset(activity, m_avatar_frm_01, w, h);
+			Drawable d2 = NoEtapUtility.createDrawableFromAsset(activity, m_avatar_frm_02, w, h);
+			Drawable d3 = NoEtapUtility.createDrawableFromAsset(activity, m_avatar_frm_03, w, h);
+			Drawable d4 = NoEtapUtility.createDrawableFromAsset(activity, m_avatar_frm_04, w, h);
+			avatarWalk.addFrame(d1, 200);
+			avatarWalk.addFrame(d2, 200);
+			avatarWalk.addFrame(d3, 200);
+			avatarWalk.addFrame(d4, 200);
+			avatarImg.setImageBitmap(null);
+		}
+	}
+	
 	public boolean goTo(final Activity activity, final TITFLTownElement destination, final boolean openDestination)
 	{
 		if (destination == null)
@@ -239,6 +294,7 @@ public class TITFLPlayer
 			m_hour = 0;
 			m_currentLocation.setVisitor(null);
 			m_currentLocation.town().setNextPlayer();
+			NoEtapUtility.showAlert(activity, "Info", "User switch.");
 			return false;
 		}
 		
@@ -249,8 +305,9 @@ public class TITFLPlayer
 		final ArrayList<TITFLTownMapNode> route = route1;
 
 		final ImageView avatarImg = (ImageView) activity.findViewById(R.id.imageView2);
-		final AnimationDrawable avatarWalk = (AnimationDrawable) avatarImg.getBackground(); 
-		
+		notifyActive(activity);
+		final AnimationDrawable avatarWalk = (AnimationDrawable) avatarImg.getBackground();
+
 		m_counter = 0;
 		TITFLTownMapNode current = route.get(m_counter);
 		TITFLTownMapNode nextStop = (route.size() > m_counter + 1) ? route.get(m_counter + 1) : route.get(m_counter);

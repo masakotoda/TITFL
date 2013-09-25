@@ -54,6 +54,11 @@ public class TITFLTown
 	public void setActivePlayer(TITFLPlayer player)
 	{
 		m_activePlayer = player;
+		
+		if (m_activePlayer != null)
+		{
+			m_activePlayer.notifyActive(m_activity);
+		}
 	}
 	
 	public void setNextPlayer()

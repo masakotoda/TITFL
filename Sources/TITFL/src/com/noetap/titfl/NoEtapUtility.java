@@ -1,11 +1,19 @@
 package com.noetap.titfl;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.graphics.Point;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.view.Display;
 
 //In future, we may want to move this to library
@@ -94,5 +102,51 @@ public class NoEtapUtility
 		int width = getScreenWidth(activity);
 		float factor = width / 1080.f;
 		return factor;		
+	}
+	
+	public static Drawable createDrawableFromAsset(Activity activity, String assetName, int desiredW, int desiredH)
+	{
+		AssetManager am = activity.getAssets();
+		InputStream bitmap = null;
+		Drawable drawable = null;
+		try 
+		{
+		    bitmap = am.open(assetName);
+		    drawable = BitmapDrawable.createFromStream(bitmap, assetName);
+		} 
+		catch (IOException e)
+		{
+		    e.printStackTrace();
+		}
+		finally 
+		{
+		    if (bitmap != null)
+		    {
+				try 
+				{
+					bitmap.close();
+				} 
+				catch (IOException e) 
+				{
+					e.printStackTrace();
+				}
+		    }
+		}
+
+		if (drawable != null) 
+		{
+			Bitmap bitmapOrg = ((BitmapDrawable) drawable).getBitmap();
+			int width = bitmapOrg.getWidth();
+			int height = bitmapOrg.getHeight();
+			float scaleWidth = ((float) desiredW) / width;
+			float scaleHeight = ((float) desiredH) / height;
+			Matrix matrix = new Matrix();
+			matrix.postScale(scaleWidth, scaleHeight);
+			Bitmap resizedBitmap = Bitmap.createBitmap(bitmapOrg, 0, 0, width, height, matrix, true);
+			drawable = new BitmapDrawable(resizedBitmap);
+			BitmapDrawable bmDrawable = (BitmapDrawable) drawable;
+			bmDrawable.setTargetDensity(activity.getResources().getDisplayMetrics());
+		}
+		return drawable;
 	}
 }
