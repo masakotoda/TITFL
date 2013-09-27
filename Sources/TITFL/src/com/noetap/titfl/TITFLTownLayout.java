@@ -26,7 +26,7 @@ public class TITFLTownLayout implements TITFLLayout
 
 	@Override
 	public void initialize()
-	{
+	{		
 		m_townView = (TITFLTownView) m_activity.findViewById(R.id.townView);
 		m_townView.initialize();
 		m_townView.invalidate();
@@ -34,6 +34,15 @@ public class TITFLTownLayout implements TITFLLayout
 		m_playerView = (TITFLPlayerView) m_activity.findViewById(R.id.playerView);
 		m_playerView.initialize();
 		m_playerView.invalidate();
+		
+		if (m_activity.getTown() != null)
+		{
+			TITFLPlayer player = m_activity.getTown().activePlayer();
+			if (player != null)
+			{
+				player.notifyActive(m_activity);
+			}
+		}
 		
 		ImageView avatarImg = (ImageView) m_activity.findViewById(R.id.imageView2);
 		avatarImg.setImageBitmap(null);

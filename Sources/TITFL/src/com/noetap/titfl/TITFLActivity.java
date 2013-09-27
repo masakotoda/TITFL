@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 public class TITFLActivity extends Activity 
 {
@@ -30,7 +31,17 @@ public class TITFLActivity extends Activity
 
 		setContentView(R.layout.activity_titfl);
 		
-		runGame();
+		if (!resumeGame())
+			runGame();
+	}
+
+	@Override
+	protected void onDestroy()
+	{
+		Toast.makeText(this, "Saving...", Toast.LENGTH_SHORT).show();
+		saveGame();
+  
+		super.onDestroy();		
 	}
 
 	@Override
@@ -76,10 +87,29 @@ public class TITFLActivity extends Activity
 	private void runGame()
 	{
 		m_game = new TITFL(this);
+		
 		m_game.run();
 
 		m_layout = new TITFLTownLayout(this);
 		m_layout.initialize();		
+	}
+	
+	private boolean resumeGame()
+	{
+		m_game = new TITFL(this);
+		
+		if (!m_game.resume())
+			return false;
+
+		m_layout = new TITFLTownLayout(this);
+		m_layout.initialize();
+		return true;
+	}
+
+	private void saveGame()
+	{		
+		if (m_game.dirty())
+			m_game.save();
 	}
 	
 	public void openTownElement(TITFLTownElement element)

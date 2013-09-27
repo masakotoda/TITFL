@@ -8,6 +8,7 @@ import org.xmlpull.v1.XmlPullParser;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.res.AssetManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
@@ -169,6 +170,63 @@ public class TITFLPlayer
 		return m_hour;
 	}
 	
+	public String name()
+	{
+		return m_name;
+	}
+	
+	public boolean save(String key, SQLiteDatabase db)
+	{
+		String currentLocationId = "";
+		if (m_currentLocation != null)
+			currentLocationId = m_currentLocation.id();
+		
+		TITFL.save(key + ".name", m_name, db);
+		TITFL.save(key + ".alias", m_alias, db);
+		TITFL.save(key + ".factor_intelligent", m_factor_intelligent, db);
+		TITFL.save(key + ".factor_hardworking", m_factor_hardworking, db);
+		TITFL.save(key + ".factor_goodlooking", m_factor_goodlooking, db);
+		TITFL.save(key + ".factor_physical", m_factor_physical, db);
+		TITFL.save(key + ".factor_lucky", m_factor_lucky, db);
+		TITFL.save(key + ".currentLocation", currentLocationId, db);
+		TITFL.save(key + ".counter", m_counter, db);
+		TITFL.save(key + ".speedFactor", m_speedFactor, db);
+		TITFL.save(key + ".hour", m_hour, db);
+		TITFL.save(key + ".avatar_frm_01", m_avatar_frm_01, db);
+		TITFL.save(key + ".avatar_frm_02", m_avatar_frm_02, db);
+		TITFL.save(key + ".avatar_frm_03", m_avatar_frm_03, db);
+		TITFL.save(key + ".avatar_frm_04", m_avatar_frm_04, db);
+		
+		//TODO save m_belongings;
+		return true;
+	}
+	
+	public static TITFLPlayer loadPlayer(String key, SQLiteDatabase db, TITFLTown town)	
+	{
+		TITFLPlayer player = new TITFLPlayer();
+
+		player.m_name = TITFL.loadString(key + ".name", db);
+		player.m_alias = TITFL.loadString(key + ".alias", db);
+		player.m_factor_intelligent = TITFL.loadInteger(key + ".factor_intelligent", db);
+		player.m_factor_hardworking = TITFL.loadInteger(key + ".factor_hardworking", db);
+		player.m_factor_goodlooking = TITFL.loadInteger(key + ".factor_goodlooking", db);
+		player.m_factor_physical = TITFL.loadInteger(key + ".factor_physical", db);
+		player.m_factor_lucky = TITFL.loadInteger(key + ".factor_lucky", db);
+		String currentLocationId = TITFL.loadString(key + ".currentLocation", db);
+		player.m_currentLocation = town.findElement(currentLocationId);
+		player.m_counter = TITFL.loadInteger(key + ".counter", db);
+		player.m_speedFactor = TITFL.loadFloat(key + ".speedFactor", db);
+		player.m_hour = TITFL.loadFloat(key + ".hour", db);
+		player.m_avatar_frm_01 = TITFL.loadString(key + ".avatar_frm_01", db);
+		player.m_avatar_frm_02 = TITFL.loadString(key + ".avatar_frm_02", db);
+		player.m_avatar_frm_03 = TITFL.loadString(key + ".avatar_frm_03", db);
+		player.m_avatar_frm_04 = TITFL.loadString(key + ".avatar_frm_04", db);
+
+		player.m_belongings = new ArrayList<TITFLGoods>();
+		//TODO load m_belongings
+		return player;
+	}
+	
 	public void draw(Canvas canvas, Paint paint)
 	{
 		if (m_currentLocation == null)
@@ -184,7 +242,7 @@ public class TITFLPlayer
 		int h = canvas.getHeight();
 		canvas.drawRect(0, 0, w, h, paint);
 
-		float factor = NoEtapUtility.getFactor(m_currentLocation.town().getActivity());
+		float factor = NoEtapUtility.getFactor(m_currentLocation.town().activity());
 		float textSize = 48 * factor;
 
 		paint.setARGB(255, 0, 0, 0);
@@ -225,6 +283,7 @@ public class TITFLPlayer
 		top += textSize;
 		canvas.drawText("Happiness: " + Float.toString(getHappinessLevel()), left, top, paint);
 		top += textSize;
+		
 	}
 	
 	private int getAnim(TITFLTownMapNode current, TITFLTownMapNode next)

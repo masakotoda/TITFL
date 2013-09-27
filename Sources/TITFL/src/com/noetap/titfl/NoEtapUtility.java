@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
@@ -104,6 +105,7 @@ public class NoEtapUtility
 		return factor;		
 	}
 	
+	@SuppressWarnings("deprecation")
 	public static Drawable createDrawableFromAsset(Activity activity, String assetName, int desiredW, int desiredH)
 	{
 		AssetManager am = activity.getAssets();
@@ -148,5 +150,36 @@ public class NoEtapUtility
 			bmDrawable.setTargetDensity(activity.getResources().getDisplayMetrics());
 		}
 		return drawable;
+	}
+
+	public static Bitmap getBitmap(Activity activity, String png)
+	{
+		AssetManager am = activity.getAssets();
+		InputStream stream = null;
+		Bitmap bmp = null;
+		try 
+		{
+			stream = am.open(png);
+			bmp = BitmapFactory.decodeStream(stream);
+		} 
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		finally 
+		{
+			if (stream != null)
+			{
+				try 
+				{
+					stream.close();
+				} 
+				catch (IOException e) 
+				{
+					e.printStackTrace();
+				}
+			}
+		}
+		return bmp;
 	}
 }

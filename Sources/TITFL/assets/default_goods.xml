@@ -12,7 +12,7 @@
         name="Bus"
         townelement_id="townelement_grocery"
         price="50"
-        <expire>4</expire>
+        expire="4"
         speed="20"
     	/>
 

@@ -176,34 +176,7 @@ public class TITFLTownElement
 		if (m_bitmap != null)
 			return m_bitmap;
 		
-		AssetManager am = m_town.getAssets();
-		InputStream bitmap = null;
-
-		try 
-		{
-			String png = m_id + ".png";
-		    bitmap = am.open(png);
-		    m_bitmap = BitmapFactory.decodeStream(bitmap);
-		} 
-		catch (IOException e)
-		{
-		    e.printStackTrace();
-		} 
-		finally 
-		{
-		    if (bitmap != null)
-		    {
-				try 
-				{
-					bitmap.close();
-				} 
-				catch (IOException e) 
-				{
-					e.printStackTrace();
-				}
-		    }
-		}		
-		
+		m_bitmap = NoEtapUtility.getBitmap(m_town.activity(), m_id + ".png");
 		return m_bitmap;
 	}
 	
@@ -229,13 +202,13 @@ public class TITFLTownElement
 		}
 			
 		paint.setColor(Color.BLACK);
-		paint.setTextSize(32 * NoEtapUtility.getFactor(m_town.getActivity()));
+		paint.setTextSize(32 * NoEtapUtility.getFactor(m_town.activity()));
 		canvas.drawText(m_name, rect.left, (rect.bottom), paint);			
 	}
 	
 	public void open()
 	{
-		TITFLActivity activity = (TITFLActivity) m_town.getActivity();
+		TITFLActivity activity = (TITFLActivity) m_town.activity();
 		activity.openTownElement(this);
 	}
 }
