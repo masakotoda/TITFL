@@ -14,7 +14,13 @@ public class TITFLJob
 	private TITFLTownElement m_townelement;
 	private String m_townelement_id;
 	private String m_name;
-	
+	private int m_dressCode;
+	private int m_wage; // @ town's economyFactor = 1
+	private int m_openingNumber; // @ town's economyFactor = 1
+	private TITFL.CharacterFactor m_requiredCharacter;	
+	private TITFL.DisciplineLevel m_requiredEducation;
+	private TITFL.DisciplineLevel m_requiredExperience;
+			
 	private static String tag_root = "TITFL";
 	private static String tag_item = "job";
 	private static String atr_name = "name";

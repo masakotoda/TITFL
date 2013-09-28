@@ -14,11 +14,11 @@ public class TITFL
 	private Activity m_activity;
 	private TITFLTown m_town;
 	private ArrayList<TITFLPlayer> m_players;
-
 	private ArrayList<TITFLPlayer> m_defaultPlayers;
 	private ArrayList<TITFLEvent> m_randomEvents;
 	private ArrayList<TITFLTownMap> m_townmaps;
 	
+
 	TITFL(Activity activity)
 	{
 		m_activity = activity;
@@ -240,4 +240,48 @@ public class TITFL
 	{
 		return TITFLSQLiteOpenHelper.loadString(key, "", db);
 	}
+	
+	// character factor used by TITFLPlayer, TITFLJob, TITFLRandomEvent
+	public static class CharacterFactor
+	{
+		CharacterFactor()
+		{			
+		}
+
+		CharacterFactor(CharacterFactor other)
+		{
+			m_intelligent = other.m_intelligent;
+			m_hardWorking = other.m_hardWorking;
+			m_goodLooking = other.m_goodLooking;
+			m_physical = other.m_physical;
+			m_lucky = other.m_lucky;
+		}
+				
+		int m_intelligent;
+		int m_hardWorking;
+		int m_goodLooking;
+		int m_physical;
+		int m_lucky;
+	};
+
+	// character factor used by TITFLPlayer, TITFLJob
+	public static class DisciplineLevel
+	{
+		DisciplineLevel()		
+		{			
+		}
+		
+		DisciplineLevel(DisciplineLevel other)
+		{
+			m_basic = other.m_basic;
+			m_engineering = other.m_engineering;
+			m_business_finance = other.m_business_finance;
+			m_academic = other.m_academic;
+		}
+		
+		int m_basic; // GED
+		int m_engineering;
+		int m_business_finance;
+		int m_academic;
+	};
 }

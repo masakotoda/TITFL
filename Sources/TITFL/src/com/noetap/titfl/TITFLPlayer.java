@@ -10,6 +10,7 @@ import android.app.Activity;
 import android.content.res.AssetManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.AnimationDrawable;
@@ -28,20 +29,35 @@ public class TITFLPlayer
 	
 	private String m_name;
 	private String m_alias;
-	private int m_factor_intelligent;
-	private int m_factor_hardworking;
-	private int m_factor_goodlooking;
-	private int m_factor_physical;
-	private int m_factor_lucky;
+
+	private TITFL.CharacterFactor m_character;
+	private TITFL.DisciplineLevel m_education;
+	private TITFL.DisciplineLevel m_experience;
+	
+	private int m_cash;
+	private int m_saving;
+	private int m_general_loan;
+	private int m_student_loan;
+	private int m_mortgage;
+	private int m_goldUnit;
+	private int m_bondUnit;
+	private int m_stockUnit;
+	private ArrayList<TITFLGoods> m_belongings;
+		
+	private TITFLJob m_job;
+	private int m_lastWorkedWeek;
+	private TITFLGoods m_transportation;	
 	private TITFLTownElement m_currentLocation;
+	private TITFLTownElement m_home;
+	
 	private int m_counter = -1;
 	private float m_speedFactor = 0.5f; // 1 is default. 0.5 is x2 faster. 2 is x2 slower.
 	private float m_hour = 0;
-	private ArrayList<TITFLGoods> m_belongings;
 	private String m_avatar_frm_01;
 	private String m_avatar_frm_02;
 	private String m_avatar_frm_03;
 	private String m_avatar_frm_04;
+	private int m_themeColor;
 	
 	private static String tag_root = "TITFL";
 	private static String tag_item = "player";
@@ -56,7 +72,10 @@ public class TITFLPlayer
 	private static String atr_avatar_frm_02 = "avatar_frm_02";
 	private static String atr_avatar_frm_03 = "avatar_frm_03";
 	private static String atr_avatar_frm_04 = "avatar_frm_04";
-
+	private static String atr_theme_color_r = "theme_color_r";
+	private static String atr_theme_color_g = "theme_color_g";
+	private static String atr_theme_color_b = "theme_color_b";
+	
 	public static ArrayList<TITFLPlayer> loadDefaultPlayers(AssetManager am)
 	{
 		ArrayList<TITFLPlayer> ret = new ArrayList<TITFLPlayer>();		
@@ -80,6 +99,7 @@ public class TITFLPlayer
 			    	continue;
 
 		    	TITFLPlayer element = new TITFLPlayer();
+		    	int r = 0, g = 0, b = 0;
 		    	for (int i = 0; i < parser.getAttributeCount(); i++)
 		    	{
 		    		String attribName = parser.getAttributeName(i);
@@ -89,15 +109,15 @@ public class TITFLPlayer
 		    		else if (attribName.equals(atr_alias))
 		    			element.m_alias = attribValue;
 		    		else if (attribName.equals(atr_factor_intelligent))
-		    			element.m_factor_intelligent = Integer.parseInt(attribValue);
+		    			element.m_character.m_intelligent = Integer.parseInt(attribValue);
 		    		else if (attribName.equals(atr_factor_hardworking))
-		    			element.m_factor_hardworking = Integer.parseInt(attribValue);
+		    			element.m_character.m_hardWorking = Integer.parseInt(attribValue);
 		    		else if (attribName.equals(atr_factor_goodlooking))
-		    			element.m_factor_goodlooking = Integer.parseInt(attribValue);
+		    			element.m_character.m_goodLooking = Integer.parseInt(attribValue);
 		    		else if (attribName.equals(atr_factor_physical))
-		    			element.m_factor_physical = Integer.parseInt(attribValue);
+		    			element.m_character.m_physical = Integer.parseInt(attribValue);
 		    		else if (attribName.equals(atr_factor_lucky))
-		    			element.m_factor_lucky = Integer.parseInt(attribValue);
+		    			element.m_character.m_lucky = Integer.parseInt(attribValue);
 		    		else if (attribName.equals(atr_avatar_frm_01))
 		    			element.m_avatar_frm_01 = attribValue;
 		    		else if (attribName.equals(atr_avatar_frm_02))
@@ -106,8 +126,15 @@ public class TITFLPlayer
 		    			element.m_avatar_frm_03 = attribValue;
 		    		else if (attribName.equals(atr_avatar_frm_04))
 		    			element.m_avatar_frm_04 = attribValue;
+		    		else if (attribName.equals(atr_theme_color_r))
+		    			r = Integer.parseInt(attribValue);
+		    		else if (attribName.equals(atr_theme_color_g))
+		    			g = Integer.parseInt(attribValue);
+		    		else if (attribName.equals(atr_theme_color_b))
+		    			b = Integer.parseInt(attribValue);
 		    	}
 		    	
+		    	element.m_themeColor = Color.rgb(r, g, b);
 		    	ret.add(element);
 		    	parser.next();
 			}
@@ -123,6 +150,7 @@ public class TITFLPlayer
 	public TITFLPlayer()
 	{
 		m_belongings = new ArrayList<TITFLGoods>();
+		m_character = new TITFL.CharacterFactor();
 	}
 	
 	// Copy constructor
@@ -130,11 +158,7 @@ public class TITFLPlayer
 	{
 		m_name = other.m_name;
 		m_alias = other.m_alias;
-		m_factor_intelligent = other.m_factor_intelligent;
-		m_factor_hardworking= other.m_factor_hardworking;
-		m_factor_goodlooking = other.m_factor_goodlooking;
-		m_factor_physical = other.m_factor_physical;
-		m_factor_lucky = other.m_factor_lucky;
+		m_character = new TITFL.CharacterFactor(other.m_character);
 		m_currentLocation = other.m_currentLocation;
 		m_counter = other.m_counter;
 		m_speedFactor = other.m_speedFactor;
@@ -143,6 +167,7 @@ public class TITFLPlayer
 		m_avatar_frm_02 = other.m_avatar_frm_02;
 		m_avatar_frm_03 = other.m_avatar_frm_03;
 		m_avatar_frm_04 = other.m_avatar_frm_04;
+		m_themeColor = other.m_themeColor;
 
 		m_belongings = new ArrayList<TITFLGoods>();
 		Iterator<TITFLGoods> it = other.m_belongings.iterator();
@@ -183,11 +208,11 @@ public class TITFLPlayer
 		
 		TITFL.save(key + ".name", m_name, db);
 		TITFL.save(key + ".alias", m_alias, db);
-		TITFL.save(key + ".factor_intelligent", m_factor_intelligent, db);
-		TITFL.save(key + ".factor_hardworking", m_factor_hardworking, db);
-		TITFL.save(key + ".factor_goodlooking", m_factor_goodlooking, db);
-		TITFL.save(key + ".factor_physical", m_factor_physical, db);
-		TITFL.save(key + ".factor_lucky", m_factor_lucky, db);
+		TITFL.save(key + ".factor_intelligent", m_character.m_intelligent, db);
+		TITFL.save(key + ".factor_hardworking", m_character.m_hardWorking, db);
+		TITFL.save(key + ".factor_goodlooking", m_character.m_goodLooking, db);
+		TITFL.save(key + ".factor_physical", m_character.m_physical, db);
+		TITFL.save(key + ".factor_lucky", m_character.m_lucky, db);
 		TITFL.save(key + ".currentLocation", currentLocationId, db);
 		TITFL.save(key + ".counter", m_counter, db);
 		TITFL.save(key + ".speedFactor", m_speedFactor, db);
@@ -207,11 +232,11 @@ public class TITFLPlayer
 
 		player.m_name = TITFL.loadString(key + ".name", db);
 		player.m_alias = TITFL.loadString(key + ".alias", db);
-		player.m_factor_intelligent = TITFL.loadInteger(key + ".factor_intelligent", db);
-		player.m_factor_hardworking = TITFL.loadInteger(key + ".factor_hardworking", db);
-		player.m_factor_goodlooking = TITFL.loadInteger(key + ".factor_goodlooking", db);
-		player.m_factor_physical = TITFL.loadInteger(key + ".factor_physical", db);
-		player.m_factor_lucky = TITFL.loadInteger(key + ".factor_lucky", db);
+		player.m_character.m_intelligent = TITFL.loadInteger(key + ".factor_intelligent", db);
+		player.m_character.m_hardWorking = TITFL.loadInteger(key + ".factor_hardworking", db);
+		player.m_character.m_goodLooking = TITFL.loadInteger(key + ".factor_goodlooking", db);
+		player.m_character.m_physical = TITFL.loadInteger(key + ".factor_physical", db);
+		player.m_character.m_lucky = TITFL.loadInteger(key + ".factor_lucky", db);
 		String currentLocationId = TITFL.loadString(key + ".currentLocation", db);
 		player.m_currentLocation = town.findElement(currentLocationId);
 		player.m_counter = TITFL.loadInteger(key + ".counter", db);
@@ -233,10 +258,7 @@ public class TITFLPlayer
 			return;
 
 		// Change theme color depending on the character?
-		if (m_factor_hardworking > m_factor_intelligent)
-			paint.setARGB(255, 255, 192, 192);
-		else
-			paint.setARGB(255, 192, 255, 192);
+		paint.setColor(m_themeColor);
 
 		int w = canvas.getWidth();
 		int h = canvas.getHeight();
@@ -367,12 +389,8 @@ public class TITFLPlayer
 		notifyActive(activity);
 		final AnimationDrawable avatarWalk = (AnimationDrawable) avatarImg.getBackground();
 
-		m_counter = 0;
-		TITFLTownMapNode current = route.get(m_counter);
-		TITFLTownMapNode nextStop = (route.size() > m_counter + 1) ? route.get(m_counter + 1) : route.get(m_counter);
-		
-		ImageView marbleImg = (ImageView) activity.findViewById(R.id.imageView1);
-		Animation anim = AnimationUtils.loadAnimation(activity, getAnim(current, nextStop));
+		Animation anim = AnimationUtils.loadAnimation(activity, R.anim.anim_marble_stay);
+		anim.scaleCurrentDuration(m_speedFactor);
 		anim.setAnimationListener(new AnimationListener() 
 		{
 			@Override
@@ -426,22 +444,92 @@ public class TITFLPlayer
 				//ImageView avatarImg = (ImageView) activity.findViewById(R.id.imageView2);
 				//Rect rectAvatar = m_currentLocation.town().avatarRect();
 				//avatarImg.layout(rectAvatar.left, rectAvatar.top, rectAvatar.right, rectAvatar.bottom);
+				if (m_counter == -1)
+				{
+					ImageView marbleImg = (ImageView) activity.findViewById(R.id.imageView1);
+					int slot = route.get(0).index();
+					Rect rect = destination.town().nodeToPosition(slot);
+					marbleImg.layout(rect.left, rect.top, rect.left + rect.width(), rect.top + rect.height());
+				}
 			}
 		});
 		
 		avatarWalk.start();
 
-		int slot = route.get(m_counter).index();
-		Rect rect = destination.town().nodeToPosition(slot);
-		marbleImg.layout(rect.left, rect.top, rect.left + rect.width(), rect.top + rect.height());
-		marbleImg.setVisibility(View.VISIBLE);
-
-		anim.scaleCurrentDuration(m_speedFactor);
+		m_counter = -1;
+		ImageView marbleImg = (ImageView) activity.findViewById(R.id.imageView1);
 		marbleImg.startAnimation(anim);
 		
 		return true;
 	}
 	
+	public void beginWeek()
+	{		
+		//TODO
+	}
+	
+	public void work()
+	{
+		//TODO
+	}
+
+	void buy(TITFLGoods goods)
+	{
+		//TODO
+	}
+
+	void sell(TITFLGoods goods)
+	{
+		//TODO
+	}
+
+
+	void relax()
+	{
+		//TODO
+	}
+
+	void study()
+	{
+		//TODO
+	}
+
+	void exercise()
+	{
+		//TODO
+	}
+
+	void socialize()
+	{
+		//TODO
+	}
+
+	void applyJob(TITFLJob job)
+	{
+		//TODO
+	}
+
+	void withdraw(int amount)
+	{
+		//TODO
+	}
+
+	void deposit(int amount)
+	{
+		//TODO
+	}
+
+	void loan(int loanType, int amount)
+	{
+		//TODO
+	}
+
+	void SetHome(TITFLTownElement home)
+	{
+		//TODO
+	}
+
+
 	public boolean isMoving()
 	{
 		if (m_counter < 0)
@@ -485,9 +573,24 @@ public class TITFLPlayer
 		//TODO - calc wealth level based on what the player owns.
 		return 0;
 	}
-	
-	public void work()
+
+	boolean hasRefrigerator()
 	{
-		//TODO
+		return false;
+	}
+	
+	boolean hasFreezer()
+	{
+		return false;
+	}
+	
+	boolean hasTatoo()
+	{
+		return false;
+	}
+
+	boolean hasSpouse()
+	{
+		return false;
 	}
 }
