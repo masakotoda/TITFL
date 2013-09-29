@@ -10,22 +10,11 @@ public class TITFLRandomEvent implements TITFLEvent
 {
 	private String m_id;
     private String m_description;
-    private int m_trigger_health;
-    private int m_trigger_wealth;
-    private int m_trigger_education;
-    private int m_trigger_carrier;
-    private int m_trigger_life;
-    private int m_affect_health;
-    private int m_affect_wealth;
-    private int m_affect_education;
-    private int m_affect_carrier;
-    private int m_happiness_per_intelligent_factor;
-    private int m_happiness_per_hardworking_factor;
-    private int m_happiness_per_goodlooking_factor;
-    private int m_happiness_per_physical_factor;
-    private int m_happiness_per_lucky_factor;
-    private float m_health_insurance_coverage;
-    private float m_car_insurance_coverage;
+    private TITFL.Satisfaction m_trigger;
+    private TITFL.Satisfaction m_affect;
+    private TITFL.CharacterFactor m_affectOnHappiness;
+    private int m_health_insurance_coverage;
+    private int m_car_insurance_coverage;
 
     private static String tag_root = "TITFL";
 	private static String tag_item = "randomevent";

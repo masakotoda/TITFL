@@ -15,8 +15,13 @@ public class TITFLGoodsEvent implements TITFLEvent
 	private String m_id;
 	private String m_goods_id;
 	private String m_description;
-	private int m_cycle;
-	private int m_price;
+	private int m_cycle;			// How often? Every 2 weeks? Every 4 weeks?
+	private int m_price;			// How much do you need to pay?
+	private int m_time; 			// For example, to keep spouse, he/she needs to pay "time".
+	private int m_lastEventOccured;	// Week# last time this event occured.
+	private boolean m_canReject; 	// Player has choice to accept or reject (unlike original jones). If he/she rejects, he/she lose the goods.
+	private boolean m_canBeSkipped;	// Does the Event happen by chance? (If so and lucky, last event occured will be updated without actual event.)
+	private boolean m_isFixedPrice;	// Is Fixed Event Price? (If not, the actual maintenance fee will be determined with economy factor.)
 
 	private static String tag_root = "TITFL";
 	private static String tag_item = "goodsevent";

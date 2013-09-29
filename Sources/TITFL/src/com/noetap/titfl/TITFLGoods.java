@@ -4,18 +4,29 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import org.xmlpull.v1.XmlPullParser;
 import android.content.res.AssetManager;
+import android.graphics.Point;
 import android.util.Xml;
+
 
 public class TITFLGoods
 {
-	private ArrayList<TITFLGoodsEvent> m_events;
+	private ArrayList<TITFLGoodsEvent> m_events; // Array of possible TownGoodsEvent (repair, divorce, accident, insurance premium payment, etc.)
 	private TITFLTownElement m_townelement;
 	
 	private String m_id;
 	private String m_townelement_id;
 	private String m_name;
-	private int m_price;
-	private int m_speed;
+	private int m_group; 			// General merchandise, Wearable merchandise, Food, Insurance, Degree, Transportation, House, Home Goods, Spouse
+	private int m_price; 			// Monetary value (or down payment)
+	private int m_requiredMortgage; // Applicable if it's house group.
+	private int m_foodValue; 		// Value of food (How many weeks). Applicable if it's food group.
+	private int m_classCredit; 		// How many credits? Applicable if it's degree group.
+	private int m_speed;  			// Speed factor. Applicable if it's transportation group.
+	private int m_acquiredWeek;		// When this goods was acquired.
+	private Point m_postionToDisplay; // It’s mainly for home goods & wearable merchandise
+	private TITFL.CharacterFactor m_affectOnHappiness;
+	private int m_affectOnHealth;
+	private String m_greeting; 		// Greeting upon purchase
 
 	private static String tag_root = "TITFL";
 	private static String tag_item = "goods";

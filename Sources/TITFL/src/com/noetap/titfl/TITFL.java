@@ -284,4 +284,27 @@ public class TITFL
 		int m_business_finance;
 		int m_academic;
 	};
+
+	// satisfaction used by TITFLPlayer
+	public static class Satisfaction
+	{
+		Satisfaction()
+		{			
+		}
+		
+		Satisfaction(Satisfaction other)
+		{
+			m_health = other.m_health;
+		    m_wealth = other.m_wealth;
+		    m_education = other.m_education;
+		    m_carrier = other.m_carrier;
+		    m_life = other.m_life;
+		}
+
+		int m_health;
+	    int m_wealth;
+	    int m_education;
+	    int m_carrier;
+	    int m_life;
+	}
 }

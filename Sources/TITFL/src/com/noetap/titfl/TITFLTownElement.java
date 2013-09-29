@@ -17,7 +17,7 @@ import android.util.Xml;
 public class TITFLTownElement
 {
 	private TITFLTown m_town;
-	private ArrayList<TITFLGoods> m_marchandise;
+	private ArrayList<TITFLGoods> m_merchandise;
 	private ArrayList<TITFLJob> m_jobs;
 	private String m_name;
 	private String m_id;
@@ -108,14 +108,14 @@ public class TITFLTownElement
 		for (int i = 0; i < elements.size(); i++)
 		{
 			TITFLTownElement element = elements.get(i);
-			element.m_marchandise = new ArrayList<TITFLGoods>();
+			element.m_merchandise = new ArrayList<TITFLGoods>();
 			for (int j = 0; j < goods.size(); j++)
 			{
 				TITFLGoods g = goods.get(j);
 				if (g.townelement_id().equals(element.id()))
 				{
 					g.setTownElement(element);
-					element.m_marchandise.add(g);
+					element.m_merchandise.add(g);
 				}				
 			}
 		}

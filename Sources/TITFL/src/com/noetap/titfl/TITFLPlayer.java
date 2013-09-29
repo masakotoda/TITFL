@@ -33,6 +33,8 @@ public class TITFLPlayer
 	private TITFL.CharacterFactor m_character;
 	private TITFL.DisciplineLevel m_education;
 	private TITFL.DisciplineLevel m_experience;
+	private TITFL.Satisfaction  m_satisfaction;
+	private int m_happiness;
 	
 	private int m_cash;
 	private int m_saving;
@@ -540,37 +542,31 @@ public class TITFLPlayer
 	
 	private float getWealthLevel()
 	{
-		//TODO - calc wealth level based on what the player owns.
 		return 0;
 	}
 
 	private float getEducationLevel()
 	{
-		//TODO - calc wealth level based on what the player owns.
 		return 0;
 	}
 
 	private float getCarrierLevel()
 	{
-		//TODO - calc wealth level based on what the player owns.
 		return 0;
 	}
 
 	private float getLifeLevel()
 	{
-		//TODO - calc wealth level based on what the player owns.
 		return 0;
 	}
 
 	private float getHealthLevel()
 	{
-		//TODO - calc wealth level based on what the player owns.
 		return 0;
 	}
 
 	private float getHappinessLevel()
 	{
-		//TODO - calc wealth level based on what the player owns.
 		return 0;
 	}
 
