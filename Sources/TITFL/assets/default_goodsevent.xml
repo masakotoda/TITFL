@@ -20,5 +20,9 @@
         goods_id="goods_bicycle"
         cycle="1"
         price="0"
+        time_to_pay="0"
+        can_reject="false"
+        can_skipped="false"
+        is_fixed_price="true"
         />
 </TITFL>

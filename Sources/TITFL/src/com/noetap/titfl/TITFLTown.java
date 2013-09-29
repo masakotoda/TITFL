@@ -47,6 +47,12 @@ public class TITFLTown
 		}
 		m_maxSlot = m_fixedElements.size() + 1;
 
+        @SuppressWarnings("unused")
+        ArrayList<TITFLJob> jobs = TITFLJob.loadDefaultJobs(m_activity.getAssets(), this);
+
+        @SuppressWarnings("unused")
+        ArrayList<TITFLGoods> goods = TITFLGoods.loadDefaultGoods(m_activity.getAssets(), this);
+        
 		initialize();
 	}
 	
@@ -117,7 +123,30 @@ public class TITFLTown
 		return null; // really??
 	}
 	
-	public TITFLPlayer activePlayer()
+    public TITFLGoods findGoods(String goodsId)
+    {
+        for (TITFLTownElement e : m_elements)
+        {
+            for (TITFLGoods g : e.merchandise())
+            {
+                if (g.id().equals(goodsId))
+                    return g;
+            }
+        }
+        
+        for (TITFLTownElement e : m_randomElements)
+        {
+            for (TITFLGoods g : e.merchandise())
+            {
+                if (g.id().equals(goodsId))
+                    return g;
+            }
+        }
+
+        return null; // really??
+    }
+
+    public TITFLPlayer activePlayer()
 	{
 		return m_activePlayer;
 	}

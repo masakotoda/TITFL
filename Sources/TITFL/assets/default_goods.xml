@@ -53,5 +53,18 @@
         townelement_id="townelement_mall"
         price="20"
         expire="8"
+        group="outfit"
+        required_mortgage="0"
+        food_value="0"
+        class_credit="0"
+        x_to_display="0"
+        y_to_display="0"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="2"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
+        affect_on_health="0"
+        greeting="It looks nice on you!"
     	/>
 </TITFL>

@@ -552,6 +552,7 @@ public class TITFLPlayer
     public void work()
     {
         //TODO
+        m_hour++;
     }
 
     void buy(TITFLGoods goods, int acquiredWeek)

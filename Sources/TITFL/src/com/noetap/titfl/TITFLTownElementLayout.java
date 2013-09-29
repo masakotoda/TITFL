@@ -62,6 +62,7 @@ public class TITFLTownElementLayout implements TITFLLayout
 			public void onClick(View v) 
 			{
 				m_element.visitor().work();
+				m_playerView.invalidate();
 			}
 		});
 	}

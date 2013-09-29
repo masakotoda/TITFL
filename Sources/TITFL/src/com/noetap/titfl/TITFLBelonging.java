@@ -9,11 +9,13 @@ public class TITFLBelonging
     private ArrayList<TITFLBelongingEvent> m_events;
     private TITFLGoods m_goodsRef;
     private int m_acquiredWeek;    
+    private int m_completedCredit;
     
     private static String tag_item = "belonging";
     private static String tag_events = "belonging_events";
     private static String atr_goods_id = "goods_id";
     private static String atr_acquired_week = "acquired_week";
+    private static String atr_completed_credit = "completed_credit";
     private static String atr_count = "count";
 
     private TITFLBelonging()
@@ -46,6 +48,11 @@ public class TITFLBelonging
         return m_acquiredWeek;
     }
 
+    public int completedCredit()
+    {
+        return m_completedCredit;
+    }
+    
     public boolean serialize(XmlSerializer serializer)
     {
         try
@@ -54,6 +61,7 @@ public class TITFLBelonging
             serializer.startTag(ns, tag_item);
             serializer.attribute(ns, atr_goods_id, m_goodsRef.id());
             serializer.attribute(ns, atr_acquired_week, Integer.toString(m_acquiredWeek));
+            serializer.attribute(ns, atr_completed_credit, Integer.toString(m_completedCredit));
 
             serializer.startTag(ns, tag_events);
             serializer.attribute(ns, atr_count, Integer.toString(m_events.size()));
@@ -92,6 +100,8 @@ public class TITFLBelonging
                     ret.m_goodsRef = findGoodsRef(attribValue, town);
                 else if (attribName.equals(atr_acquired_week))
                       ret.m_acquiredWeek = Integer.parseInt(attribValue);
+                else if (attribName.equals(atr_completed_credit))
+                    ret.m_completedCredit = Integer.parseInt(attribValue);
             }                
                 
                 

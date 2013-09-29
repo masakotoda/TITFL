@@ -32,6 +32,12 @@ public class TITFLTownElement
 	private static String atr_name = "name";
 	private static String atr_slot = "slot";
 	
+	TITFLTownElement()
+	{
+	    m_merchandise = new ArrayList<TITFLGoods>();
+	    m_jobs = new ArrayList<TITFLJob>();
+	}
+	
 	public static ArrayList<TITFLTownElement> loadTownElements(AssetManager am, TITFLTown town)
 	{
 		ArrayList<TITFLTownElement> ret = new ArrayList<TITFLTownElement>();		
@@ -74,56 +80,18 @@ public class TITFLTownElement
 		}
 		catch (Exception e)
 		{
-		}
-		
-		ArrayList<TITFLJob> jobs = TITFLJob.loadDefaultJobs(am);
-		assignJobs(jobs, ret);
-
-		ArrayList<TITFLGoods> goods = TITFLGoods.loadDefaultGoods(am);
-		assignGoods(goods, ret);
-		
+		}		
 		return ret;
 	}
 	
-	private static void assignJobs(ArrayList<TITFLJob> jobs, ArrayList<TITFLTownElement> elements)
-	{
-		for (int i = 0; i < elements.size(); i++)
-		{
-			TITFLTownElement element = elements.get(i);
-			element.m_jobs = new ArrayList<TITFLJob>();
-			for (int j = 0; j < jobs.size(); j++)
-			{
-				TITFLJob job = jobs.get(j);
-				if (job.townelement_id().equals(element.id()))
-				{
-					job.setTownElement(element);
-					element.m_jobs.add(job);
-				}				
-			}
-		}
-	}
-
-	private static void assignGoods(ArrayList<TITFLGoods> goods, ArrayList<TITFLTownElement> elements)
-	{		
-		for (int i = 0; i < elements.size(); i++)
-		{
-			TITFLTownElement element = elements.get(i);
-			element.m_merchandise = new ArrayList<TITFLGoods>();
-			for (int j = 0; j < goods.size(); j++)
-			{
-				TITFLGoods g = goods.get(j);
-				if (g.townelement_id().equals(element.id()))
-				{
-					g.setTownElement(element);
-					element.m_merchandise.add(g);
-				}				
-			}
-		}
-	}
-
 	public ArrayList<TITFLGoods> merchandise()
 	{
 		return m_merchandise;
+	}
+	
+	public ArrayList<TITFLJob> jobs()
+	{
+	    return m_jobs;
 	}
 	
 	public int slot()
