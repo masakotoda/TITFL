@@ -27,7 +27,7 @@ public class TITFLTown
 	private TITFLPlayer m_activePlayer;
 	private TITFLTownMap m_townMap;
 	private TITFL m_game;
-		
+	
 	public TITFLTown(Activity activity, TITFL game, TITFLTownMap townMap)
 	{		
 		m_activity = activity;
@@ -260,6 +260,33 @@ public class TITFLTown
 			}
 		}
 		return -1;
+	}
+	
+	public ArrayList<TITFLTownElement> elements()
+	{
+		return m_elements;
+	}
+	
+	public TITFLGoods getDefaultTransportation()
+	{
+		for (TITFLTownElement e : m_elements)
+		{
+			for (TITFLGoods g : e.merchandise())
+				if (g.id().equals("goods_bicycle"))
+					return g;			
+		}
+		return null;
+	}
+	
+	public TITFLGoods getDefaultOutfit()
+	{
+		for (TITFLTownElement e : m_elements)
+		{
+			for (TITFLGoods g : e.merchandise())
+				if (g.id().equals("goods_casual_outfit"))
+					return g;			
+		}
+		return null;
 	}
 	
 	public TITFLTownElement getTownElement(int slot)

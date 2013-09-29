@@ -3,6 +3,7 @@
     <goods
         goods_id="goods_bicycle"
         name="Bicycle"
+        townelement_id="townelement_mall"
         price="0"
         speed="5"
     	/>
@@ -44,5 +45,13 @@
         maintenance_fee="200"
         maintenance_cycle="12"
         speed="50"
+    	/>
+    
+    <goods
+        goods_id="goods_casual_outfit"
+        name="Casual Outfit"
+        townelement_id="townelement_mall"
+        price="20"
+        expire="8"
     	/>
 </TITFL>

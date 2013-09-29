@@ -19,22 +19,27 @@ public class TITFL
 	private ArrayList<TITFLTownMap> m_townmaps;
 	
 
-	TITFL(Activity activity)
+	public TITFL(Activity activity)
 	{
 		m_activity = activity;
 	}
 	
-	boolean dirty()
+	public boolean dirty()
 	{
 		return m_dirty;
 	}
 	
-	void setDirty()
+	public void setDirty()
 	{
 		m_dirty = true;
 	}
 	
-	void run()
+	public TITFLTown getTown()
+	{
+		return m_town;
+	}
+	
+	public void run()
 	{
 		m_defaultPlayers = TITFLPlayer.loadDefaultPlayers(m_activity.getAssets());
 		m_randomEvents = TITFLRandomEvent.loadRandomEvents(m_activity.getAssets());
@@ -56,10 +61,11 @@ public class TITFL
 		shuffleRandomEvent();
 		
 		m_town = new TITFLTown(m_activity, this, m_townmaps.get(mapType()));
+		initiatePlayers();
 		m_town.setActivePlayer(m_players.get(0));
 	}
 	
-	boolean resume()
+	public boolean resume()
 	{
 		boolean ret = false;
 		
@@ -143,9 +149,15 @@ public class TITFL
 		return true;
 	}
 
-	public TITFLTown getTown()
+	private void initiatePlayers()
 	{
-		return m_town;
+		TITFLGoods bicycle = m_town.getDefaultTransportation();
+		TITFLGoods outfit = m_town.getDefaultOutfit();
+		for (TITFLPlayer player : m_players)
+		{
+			player.buy(bicycle, 0);
+			player.buy(outfit, 0);
+		}		
 	}
 	
 	public void setNextPlayer(TITFLPlayer oldPlayer)	

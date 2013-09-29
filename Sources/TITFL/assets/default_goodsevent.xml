@@ -7,4 +7,18 @@
         cycle="4"
         price="20"
         />
+    <goodsevent
+        goodsevent_id="goodsevent_fill_air"
+        description="Fill some air to the bicycle tires"
+        goods_id="goods_bicycle"
+        cycle="4"
+        price="0"
+        />
+    <goodsevent
+        goodsevent_id="goodsevent_ring_bell"
+        description="Ring bicycle bell"
+        goods_id="goods_bicycle"
+        cycle="1"
+        price="0"
+        />
 </TITFL>

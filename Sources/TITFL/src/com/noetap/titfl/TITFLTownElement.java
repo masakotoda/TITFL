@@ -121,6 +121,11 @@ public class TITFLTownElement
 		}
 	}
 
+	public ArrayList<TITFLGoods> merchandise()
+	{
+		return m_merchandise;
+	}
+	
 	public int slot()
 	{
 		return m_slot;
