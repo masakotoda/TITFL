@@ -34,7 +34,7 @@ public class TITFLGoodsEvent implements TITFLEvent
     private static String att_can_skip = "can_skipped";
     private static String atr_is_fixed_price = "is_fixed_price";
     
-    TITFLGoodsEvent()
+    public TITFLGoodsEvent()
     {        
     }
     

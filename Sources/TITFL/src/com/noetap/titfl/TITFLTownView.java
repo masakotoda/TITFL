@@ -12,69 +12,69 @@ import android.view.ViewGroup;
 
 public class TITFLTownView  extends View 
 {
-	private Rect m_rect;
-	private TITFLActivity m_activity;
-	
-	public TITFLTownView(Context context, AttributeSet attrs)
-	{
-		super(context, attrs); // Do not call super(context). Always pass attrs. Otherwise findViewById will NOT work!
-		setFocusable(true);
-	}
-	
-	public void initialize()
-	{
-		m_activity = (TITFLActivity)getContext();
-		int w = NoEtapUtility.getScreenWidth(m_activity);
-		int h = NoEtapUtility.getScreenHeight(m_activity);
-		int playerInfoW = (int)(0.6 * w);
+    private Rect m_rect;
+    private TITFLActivity m_activity;
+    
+    public TITFLTownView(Context context, AttributeSet attrs)
+    {
+        super(context, attrs); // Do not call super(context). Always pass attrs. Otherwise findViewById will NOT work!
+        setFocusable(true);
+    }
+    
+    public void initialize()
+    {
+        m_activity = (TITFLActivity)getContext();
+        int w = NoEtapUtility.getScreenWidth(m_activity);
+        int h = NoEtapUtility.getScreenHeight(m_activity);
+        int playerInfoW = (int)(0.6 * w);
 
-		m_rect = new Rect(0, 0, h - playerInfoW, w);
+        m_rect = new Rect(0, 0, h - playerInfoW, w);
 
-		ViewGroup.LayoutParams params = this.getLayoutParams();
-		params.width = m_rect.width();
-		params.height = m_rect.height();
-		this.setLayoutParams(params);
-	}	
-	
-	@Override
-	public boolean onTouchEvent(MotionEvent event) 
-	{	
-		final TITFLActivity activity = (TITFLActivity)getContext();
-		int action = event.getAction();
-		switch (action)
-		{
-			case MotionEvent.ACTION_DOWN:
-				activity.getTown().handleActionDown(event);
-				activity.invalidate();
-				break;
-			default:
-				break;
-		}
-		
-		return true;
-	}
-	
-	@SuppressLint("DrawAllocation")
-	@Override
-	protected void onDraw(Canvas canvas) 
-	{
-		super.onDraw(canvas);
+        ViewGroup.LayoutParams params = this.getLayoutParams();
+        params.width = m_rect.width();
+        params.height = m_rect.height();
+        this.setLayoutParams(params);
+    }    
+    
+    @Override
+    public boolean onTouchEvent(MotionEvent event) 
+    {    
+        final TITFLActivity activity = (TITFLActivity)getContext();
+        int action = event.getAction();
+        switch (action)
+        {
+            case MotionEvent.ACTION_DOWN:
+                activity.getTown().handleActionDown(event);
+                activity.invalidate();
+                break;
+            default:
+                break;
+        }
+        
+        return true;
+    }
+    
+    @SuppressLint("DrawAllocation")
+    @Override
+    protected void onDraw(Canvas canvas) 
+    {
+        super.onDraw(canvas);
 
-		if (m_activity == null)
-			return;
-		
-		try
-		{
-			Paint paint = new Paint();
-			paint.setARGB(255, 224, 224, 224);
-			canvas.drawRect(m_rect, paint);		
-	
-			// Draw town	
-			if (m_activity.getTown() != null)
-				m_activity.getTown().draw(canvas, paint);		
-		}
-		catch (Exception e)
-		{			
-		}
-	}
+        if (m_activity == null)
+            return;
+        
+        try
+        {
+            Paint paint = new Paint();
+            paint.setARGB(255, 224, 224, 224);
+            canvas.drawRect(m_rect, paint);        
+    
+            // Draw town    
+            if (m_activity.getTown() != null)
+                m_activity.getTown().draw(canvas, paint);        
+        }
+        catch (Exception e)
+        {            
+        }
+    }
 }

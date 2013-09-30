@@ -39,6 +39,13 @@ public class TITFLRandomEvent implements TITFLEvent
     private static String atr_health_insurance = "health_insurance_coverage";
     private static String atr_car_insurance = "car_insurance_coverage";
 
+    public TITFLRandomEvent()
+    {
+        m_trigger = new TITFL.Satisfaction();
+        m_affect = new TITFL.Satisfaction();
+        m_affectOnHappiness = new TITFL.CharacterFactor();        
+    }
+    
     public String id()
     {
         return m_id;
@@ -74,14 +81,6 @@ public class TITFLRandomEvent implements TITFLEvent
         return m_car_insurance_coverage;
     }
         
-    // Constructor
-    public TITFLRandomEvent()
-    {
-        m_trigger = new TITFL.Satisfaction();
-        m_affect = new TITFL.Satisfaction();
-        m_affectOnHappiness = new TITFL.CharacterFactor();        
-    }
-    
     public static ArrayList<TITFLEvent> loadRandomEvents(AssetManager am)
     {
         ArrayList<TITFLEvent> ret = new ArrayList<TITFLEvent>();        

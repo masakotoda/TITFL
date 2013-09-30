@@ -54,8 +54,8 @@ public class TITFL
         // 5. Enter your name.
         // 6. Repeat 4 & 5
         // 7. Initialize TITFLTown
-        m_players.add(new TITFLPlayer(m_defaultPlayers.get(0))); // <- This should be done in the steps above
-        m_players.add(new TITFLPlayer(m_defaultPlayers.get(1))); // <- This should be done in the steps above
+        m_players.add(TITFLPlayer.createPlayer(m_defaultPlayers.get(0))); // <- This should be done in the steps above
+        m_players.add(TITFLPlayer.createPlayer(m_defaultPlayers.get(1))); // <- This should be done in the steps above
         NoEtapUtility.showAlert(m_activity, "TODO", "Initiate game");
         
         shuffleRandomEvent();
@@ -129,6 +129,8 @@ public class TITFL
         for (int i = 0; i < numPlayers; i++)
         {
             TITFLPlayer player = TITFLPlayer.loadPlayer(key + ".player." + Integer.toString(i), db, m_town);
+            if (player == null)
+                return false;
             m_players.add(player);
         }
 
@@ -141,7 +143,7 @@ public class TITFL
         TITFLPlayer player = m_town.activePlayer();
         if (player != null)
         {
-            TITFLTownElement element = player.getLocation();
+            TITFLTownElement element = player.currentLocation();
             if (element != null)
                 element.setVisitor(player);
         }

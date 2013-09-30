@@ -48,7 +48,7 @@ public class TITFLGoods
     private static String atr_health = "affect_on_health";
     private static String atr_greeting = "greeting";
 
-    TITFLGoods()
+    public TITFLGoods()
     {
         m_events = new ArrayList<TITFLGoodsEvent>();
         m_positionToDisplay = new Point();
