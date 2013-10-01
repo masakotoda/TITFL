@@ -85,7 +85,7 @@ public class TITFLBelonging
         TITFLBelonging ret = new TITFLBelonging();
         try
         {
-              parser.next(); // <belonging>
+            parser.next(); // <belonging>
             if (parser.getEventType() != XmlPullParser.START_TAG) 
                 throw new Exception();
             String name = parser.getName();
@@ -99,11 +99,10 @@ public class TITFLBelonging
                 if (attribName.equals(atr_goods_id))
                     ret.m_goodsRef = findGoodsRef(attribValue, town);
                 else if (attribName.equals(atr_acquired_week))
-                      ret.m_acquiredWeek = Integer.parseInt(attribValue);
+                    ret.m_acquiredWeek = Integer.parseInt(attribValue);
                 else if (attribName.equals(atr_completed_credit))
-                    ret.m_completedCredit = Integer.parseInt(attribValue);
+                    ret.m_completedCredit = Integer.parseInt(attribValue);                
             }                
-                
                 
             parser.next(); // <belonging_events>
             if (parser.getEventType() != XmlPullParser.START_TAG) 

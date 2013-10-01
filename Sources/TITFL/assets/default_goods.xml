@@ -35,6 +35,7 @@
         maintenance_fee="300"
         maintenance_cycle="12"
         speed="40"
+        greeting="I gurantee this car runs fine for 4 weeks."
     	/>
 
     <goods
@@ -45,6 +46,7 @@
         maintenance_fee="200"
         maintenance_cycle="12"
         speed="50"
+        greeting="You got a fastest car in this town!"
     	/>
     
     <goods
@@ -66,5 +68,131 @@
         happiness_per_lucky_factor="1" 
         affect_on_health="0"
         greeting="It looks nice on you!"
+    	/>
+        
+    <goods
+        townelement_id="townelement_realtor"
+        goods_id="goods_cheap_apartment"
+        name="Cheap Apartment"
+        price="200"
+	    />
+        
+    <goods
+        townelement_id="townelement_insurance"
+        goods_id="goods_car_insurance"
+        name="Car Insurance"
+        price="200"
+	    />
+
+    <goods
+        townelement_id="townelement_hospital"
+        goods_id="goods_dayquil"
+        name="Day Quil"
+        price="10"
+        />
+
+    <goods
+        townelement_id="townelement_grocery"
+        goods_id="goods_food_for_1week"
+        name="Food for a week"
+        price="50"
+        />
+        
+    <goods
+        townelement_id="townelement_grocery"
+        goods_id="goods_food_for_2weeks"
+        name="Food for 2 weeks"
+        price="80"
+        />
+    
+    <goods
+        townelement_id="townelement_grocery"
+        goods_id="goods_food_for_4weeks"
+        name="Food for 4 weeks"
+        price="150"
+        />
+    
+    <goods
+        townelement_id="townelement_grocery"
+        goods_id="goods_lottery_ticket"
+        name="Lottery Ticket"
+        price="5"
+        />
+    
+    <goods
+        townelement_id="townelement_grocery"
+        goods_id="goods_magazine"
+        name="Magazine"
+        price="10"
+        />
+    
+    <goods
+        townelement_id="townelement_fastfood"
+        goods_id="goods_cheese_burger"
+        name="Cheese Burger"
+        price="50"
+        />
+
+    <goods
+        townelement_id="townelement_restaurant"
+        goods_id="goods_nice_dinner"
+        name="Nice Dinner"
+        price="200"
+        />
+        
+    <goods
+        townelement_id="townelement_church"
+        goods_id="goods_donation"
+        name="Donation"
+        price="200"
+        />
+        
+    <goods
+        townelement_id="townelement_pawnshop"
+        goods_id="goods_antique_sword"
+        name="Antique Sword"
+        price="200"
+        />
+        
+    <goods
+        townelement_id="townelement_electric"
+        goods_id="goods_computer"
+        name="Computer"
+        price="600"
+        />
+        
+    <goods
+        townelement_id="townelement_mall"
+        goods_id="goods_dress_shoes"
+        name="Dress Shoes"
+        price="200"
+        />
+        
+    <goods
+        townelement_id="townelement_tattoo"
+        goods_id="goods_tirbal_tattoo"
+        name="Tribal Tatto"
+        price="200"
+    	/>
+
+    <goods
+        townelement_id="townelement_flower"
+        goods_id="goods_dozen_roses"
+        name="A dozen of Roses"
+        price="50"
+    	/>
+    
+    <goods
+        townelement_id="townelement_whorehouse"
+        goods_id="goods_whore"
+        name="Whore"
+        price="200"
+    	/>
+
+    <goods
+        townelement_id="townelement_dollarstore"
+        goods_id="goods_dollar_pencil"
+        name="Pencil"
+        price="1"
     	/>
 </TITFL>

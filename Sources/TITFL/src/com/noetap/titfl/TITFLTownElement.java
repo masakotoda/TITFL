@@ -19,6 +19,7 @@ public class TITFLTownElement
     private String m_name;
     private String m_id;
     private int m_slot;
+    private String m_greeting;
     private Bitmap m_bitmap;
     private TITFLPlayer m_visitor;
     private TITFLTownMapNode m_node;
@@ -29,6 +30,7 @@ public class TITFLTownElement
     private static String atr_id = "townelement_id";
     private static String atr_name = "name";
     private static String atr_slot = "slot";
+    private static String atr_greeting = "greeting";
     
     public TITFLTownElement()
     {
@@ -69,6 +71,11 @@ public class TITFLTownElement
     public void setSlot(int slot)
     {
         m_slot = slot;
+    }
+    
+    public String greeting()
+    {
+        return m_greeting;
     }
     
     public TITFLPlayer visitor()
@@ -124,6 +131,8 @@ public class TITFLTownElement
                         element.m_name = attribValue;
                     else if (attribName.equals(atr_slot))
                         element.m_slot = Integer.parseInt(attribValue);
+                    else if (attribName.equals(atr_greeting))
+                        element.m_greeting = attribValue;
                 }
                 
                 element.m_town = town;

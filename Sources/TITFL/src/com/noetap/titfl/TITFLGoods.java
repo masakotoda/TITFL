@@ -55,6 +55,13 @@ public class TITFLGoods
         m_affectOnHappiness = new TITFL.CharacterFactor();
     }
     
+    @Override
+    public String toString() 
+    {
+        int price = (int)(m_price * m_townelement.town().economyFactor());
+        return m_name + " - $" + Integer.toString(price);
+    }
+
     public TITFLTownElement townelement()
     {
         return m_townelement;

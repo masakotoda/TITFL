@@ -355,7 +355,9 @@ public class TITFLTown
     }
     
     private void initialize()
-    {        
+    {   
+        addCurrentWeek();
+
         m_nodeRect = new ArrayList<Rect>();
         
         int w = NoEtapUtility.getScreenWidth(m_activity);        

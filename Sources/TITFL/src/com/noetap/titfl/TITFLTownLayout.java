@@ -141,7 +141,20 @@ public class TITFLTownLayout implements TITFLLayout
             @Override
             public void onClick(View v) 
             {
-                m_activity.getTown().getTownElement(0).open();
+                TITFLPlayer player = m_activity.getTown().activePlayer();
+                if (player != null)
+                {
+                    String belongings = "";
+                    for (TITFLBelonging b : player.belongings())
+                    {
+                        if (b.goodsRef() != null)
+                        {
+                            belongings += b.goodsRef().name();
+                            belongings += ", ";
+                        }
+                    }
+                    NoEtapUtility.showAlert(m_activity, "belongings", belongings);
+                }
             }
         });
     }

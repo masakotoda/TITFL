@@ -171,9 +171,14 @@ public class TITFL
                 break;
         }
         if (it.hasNext())
+        {
             m_town.setActivePlayer(it.next());
+        }
         else
+        {
+            m_town.addCurrentWeek();
             m_town.setActivePlayer(m_players.get(0));
+        }
     }
     
     // used when resuming game
