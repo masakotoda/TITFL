@@ -58,7 +58,7 @@ public class TITFLGoods
     @Override
     public String toString() 
     {
-        int price = (int)(m_price * m_townelement.town().economyFactor());
+        int price = getPrice();
         return m_name + " - $" + Integer.toString(price);
     }
 
@@ -211,5 +211,26 @@ public class TITFLGoods
         ArrayList<TITFLGoodsEvent> events = TITFLGoodsEvent.loadDefaultGoodsEvent(am, town);
 
         return ret;
+    }
+    
+    public boolean isRefrigerator()
+    {
+        if (m_id.equals("goods_refrigerator"))
+            return true;
+        else
+            return false;
+    }
+    
+    public boolean isFreezer()
+    {
+        if (m_id.equals("goods_freezer"))
+            return true;
+        else
+            return false;
+    }
+    
+    public int getPrice()
+    {
+        return (int)(m_price * m_townelement.town().economyFactor());        
     }
 }

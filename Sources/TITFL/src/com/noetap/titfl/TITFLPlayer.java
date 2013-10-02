@@ -28,6 +28,7 @@ import android.widget.ImageView;
 public class TITFLPlayer 
 {
     private final float m_maxHour = 24;
+    private final int m_incre = 10;
     
     private String m_name;
     private String m_alias;
@@ -75,6 +76,28 @@ public class TITFLPlayer
     private static String atr_factor_goodlooking = "factor_goodlooking";
     private static String atr_factor_physical = "factor_physical";
     private static String atr_factor_lucky = "factor_lucky";
+    private static String atr_edu_basic = "reqired_edu_basic";
+    private static String atr_edu_engineer = "edu_engineer";
+    private static String atr_edu_business = "edu_business";
+    private static String atr_edu_academic = "edu_academic";
+    private static String atr_exp_basic = "exp_basic";
+    private static String atr_exp_engineer = "exp_engineer";
+    private static String atr_exp_business = "exp_business";
+    private static String atr_exp_academic = "exp_academic";
+    private static String atr_satisfaction_health = "satisfaction_health";
+    private static String atr_satisfaction_wealth = "satisfaction_wealth";
+    private static String atr_satisfaction_education = "satisfaction_education";
+    private static String atr_satisfaction_carrier = "satisfaction_carrier";
+    private static String atr_satisfaction_life = "satisfaction_life";
+    private static String atr_happiness = "happiness";
+    private static String atr_cash = "cash";
+    private static String atr_saving = "saving";
+    private static String atr_general_loan = "general_loan";
+    private static String atr_student_loan = "student_loan";
+    private static String atr_mortgage = "mortgage";
+    private static String atr_gold_unit = "gold_unit";
+    private static String atr_bond_unit = "bond_unit";
+    private static String atr_stock_unit = "stock_unit";
     private static String atr_avatar_frm_01 = "avatar_frm_01";
     private static String atr_avatar_frm_02 = "avatar_frm_02";
     private static String atr_avatar_frm_03 = "avatar_frm_03";
@@ -91,6 +114,9 @@ public class TITFLPlayer
     {
         m_belongings = new ArrayList<TITFLBelonging>();
         m_character = new TITFL.CharacterFactor();
+        m_education = new TITFL.DisciplineLevel();
+        m_experience = new TITFL.DisciplineLevel();
+        m_satisfaction = new TITFL.Satisfaction();
     }
     
     public static TITFLPlayer createPlayer(TITFLPlayer defaultPlayer)
@@ -342,6 +368,28 @@ public class TITFLPlayer
             serializer.attribute(ns, atr_factor_goodlooking, Integer.toString(m_character.m_goodLooking));
             serializer.attribute(ns, atr_factor_physical, Integer.toString(m_character.m_physical));
             serializer.attribute(ns, atr_factor_lucky, Integer.toString(m_character.m_lucky));
+            serializer.attribute(ns, atr_edu_basic, Integer.toString(m_education.m_basic));
+            serializer.attribute(ns, atr_edu_engineer, Integer.toString(m_education.m_engineering));
+            serializer.attribute(ns, atr_edu_business, Integer.toString(m_education.m_business_finance));
+            serializer.attribute(ns, atr_edu_academic, Integer.toString(m_education.m_academic));
+            serializer.attribute(ns, atr_exp_basic, Integer.toString(m_experience.m_basic));
+            serializer.attribute(ns, atr_exp_engineer, Integer.toString(m_experience.m_engineering));
+            serializer.attribute(ns, atr_exp_business, Integer.toString(m_experience.m_business_finance));
+            serializer.attribute(ns, atr_exp_academic, Integer.toString(m_experience.m_academic));
+            serializer.attribute(ns, atr_satisfaction_health, Integer.toString(m_satisfaction.m_health));
+            serializer.attribute(ns, atr_satisfaction_wealth, Integer.toString(m_satisfaction.m_wealth));
+            serializer.attribute(ns, atr_satisfaction_education, Integer.toString(m_satisfaction.m_education));
+            serializer.attribute(ns, atr_satisfaction_carrier, Integer.toString(m_satisfaction.m_carrier));
+            serializer.attribute(ns, atr_satisfaction_life, Integer.toString(m_satisfaction.m_life));
+            serializer.attribute(ns, atr_happiness, Integer.toString(m_happiness));
+            serializer.attribute(ns, atr_cash, Integer.toString(m_cash));
+            serializer.attribute(ns, atr_saving, Integer.toString(m_saving));
+            serializer.attribute(ns, atr_general_loan, Integer.toString(m_general_loan));
+            serializer.attribute(ns, atr_student_loan, Integer.toString(m_student_loan));
+            serializer.attribute(ns, atr_mortgage, Integer.toString(m_mortgage));
+            serializer.attribute(ns, atr_gold_unit, Integer.toString(m_goldUnit));
+            serializer.attribute(ns, atr_bond_unit, Integer.toString(m_bondUnit));
+            serializer.attribute(ns, atr_stock_unit, Integer.toString(m_stockUnit));
             serializer.attribute(ns, atr_current_location, currentLocationId);
             serializer.attribute(ns, atr_speed_factor, Float.toString(m_speedFactor));
             serializer.attribute(ns, atr_counter, Integer.toString(m_counter));
@@ -416,6 +464,50 @@ public class TITFLPlayer
                 player.m_character.m_physical = Integer.parseInt(attribValue);
             else if (attribName.equals(atr_factor_lucky))
                 player.m_character.m_lucky = Integer.parseInt(attribValue);
+            else if (attribName.equals(atr_edu_basic))
+                player.m_education.m_basic = Integer.parseInt(attribValue);
+            else if (attribName.equals(atr_edu_engineer))
+                player.m_education.m_engineering = Integer.parseInt(attribValue);
+            else if (attribName.equals(atr_edu_business))
+                player.m_education.m_business_finance = Integer.parseInt(attribValue);
+            else if (attribName.equals(atr_edu_academic))
+                player.m_education.m_academic = Integer.parseInt(attribValue);
+            else if (attribName.equals(atr_exp_basic))
+                player.m_experience.m_basic = Integer.parseInt(attribValue);
+            else if (attribName.equals(atr_exp_engineer))
+                player.m_experience.m_engineering = Integer.parseInt(attribValue);
+            else if (attribName.equals(atr_exp_business))
+                player.m_experience.m_business_finance = Integer.parseInt(attribValue);
+            else if (attribName.equals(atr_exp_academic))
+                player.m_experience.m_academic = Integer.parseInt(attribValue);
+            else if (attribName.equals(atr_satisfaction_health))
+                player.m_satisfaction.m_health = Integer.parseInt(attribValue);
+            else if (attribName.equals(atr_satisfaction_wealth))
+                player.m_satisfaction.m_wealth = Integer.parseInt(attribValue);
+            else if (attribName.equals(atr_satisfaction_education))
+                player.m_satisfaction.m_education = Integer.parseInt(attribValue);
+            else if (attribName.equals(atr_satisfaction_carrier))
+                player.m_satisfaction.m_carrier = Integer.parseInt(attribValue);
+            else if (attribName.equals(atr_satisfaction_life))
+                player.m_satisfaction.m_life = Integer.parseInt(attribValue);
+            else if (attribName.equals(atr_happiness))
+                player.m_happiness = Integer.parseInt(attribValue);
+            else if (attribName.equals(atr_cash))
+                player.m_cash = Integer.parseInt(attribValue);
+            else if (attribName.equals(atr_saving))
+                player.m_saving = Integer.parseInt(attribValue);
+            else if (attribName.equals(atr_general_loan))
+                player.m_general_loan = Integer.parseInt(attribValue);
+            else if (attribName.equals(atr_student_loan))
+                player.m_student_loan = Integer.parseInt(attribValue);
+            else if (attribName.equals(atr_mortgage))
+                player.m_mortgage = Integer.parseInt(attribValue);
+            else if (attribName.equals(atr_gold_unit))
+                player.m_goldUnit = Integer.parseInt(attribValue);
+            else if (attribName.equals(atr_bond_unit))
+                player.m_bondUnit = Integer.parseInt(attribValue);
+            else if (attribName.equals(atr_stock_unit))
+                player.m_stockUnit = Integer.parseInt(attribValue);
             else if (attribName.equals(atr_avatar_frm_01))
                 player.m_avatar_frm_01 = attribValue;
             else if (attribName.equals(atr_avatar_frm_02))
@@ -548,6 +640,22 @@ public class TITFLPlayer
         canvas.drawText("Happiness: " + Float.toString(getHappinessLevel()), left, top, paint);
         top += textSize;
         
+        top += textSize;
+        canvas.drawText("Cash: $" + Integer.toString(m_cash), left, top, paint);
+        top += textSize;
+
+        top += textSize;
+        int count = 0;
+        for (int i = m_belongings.size() - 1; i >= 0 && count < 20; i--)
+        {
+            TITFLGoods goods = m_belongings.get(i).goodsRef();
+            if (goods != null)
+            {
+                canvas.drawText(goods.name(), left, top, paint);
+            }
+            top += textSize;
+            count++;
+        }
     }
     
     private int getAnim(TITFLTownMapNode current, TITFLTownMapNode next)
@@ -711,16 +819,10 @@ public class TITFLPlayer
         //TODO
     }
     
-    public void work()
-    {
-        //TODO
-        m_hour++;
-    }
-
     public void buy(TITFLGoods goods, int acquiredWeek)
     {
         TITFLBelonging belonging = new TITFLBelonging(goods, acquiredWeek);
-        m_cash -= goods.price();
+        m_cash -= goods.getPrice();
         m_belongings.add(belonging);
     }
 
@@ -729,24 +831,56 @@ public class TITFLPlayer
         //TODO
     }
 
+    public void work()
+    {
+        if (!addHour())
+            return;
+
+        m_cash += 100;
+
+        m_satisfaction.m_carrier += m_incre;
+        int happiness = (int)(m_incre *  m_character.hardworking());
+        m_happiness += happiness;
+    }
+
     public void relax()
     {
-        //TODO
+        if (!addHour())
+            return;
+
+        m_satisfaction.m_life += m_incre;
+        int happiness = (int)(m_incre *  m_character.lucky());
+        m_happiness += happiness;
     }
 
     public void study()
     {
-        //TODO
+        if (!addHour())
+            return;
+
+        m_satisfaction.m_education += m_incre;
+        int happiness = (int)(m_incre *  m_character.intelligent());
+        m_happiness += happiness;
     }
 
     public void exercise()
     {
-        //TODO
+        if (!addHour())
+            return;
+
+        m_satisfaction.m_health += m_incre;
+        int happiness = (int)(m_incre *  m_character.physical());
+        m_happiness += happiness;
     }
 
     public void socialize()
     {
-        //TODO
+        if (!addHour())
+            return;
+
+        m_satisfaction.m_life += m_incre;
+        int happiness = (int)(m_incre *  m_character.goodlooking());
+        m_happiness += happiness;
     }
 
     public void applyJob(TITFLJob job)
@@ -784,41 +918,51 @@ public class TITFLPlayer
     
     private float getWealthLevel()
     {
-        return 0;
+        return m_satisfaction.m_wealth;
     }
 
     private float getEducationLevel()
     {
-        return 0;
+        return m_satisfaction.m_education;
     }
 
     private float getCarrierLevel()
     {
-        return 0;
+        return m_satisfaction.m_carrier;
     }
 
     private float getLifeLevel()
     {
-        return 0;
+        return m_satisfaction.m_life;
     }
 
     private float getHealthLevel()
     {
-        return 0;
+        return m_satisfaction.m_health;
     }
 
     private float getHappinessLevel()
     {
-        return 0;
+        return m_happiness;
     }
 
     public boolean hasRefrigerator()
     {
+        for (TITFLBelonging g : m_belongings)
+        {
+            if (g.goodsRef().isRefrigerator())
+                return true;
+        }
         return false;
     }
     
     public boolean hasFreezer()
     {
+        for (TITFLBelonging g : m_belongings)
+        {
+            if (g.goodsRef().isFreezer())
+                return true;
+        }
         return false;
     }
     
@@ -830,5 +974,14 @@ public class TITFLPlayer
     public boolean hasSpouse()
     {
         return false;
+    }
+
+    private boolean addHour()
+    {
+        if (m_hour + 1 > m_maxHour)
+            return false;
+
+        m_hour++;
+        return true;
     }
 }

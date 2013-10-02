@@ -162,6 +162,20 @@
         />
         
     <goods
+        townelement_id="townelement_electric"
+        goods_id="goods_refrigerator"
+        name="Refrigerator"
+        price="1000"
+        />
+    
+    <goods
+        townelement_id="townelement_electric"
+        goods_id="goods_freezer"
+        name="Freezer"
+        price="1000"
+        />
+    
+    <goods
         townelement_id="townelement_mall"
         goods_id="goods_dress_shoes"
         name="Dress Shoes"

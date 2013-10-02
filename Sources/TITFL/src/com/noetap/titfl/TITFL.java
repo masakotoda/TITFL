@@ -275,7 +275,38 @@ public class TITFL
             m_physical = other.m_physical;
             m_lucky = other.m_lucky;
         }
-                
+        
+        int sum()
+        {
+            int sum = 1 + m_intelligent + m_hardWorking + m_goodLooking + m_physical + m_lucky;
+            return sum;
+        }
+        
+        float intelligent()
+        {
+            return 1 + (float)m_intelligent / (float)sum();
+        }
+        
+        float goodlooking()
+        {
+            return 1 + (float)m_goodLooking / (float)sum();
+        }
+        
+        float hardworking()
+        {
+            return 1 + (float)m_hardWorking / (float)sum();
+        }
+
+        float physical()
+        {
+            return 1 + (float)m_physical / (float)sum();
+        }
+
+        float lucky()
+        {
+            return 1 + (float)m_lucky / (float)sum();
+        }
+
         int m_intelligent;
         int m_hardWorking;
         int m_goodLooking;
