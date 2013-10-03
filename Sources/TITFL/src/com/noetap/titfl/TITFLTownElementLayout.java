@@ -22,6 +22,26 @@ public class TITFLTownElementLayout implements TITFLLayout
         m_element = element;
     }
     
+    public TITFLActivity activity()
+    {
+        return m_activity;
+    }
+
+    public TITFLPlayerView playerView()
+    {
+        return m_playerView;
+    }
+
+    public TITFLTownElement element()
+    {
+        return m_element;
+    }
+
+    public TextView greetingText()
+    {
+        return m_greetingText;
+    }
+
     @Override
     public void invalidate() 
     {
@@ -95,6 +115,7 @@ public class TITFLTownElementLayout implements TITFLLayout
 
     private void setListAction(ListView list)
     {
+        final TITFLTownElementLayout layout = this;
         ArrayAdapter<TITFLGoods> adapter = new ArrayAdapter<TITFLGoods>(m_activity, android.R.layout.simple_list_item_1, m_element.merchandise());
         list.setAdapter(adapter);        
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() 
@@ -102,10 +123,9 @@ public class TITFLTownElementLayout implements TITFLLayout
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long id) 
             {
-                TITFLGoods goods = m_element.merchandise().get(position);
-                m_element.visitor().buy(goods, m_element.town().currentWeek());
-                m_greetingText.setText(goods.greeting());
-                m_playerView.invalidate();
+                final TITFLGoods goods = m_element.merchandise().get(position);
+                DialogPurchaseGoods dialog = new DialogPurchaseGoods(goods, layout);
+                dialog.show();
             }
         });
     }

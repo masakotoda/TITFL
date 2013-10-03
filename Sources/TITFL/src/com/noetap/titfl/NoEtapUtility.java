@@ -20,6 +20,19 @@ import android.view.Display;
 //In future, we may want to move this to library
 public class NoEtapUtility 
 {
+    public static int parseInt(String str)
+    {
+        int i = 0;
+        try
+        {
+            i = Integer.parseInt(str);
+        }
+        catch (Exception e)
+        {
+        }
+        return i;
+    }
+
     public static void showAlert(Context context, String title, String message)
     {
           AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
