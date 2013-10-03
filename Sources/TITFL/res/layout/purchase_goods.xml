@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+            <ImageView
+                android:id="@+id/imageViewGoods"
+                android:layout_width="128dp"
+                android:layout_height="128dp"
+                android:contentDescription="@string/blank_string"
+                android:src="@drawable/goods_sample" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/textViewName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/dummy_string"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                <TextView
+                    android:id="@+id/textViewPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/dummy_string"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+             </LinearLayout>
+         </LinearLayout>
+         <LinearLayout
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:orientation="horizontal" >
+             <TextView
+                 android:id="@+id/textViewQuantity"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="@string/quantity"
+                 android:textAppearance="?android:attr/textAppearanceSmall" />
+             <EditText
+                 android:id="@+id/editTextQuantity"
+                 android:layout_width="72dp"
+                 android:layout_height="wrap_content"
+                 android:ems="10"
+                 android:inputType="number" />
+
+             <Button
+                 android:id="@+id/buttonAdd1"
+                 style="?android:attr/buttonStyleSmall"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_marginLeft="10dp"
+                 android:text="@string/add_1" />
+
+             <Button
+                 android:id="@+id/buttonAdd10"
+                 style="?android:attr/buttonStyleSmall"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="@string/add_10" />
+             <Button
+                 android:id="@+id/buttonAdd100"
+                 style="?android:attr/buttonStyleSmall"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="@string/add_100" />
+         </LinearLayout>
+     </LinearLayout>
+         
+     <LinearLayout
+         style="?android:attr/buttonBarStyle"
+         android:divider="?android:attr/dividerVertical"
+         android:showDividers="middle"
+         android:background="@drawable/bg_babyblue"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content" >   
+         <Button
+              style="?android:attr/buttonBarButtonStyle"
+              android:id="@+id/buttonCancel"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:text="@string/change_my_mind" />
+         <Button
+              style="?android:attr/buttonBarButtonStyle"
+              android:id="@+id/buttonOK"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:text="@string/purchase" />
+     </LinearLayout>
+ </LinearLayout>
+        
