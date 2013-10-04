@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <com.noetap.titfl.TITFLPlayerView
+        android:id="@+id/playerView"
+        android:layout_width="180dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true" />
+
+    <TextView
+        android:id="@+id/textViewName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/dummy_string"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ImageView
+        android:id="@+id/imageViewGreeting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textViewName"
+        android:contentDescription="@string/blank_string"
+        android:src="@drawable/marble" />
+
+    <Button
+        android:id="@+id/buttonClose"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/playerView"
+        android:text="@string/close" />
+
+    <Button
+        android:id="@+id/buttonWork"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/buttonClose"
+        android:text="@string/work" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/listViewAllCourses"
+        android:text="@string/all_courses"
+        android:layout_above="@+id/listViewAllCourses"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+    
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/listViewMyCourses"
+        android:text="@string/my_courses"
+        android:layout_above="@+id/listViewMyCourses"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+        
+    <ListView
+        android:id="@+id/listViewMyCourses"
+        android:layout_width="170dp"
+        android:layout_height="160dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/buttonClose" >
+
+    </ListView>
+
+    <TextView
+        android:id="@+id/textViewGreeting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buttonClose"
+        android:layout_toRightOf="@+id/imageViewGreeting"
+        android:text="@string/dummy_string"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <ListView
+        android:id="@+id/listViewAllCourses"
+        android:layout_width="170dp"
+        android:layout_height="160dp"
+        android:layout_below="@+id/textView2"
+        android:layout_marginRight="5dp"
+        android:layout_toLeftOf="@+id/textView2" >
+
+    </ListView>
+
+</RelativeLayout>

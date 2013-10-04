@@ -209,4 +209,44 @@
         name="Pencil"
         price="1"
     	/>
+    
+    <goods
+        goods_id="goods_degree_gde"
+        name="GDE"
+        townelement_id="townelement_school"
+        price="20"
+        group="degree_basic"
+        class_credit="5"
+        required_degree=""
+    	/>
+        
+    <goods
+        goods_id="goods_degree_engineering1"
+        name="Engineering 1"
+        townelement_id="townelement_school"
+        price="50"
+        group="degree_engineering"
+        class_credit="8"
+        required_degree="goods_degree_gde"
+    	/>
+
+    <goods
+        goods_id="goods_degree_engineering2"
+        name="Engineering 2"
+        townelement_id="townelement_school"
+        price="50"
+        group="degree_engineering"
+        class_credit="8"
+        required_degree="goods_degree_engineering1"
+    	/>
+
+    <goods
+        goods_id="goods_degree_business1"
+        name="Business 1"
+        townelement_id="townelement_school"
+        price="50"
+        group="degree_business"
+        class_credit="8"
+        required_degree="goods_degree_gde"
+    	/>
 </TITFL>

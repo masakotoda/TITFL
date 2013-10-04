@@ -32,7 +32,16 @@ public class TITFLBelonging
         for (TITFLGoodsEvent event : m_goodsRef.events())
             m_events.add(new TITFLBelongingEvent(event));
     }
-               
+    
+    @Override
+    public String toString()
+    {
+        String ret = goodsRef().name();
+        if (goodsRef().isDegree())
+            ret = ret + " - " + Integer.toString(m_completedCredit) + "/" + Integer.toString(goodsRef().classCredit());
+        return ret;
+    }
+    
     public ArrayList<TITFLBelongingEvent> events()
     {
         return m_events;
@@ -150,5 +159,12 @@ public class TITFLBelonging
             }
         }
         return null;
+    }
+    
+    public void addCredit(int credit)
+    {
+        m_completedCredit += credit;
+        if (m_completedCredit > goodsRef().classCredit())
+            m_completedCredit = goodsRef().classCredit();
     }
 }

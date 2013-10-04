@@ -98,6 +98,22 @@ public class TITFLTownElement
         m_node = node;
     }
     
+    public boolean isHome()
+    {
+        if (m_id.equals("townelement_apartment") || m_id.equals("townelement_house"))
+            return true;
+        else
+            return false;
+    }
+
+    public boolean isSchool()
+    {
+        if (m_id.equals("townelement_school"))
+            return true;
+        else
+            return false;
+    }
+
     public static ArrayList<TITFLTownElement> loadTownElements(AssetManager am, TITFLTown town)
     {
         ArrayList<TITFLTownElement> ret = new ArrayList<TITFLTownElement>();        

@@ -14,5 +14,9 @@
     <string name="add_1">+1</string>
     <string name="add_10">+10</string>
     <string name="add_100">+100</string>
-        
+    <string name="close">Close</string>
+    <string name="my_courses">My Courses</string>
+    <string name="all_courses">All Courses</string>
+    <string name="work">Work</string>
+    
 </resources>

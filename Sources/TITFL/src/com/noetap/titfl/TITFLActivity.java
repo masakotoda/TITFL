@@ -114,8 +114,7 @@ public class TITFLActivity extends Activity
     
     public void openTownElement(TITFLTownElement element)
     {
-        setContentView(R.layout.townelement);
-        m_layout = new TITFLTownElementLayout(this, element);
+        m_layout = TITFLTownElementFactory.createLayout(this, element);
         m_layout.initialize();        
     }
     

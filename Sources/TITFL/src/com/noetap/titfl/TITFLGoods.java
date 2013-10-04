@@ -229,6 +229,22 @@ public class TITFLGoods
             return false;
     }
     
+    public boolean isDegree()
+    {
+        if (m_group == null)
+            return false;
+        else if (m_group.equals("degree_basic"))
+            return true;
+        else if (m_group.equals("degree_engineering"))
+            return true;
+        else if (m_group.equals("degree_business"))
+            return true;
+        else if (m_group.equals("degree_academic"))
+            return true;
+        else
+            return false;
+    }
+
     public int getPrice()
     {
         return (int)(m_price * m_townelement.town().economyFactor());        

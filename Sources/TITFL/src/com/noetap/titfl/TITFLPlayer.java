@@ -853,11 +853,15 @@ public class TITFLPlayer
         m_happiness += happiness;
     }
 
-    public void study()
+    public void study(TITFLBelonging degree)
     {
+        if (degree.completedCredit() >= degree.goodsRef().classCredit())
+            return;
+        
         if (!addHour())
             return;
 
+        degree.addCredit(1);
         m_satisfaction.m_education += m_incre;
         int happiness = (int)(m_incre *  m_character.intelligent());
         m_happiness += happiness;
@@ -983,5 +987,16 @@ public class TITFLPlayer
 
         m_hour++;
         return true;
+    }
+ 
+    public ArrayList<TITFLBelonging> getDegrees()
+    {
+        ArrayList<TITFLBelonging> degrees = new ArrayList<TITFLBelonging>();
+        for (TITFLBelonging degree : m_belongings)            
+        {
+            if (degree.goodsRef().isDegree())
+                degrees.add(0, degree);
+        }
+        return degrees;
     }
 }

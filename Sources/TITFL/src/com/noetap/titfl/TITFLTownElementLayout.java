@@ -11,10 +11,10 @@ import android.widget.TextView;
 
 public class TITFLTownElementLayout implements TITFLLayout
 {
-    private TITFLActivity m_activity;
-    private TITFLPlayerView m_playerView;
-    private TITFLTownElement m_element;
-    private TextView m_greetingText;
+    protected TITFLActivity m_activity;
+    protected TITFLPlayerView m_playerView;
+    protected TITFLTownElement m_element;
+    protected TextView m_greetingText;
 
     public TITFLTownElementLayout(Activity activity, TITFLTownElement element)
     {
@@ -75,7 +75,7 @@ public class TITFLTownElementLayout implements TITFLLayout
         setListAction(list);
     }
     
-    private void setButtonActionClose(Button clicked)
+    protected void setButtonActionClose(Button clicked)
     {
         clicked.setOnClickListener(new OnClickListener()
         {
@@ -87,7 +87,7 @@ public class TITFLTownElementLayout implements TITFLLayout
         });
     }
 
-    private void setButtonActionWork(Button clicked)
+    protected void setButtonActionWork(Button clicked)
     {
         clicked.setOnClickListener(new OnClickListener()
         {
@@ -100,7 +100,7 @@ public class TITFLTownElementLayout implements TITFLLayout
         });
     }
     
-    private void setButtonActionRelax(Button clicked)
+    protected void setButtonActionRelax(Button clicked)
     {
         clicked.setOnClickListener(new OnClickListener()
         {
@@ -113,7 +113,7 @@ public class TITFLTownElementLayout implements TITFLLayout
         });
     }
 
-    private void setListAction(ListView list)
+    protected void setListAction(ListView list)
     {
         final TITFLTownElementLayout layout = this;
         ArrayAdapter<TITFLGoods> adapter = new ArrayAdapter<TITFLGoods>(m_activity, android.R.layout.simple_list_item_1, m_element.merchandise());
