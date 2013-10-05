@@ -16,8 +16,7 @@ public class TITFLGoods
     private String m_id;
     private String m_name;
     private String m_group;            // General merchandise, Wearable merchandise, Food, Insurance, Degree, Transportation, House, Home Goods, Spouse
-    private int m_price;               // Monetary value (or down payment)
-    private int m_requiredMortgage;    // Applicable if it's house group.
+    private int m_price;               // Monetary value
     private int m_foodValue;           // Value of food (How many weeks). Applicable if it's food group.
     private int m_classCredit;         // How many credits? Applicable if it's degree group.
     private int m_speed;               // Speed factor. Applicable if it's transportation group.
@@ -25,6 +24,7 @@ public class TITFLGoods
     private TITFL.CharacterFactor m_affectOnHappiness; // Affect on happy level for each characteristic
     private int m_affectOnHealth;      // Affect on health level
     private String m_greeting;         // Greeting upon purchase
+    private String m_requiredGoods;    // Required goods to buy this goods
 
     private static String asset_xml_name = "default_goods.xml";
     private static String tag_root = "TITFL";
@@ -34,7 +34,6 @@ public class TITFLGoods
     private static String atr_townelement_id = "townelement_id";
     private static String atr_price = "price";
     private static String atr_group = "group";    
-    private static String atr_reqMortgage = "required_mortgage";
     private static String atr_foodValue = "food_value";
     private static String atr_classCredit = "class_credit";
     private static String atr_speed = "speed";
@@ -47,6 +46,7 @@ public class TITFLGoods
     private static String atr_happiness_5 = "happiness_per_lucky_factor";    
     private static String atr_health = "affect_on_health";
     private static String atr_greeting = "greeting";
+    private static String atr_required_goods = "required_goods";
 
     public TITFLGoods()
     {
@@ -59,7 +59,10 @@ public class TITFLGoods
     public String toString() 
     {
         int price = getPrice();
-        return m_name + " - $" + Integer.toString(price);
+        if (isLoan())
+            return m_name;
+        else
+            return m_name + " - $" + Integer.toString(price);
     }
 
     public TITFLTownElement townelement()
@@ -92,11 +95,6 @@ public class TITFLGoods
         return m_price;
     }
 
-    public int requiredMortgage()
-    {
-        return m_requiredMortgage;
-    }
-    
     public int foodValue()
     {
         return m_foodValue;
@@ -171,8 +169,6 @@ public class TITFLGoods
                         goods.m_speed = Integer.parseInt(attribValue);
                     else if (attribName.equals(atr_group))   
                         goods.m_group = attribValue;
-                    else if (attribName.equals(atr_reqMortgage))
-                        goods.m_requiredMortgage = Integer.parseInt(attribValue);
                     else if (attribName.equals(atr_foodValue))
                         goods.m_foodValue = Integer.parseInt(attribValue);
                     else if (attribName.equals(atr_classCredit))
@@ -195,6 +191,8 @@ public class TITFLGoods
                         goods.m_affectOnHealth = Integer.parseInt(attribValue);
                     else if (attribName.equals(atr_greeting))
                         goods.m_greeting = attribValue;
+                    else if (attribName.equals(atr_required_goods))
+                        goods.m_requiredGoods = attribValue;
                 }
                 
                 ret.add(goods);
@@ -229,6 +227,14 @@ public class TITFLGoods
             return false;
     }
     
+    public boolean isHouse()
+    {
+        if (m_id.equals("goods_house"))
+            return true;
+        else
+            return false;
+    }
+
     public boolean isDegree()
     {
         if (isDegreeBasic())
@@ -274,9 +280,60 @@ public class TITFLGoods
         else
             return false;        
     }
+    
+    public boolean isLoan()
+    {
+        if (isGeneralLoan())
+            return true;
+        if (isStudentLoan())
+            return true;
+        if (isMortgage())
+            return true;
+        
+        return false;
+    }
+
+    public boolean isGeneralLoan()
+    {
+        if (m_id.equals("goods_general_loan"))
+            return true;
+        else
+            return false;
+    }
+
+    public boolean isStudentLoan()
+    {
+        if (m_id.equals("goods_student_loan"))
+            return true;
+        else
+            return false;
+    }
+
+    public boolean isMortgage()
+    {
+        if (m_id.equals("goods_mortgage"))
+            return true;
+        else
+            return false;
+    }
 
     public int getPrice()
     {
         return (int)(m_price * m_townelement.town().economyFactor());        
+    }
+    
+    public boolean isEligible(TITFLPlayer player)
+    {
+        if (m_requiredGoods == null)
+            return true;
+        
+        for (TITFLBelonging b : player.belongings())
+        {
+            if (m_requiredGoods.equals(b.goodsRef().id()))
+                return true;
+        }
+
+        NoEtapUtility.showAlert(m_townelement.town().activity(), "Information", "Please get " + m_requiredGoods + " first.");
+        return false;
     }
 }

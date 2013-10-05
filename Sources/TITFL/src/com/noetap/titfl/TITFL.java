@@ -157,8 +157,8 @@ public class TITFL
         TITFLGoods outfit = m_town.getDefaultOutfit();
         for (TITFLPlayer player : m_players)
         {
-            player.buy(bicycle, 0);
-            player.buy(outfit, 0);
+            player.buy(bicycle, 1, 0);
+            player.buy(outfit, 1, 0);
         }        
     }
     

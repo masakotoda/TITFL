@@ -78,6 +78,13 @@
 	    />
         
     <goods
+        townelement_id="townelement_realtor"
+        goods_id="goods_house"
+        name="House"
+        price="300000"
+	    />
+    
+    <goods
         townelement_id="townelement_insurance"
         goods_id="goods_car_insurance"
         name="Car Insurance"
@@ -211,7 +218,7 @@
     	/>
     
     <goods
-        goods_id="goods_degree_gde"
+        goods_id="goods_degree_ged"
         name="GDE"
         townelement_id="townelement_school"
         price="20"
@@ -227,7 +234,7 @@
         price="50"
         group="degree_engineering"
         class_credit="8"
-        required_degree="goods_degree_gde"
+        required_goods="goods_degree_ged"
     	/>
 
     <goods
@@ -237,9 +244,19 @@
         price="50"
         group="degree_engineering"
         class_credit="8"
-        required_degree="goods_degree_engineering1"
+        required_goods="goods_degree_engineering1"
     	/>
 
+    <goods
+        goods_id="goods_degree_engineering3"
+        name="Engineering phD"
+        townelement_id="townelement_school"
+        price="500"
+        group="degree_engineering"
+        class_credit="16"
+        required_goods="goods_degree_engineering2"
+    	/>
+    
     <goods
         goods_id="goods_degree_business1"
         name="Business 1"
@@ -247,6 +264,51 @@
         price="50"
         group="degree_business"
         class_credit="8"
-        required_degree="goods_degree_gde"
+        required_goods="goods_degree_ged"
+    	/>
+    
+    <goods
+        goods_id="goods_gold"
+        name="Gold"
+        townelement_id="townelement_bank"
+        price="100"
+    	/>
+    
+    <goods
+        goods_id="goods_bond"
+        name="Bond"
+        townelement_id="townelement_bank"
+        price="50"
+    	/>
+    
+    <goods
+        goods_id="goods_stock"
+        name="Stock"
+        townelement_id="townelement_bank"
+        price="10"
+    	/>
+        
+    <goods
+        goods_id="goods_general_loan"
+        group="loan"
+        name="General Loan"
+        townelement_id="townelement_bank"
+        price="10"
+    	/>
+
+    <goods
+        goods_id="goods_student_loan"
+        group="loan"
+        name="Student Loan"
+        townelement_id="townelement_bank"
+        price="1"
+    	/>
+    
+    <goods
+        goods_id="goods_mortgage"
+        group="loan"
+        name="Mortgage"
+        townelement_id="townelement_bank"
+        price="1000"
     	/>
 </TITFL>

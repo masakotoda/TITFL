@@ -183,42 +183,69 @@ public class TITFLJob
 
     public boolean accept(TITFLPlayer applicant)
     {
+        boolean accepted = true;
+        String title = "Sorry";
+        
         // Check opening
-        if (openingNumber() < 1)            
+        if (openingNumber() < 1)
+            accepted = false;
+        
+        if (!accepted)
+        {
+            NoEtapUtility.showAlert(m_townelement.town().activity(), title, "No Opening");
             return false;
+        }
 
         // Check character
         if (applicant.character().m_intelligent < m_requiredCharacter.m_intelligent)
-            return false;
+            accepted = false;
         if (applicant.character().m_hardWorking < m_requiredCharacter.m_hardWorking)
-            return false;
+            accepted = false;
         if (applicant.character().m_goodLooking < m_requiredCharacter.m_goodLooking)
-            return false;
+            accepted = false;
         if (applicant.character().m_physical < m_requiredCharacter.m_physical)
-            return false;
+            accepted = false;
         if (applicant.character().m_lucky < m_requiredCharacter.m_lucky)
+            accepted = false;
+
+        if (!accepted)
+        {
+            NoEtapUtility.showAlert(m_townelement.town().activity(), title, "Your character doesn't fit.");
             return false;
+        }
 
         // Check education
         if (applicant.education().m_basic < m_requiredEducation.m_basic)
-            return false;
+            accepted = false;
         if (applicant.education().m_engineering < m_requiredEducation.m_engineering)
-            return false;
+            accepted = false;
         if (applicant.education().m_business_finance < m_requiredEducation.m_business_finance)
-            return false;
+            accepted = false;
         if (applicant.education().m_academic < m_requiredEducation.m_academic)
+            accepted = false;
+
+        if (!accepted)
+        {
+            NoEtapUtility.showAlert(m_townelement.town().activity(), title, "Your education level didn't meet our criteria.");
             return false;
+        }
 
         // Check experience
         if (applicant.experience().m_basic < m_requiredExperience.m_basic)
-            return false;
+            accepted = false;
         if (applicant.experience().m_engineering < m_requiredExperience.m_engineering)
-            return false;
+            accepted = false;
         if (applicant.experience().m_business_finance < m_requiredExperience.m_business_finance)
-            return false;
+            accepted = false;
         if (applicant.experience().m_academic < m_requiredExperience.m_academic)
-            return false;
+            accepted = false;
         
+        if (!accepted)
+        {
+            NoEtapUtility.showAlert(m_townelement.town().activity(), title, "Your experience is not enough.");
+            return false;
+        }
+
         return true;
     }
 }

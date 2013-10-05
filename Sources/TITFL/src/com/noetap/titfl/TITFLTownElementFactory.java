@@ -4,7 +4,6 @@ import android.app.Activity;
 
 public class TITFLTownElementFactory 
 {
-
     public static TITFLLayout createLayout(Activity activity, TITFLTownElement element)
     {
         TITFLLayout layout = null;
@@ -19,6 +18,11 @@ public class TITFLTownElementFactory
         {
             layoutId = R.layout.townelement_school;
             layout = new TITFLTownElementSchoolLayout(activity, element);
+        }
+        else if (element.isBank())
+        {
+            layoutId = R.layout.townelement_bank;
+            layout = new TITFLTownElementBankLayout(activity, element);
         }
         else
         {

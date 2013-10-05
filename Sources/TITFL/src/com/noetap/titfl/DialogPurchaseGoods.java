@@ -89,10 +89,10 @@ public class DialogPurchaseGoods
             {
                 String countStr = m_quantity.getText().toString();
                 int count = NoEtapUtility.parseInt(countStr);
-                for (int i = 0; i < count; i++)
-                    m_parent.element().visitor().buy(m_goods, m_parent.element().town().currentWeek());
+                m_parent.element().visitor().buy(m_goods, count, m_parent.element().town().currentWeek());
                 m_parent.greetingText().setText(m_goods.greeting());
                 m_parent.playerView().invalidate();
+                m_parent.updateSellable();
                 m_dialog.dismiss();
             }
         });

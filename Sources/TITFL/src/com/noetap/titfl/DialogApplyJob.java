@@ -20,7 +20,7 @@ public class DialogApplyJob extends Dialog
         m_parent = parent;
         m_element = element;
 
-        setContentView(R.layout.apply_job);
+        setContentView(R.layout.dialog_apply_job);
         setTitle("Select your job");
 
         Button cancelButton = (Button) findViewById(R.id.buttonCancel);
@@ -57,8 +57,6 @@ public class DialogApplyJob extends Dialog
                 
                 if (job == m_element.visitor().job())
                     NoEtapUtility.showAlert(activity, "Congrats", "You got a job!");
-                else
-                    NoEtapUtility.showAlert(activity, "Sorry", "You didn't get a job.");
                     
                 m_parent.playerView().invalidate();
                 dismiss();                

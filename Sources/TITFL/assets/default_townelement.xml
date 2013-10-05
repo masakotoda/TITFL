@@ -27,8 +27,8 @@
 	    />
 
     <townelement
-        townelement_id="townelement_employment"
-        name="Employment Office"
+        townelement_id="townelement_gym"
+        name="Gym"
         slot="4"
         greeting="How may I help you?"
         />

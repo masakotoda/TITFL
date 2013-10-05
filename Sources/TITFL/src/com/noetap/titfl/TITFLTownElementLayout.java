@@ -158,6 +158,9 @@ public class TITFLTownElementLayout implements TITFLLayout
 
     protected void setListAction(ListView list)
     {
+        if (list == null)
+            return;
+        
         final TITFLTownElementLayout layout = this;
         ArrayAdapter<TITFLGoods> adapter = new ArrayAdapter<TITFLGoods>(m_activity, android.R.layout.simple_list_item_1, m_element.merchandise());
         list.setAdapter(adapter);        
@@ -171,5 +174,9 @@ public class TITFLTownElementLayout implements TITFLLayout
                 dialog.show();
             }
         });
+    }
+    
+    public void updateSellable()
+    {
     }
 }

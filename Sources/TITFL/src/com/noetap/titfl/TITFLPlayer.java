@@ -41,12 +41,6 @@ public class TITFLPlayer
     
     private int m_cash;
     private int m_saving;
-    private int m_general_loan;
-    private int m_student_loan;
-    private int m_mortgage;
-    private int m_goldUnit;
-    private int m_bondUnit;
-    private int m_stockUnit;
     private ArrayList<TITFLBelonging> m_belongings;
         
     private TITFLJob m_job;
@@ -92,12 +86,6 @@ public class TITFLPlayer
     private static String atr_happiness = "happiness";
     private static String atr_cash = "cash";
     private static String atr_saving = "saving";
-    private static String atr_general_loan = "general_loan";
-    private static String atr_student_loan = "student_loan";
-    private static String atr_mortgage = "mortgage";
-    private static String atr_gold_unit = "gold_unit";
-    private static String atr_bond_unit = "bond_unit";
-    private static String atr_stock_unit = "stock_unit";
     private static String atr_avatar_frm_01 = "avatar_frm_01";
     private static String atr_avatar_frm_02 = "avatar_frm_02";
     private static String atr_avatar_frm_03 = "avatar_frm_03";
@@ -182,34 +170,37 @@ public class TITFLPlayer
 
     public int generalLoan()
     {
-        return m_general_loan;
+        int amount = 0;
+        for (TITFLBelonging g : m_belongings)
+        {
+            if (g.goodsRef().isGeneralLoan())
+                amount += g.loanAmount();
+        }
+        return amount;
     }
 
     public int studentLoan()
     {
-        return m_student_loan;
+        int amount = 0;
+        for (TITFLBelonging g : m_belongings)
+        {
+            if (g.goodsRef().isStudentLoan())
+                amount += g.loanAmount();
+        }
+        return amount;
     }
     
     public int mortgage()
     {
-        return m_mortgage;
+        int amount = 0;
+        for (TITFLBelonging g : m_belongings)
+        {
+            if (g.goodsRef().isMortgage())
+                amount += g.loanAmount();
+        }
+        return amount;
     }
-    
-    public int goldUnit()
-    {
-        return m_goldUnit;
-    }
-    
-    public int bondUnit()
-    {
-        return m_bondUnit;
-    }
-    
-    public int stockUnit()
-    {
-        return m_stockUnit;
-    }
-    
+
     public ArrayList<TITFLBelonging> belongings()
     {
         return m_belongings;        
@@ -389,12 +380,6 @@ public class TITFLPlayer
             serializer.attribute(ns, atr_happiness, Integer.toString(m_happiness));
             serializer.attribute(ns, atr_cash, Integer.toString(m_cash));
             serializer.attribute(ns, atr_saving, Integer.toString(m_saving));
-            serializer.attribute(ns, atr_general_loan, Integer.toString(m_general_loan));
-            serializer.attribute(ns, atr_student_loan, Integer.toString(m_student_loan));
-            serializer.attribute(ns, atr_mortgage, Integer.toString(m_mortgage));
-            serializer.attribute(ns, atr_gold_unit, Integer.toString(m_goldUnit));
-            serializer.attribute(ns, atr_bond_unit, Integer.toString(m_bondUnit));
-            serializer.attribute(ns, atr_stock_unit, Integer.toString(m_stockUnit));
             serializer.attribute(ns, atr_current_location, currentLocationId);
             serializer.attribute(ns, atr_job, jobId);
             serializer.attribute(ns, atr_speed_factor, Float.toString(m_speedFactor));
@@ -502,18 +487,6 @@ public class TITFLPlayer
                 player.m_cash = Integer.parseInt(attribValue);
             else if (attribName.equals(atr_saving))
                 player.m_saving = Integer.parseInt(attribValue);
-            else if (attribName.equals(atr_general_loan))
-                player.m_general_loan = Integer.parseInt(attribValue);
-            else if (attribName.equals(atr_student_loan))
-                player.m_student_loan = Integer.parseInt(attribValue);
-            else if (attribName.equals(atr_mortgage))
-                player.m_mortgage = Integer.parseInt(attribValue);
-            else if (attribName.equals(atr_gold_unit))
-                player.m_goldUnit = Integer.parseInt(attribValue);
-            else if (attribName.equals(atr_bond_unit))
-                player.m_bondUnit = Integer.parseInt(attribValue);
-            else if (attribName.equals(atr_stock_unit))
-                player.m_stockUnit = Integer.parseInt(attribValue);
             else if (attribName.equals(atr_avatar_frm_01))
                 player.m_avatar_frm_01 = attribValue;
             else if (attribName.equals(atr_avatar_frm_02))
@@ -661,11 +634,7 @@ public class TITFLPlayer
         int count = 0;
         for (int i = m_belongings.size() - 1; i >= 0 && count < 20; i--)
         {
-            TITFLGoods goods = m_belongings.get(i).goodsRef();
-            if (goods != null)
-            {
-                canvas.drawText(goods.name(), left, top, paint);
-            }
+            canvas.drawText(m_belongings.get(i).toString(), left, top, paint);
             top += textSize;
             count++;
         }
@@ -832,16 +801,59 @@ public class TITFLPlayer
         //TODO
     }
     
-    public void buy(TITFLGoods goods, int acquiredWeek)
+    public void buy(TITFLGoods goods, int unit, int acquiredWeek)
     {
-        TITFLBelonging belonging = new TITFLBelonging(goods, acquiredWeek);
-        m_cash -= goods.getPrice();
-        m_belongings.add(belonging);
+        if (!goods.isEligible(this))
+            return;
+
+        boolean success = false;
+        if (m_cash >= goods.getPrice() * unit)
+        {
+            success = true;
+            m_cash -= (goods.getPrice() * unit);
+        }
+        else if (goods.isHouse())
+        {
+            success = updateMortgageBalance(goods.getPrice());
+        }
+        else if (goods.isDegree())
+        {
+            success = updateStudentLoanBalance(goods.getPrice());
+        }
+        else
+        {
+            success = updateGeneralLoanBalance(goods.getPrice());
+        }
+        
+        if (success)
+        {
+            TITFLBelonging belonging = new TITFLBelonging(goods, unit, acquiredWeek);
+            m_belongings.add(belonging);
+        }
+        else
+        {
+            if (m_currentLocation != null)
+            {
+                NoEtapUtility.showAlert(m_currentLocation.town().activity(), "Sorry", "You cannot afford.");
+            }
+        }
     }
 
-    public void sell(TITFLGoods goods)
+    public void sell(TITFLBelonging belonging, int unit)
     {
-        //TODO
+        for (TITFLBelonging b : m_belongings)            
+        {
+            if (b == belonging)
+            {
+                int remainingUnit = b.unit() - unit;
+                if (remainingUnit <= 0)
+                    m_belongings.remove(b);
+                else
+                    b.setUnit(remainingUnit);
+                m_cash += (b.goodsRef().getPrice() * unit);
+                return;
+            }
+        }
     }
 
     public void work()
@@ -1025,7 +1037,46 @@ public class TITFLPlayer
         m_hour++;
         return true;
     }
+    
+    private boolean updateMortgageBalance(int price)
+    {
+        for (TITFLBelonging b : m_belongings)
+        {
+            if (b.goodsRef().isMortgage() && b.loanAmount() == 0)
+            {
+                b.setLoanAmount(price);
+                return true;
+            }
+        }
+        return false;
+    }
  
+    private boolean updateStudentLoanBalance(int price)
+    {
+        for (TITFLBelonging b : m_belongings)
+        {
+            if (b.goodsRef().isStudentLoan() && b.loanAmount() == 0)
+            {
+                b.setLoanAmount(price);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean updateGeneralLoanBalance(int price)
+    {
+        for (TITFLBelonging b : m_belongings)
+        {
+            if (b.goodsRef().isGeneralLoan() && b.loanAmount() == 0)
+            {
+                b.setLoanAmount(price);
+                return true;
+            }
+        }
+        return false;
+    }
+
     public ArrayList<TITFLBelonging> getDegrees()
     {
         ArrayList<TITFLBelonging> degrees = new ArrayList<TITFLBelonging>();

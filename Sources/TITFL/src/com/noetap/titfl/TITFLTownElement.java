@@ -114,6 +114,14 @@ public class TITFLTownElement
             return false;
     }
 
+    public boolean isBank()
+    {
+        if (m_id.equals("townelement_bank"))
+            return true;
+        else
+            return false;
+    }
+
     public static ArrayList<TITFLTownElement> loadTownElements(AssetManager am, TITFLTown town)
     {
         ArrayList<TITFLTownElement> ret = new ArrayList<TITFLTownElement>();        

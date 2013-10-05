@@ -22,5 +22,10 @@
     <string name="socialize">Socialize</string>
     <string name="exercise">Exercise</string>
     <string name="apply_job">Apply Job</string>
-    
+    <string name="withdraw">Withdraw</string>
+    <string name="deposit">Deposit</string>
+    <string name="buy">Buy</string>
+    <string name="sell">Sell</string>
+    <string name="apply_loan">Apply Loan</string>
+    <string name="amount">Amount $.</string>    
 </resources>

@@ -79,14 +79,38 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical" >
+		    <Button
+		        android:id="@+id/buttonDeposit"
+		        style="?android:attr/buttonStyleSmall"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="@string/deposit" />
+		    <Button
+		        android:id="@+id/buttonWithdraw"
+		        style="?android:attr/buttonStyleSmall"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="@string/withdraw" />
+            <ListView
+		        android:id="@+id/listViewLoans"
+		        android:layout_width="wrap_content"
+		        android:layout_height="match_parent" >
+		    </ListView>
+		</LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical" >
 		    <TextView
 		        android:id="@+id/textView1"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:text="@string/all_courses"
+		        android:text="@string/buy"
 		        android:textAppearance="?android:attr/textAppearanceSmall" />
             <ListView
-		        android:id="@+id/listViewAllCourses"
+		        android:id="@+id/listViewBuyable"
 		        android:layout_width="wrap_content"
 		        android:layout_height="match_parent" >
 		    </ListView>
@@ -101,14 +125,15 @@
 		        android:id="@+id/textView2"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:text="@string/my_courses"
+		        android:text="@string/sell"
 		        android:textAppearance="?android:attr/textAppearanceSmall" />
 		        
 		    <ListView
-		        android:id="@+id/listViewMyCourses"
+		        android:id="@+id/listViewSellable"
 		        android:layout_width="wrap_content"
 		        android:layout_height="match_parent" >		
 		    </ListView>
 		</LinearLayout>
-	</LinearLayout>    
+	</LinearLayout>
+
 </RelativeLayout>
