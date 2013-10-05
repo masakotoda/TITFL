@@ -109,6 +109,7 @@ public class TITFLPlayer
     private static String atr_counter = "counter";
     private static String atr_speed_factor = "speed_factor";
     private static String atr_hour = "hour";
+    private static String atr_job = "job";
     
     public TITFLPlayer()
     {
@@ -328,7 +329,7 @@ public class TITFLPlayer
                 if (!name.equals(tag_item))
                     return null;                    
 
-                player = deserializeProperties(parser, null);
+                player = deserializeProperties(parser, town);
                 parser.next(); // </player>
             }
             catch (Exception e)
@@ -361,6 +362,10 @@ public class TITFLPlayer
             if (m_currentLocation != null)
                 currentLocationId = m_currentLocation.id();
             
+            String jobId = "";
+            if (m_job != null)
+                jobId = m_job.id();
+            
             serializer.attribute(ns, atr_name, m_name);
             serializer.attribute(ns, atr_alias, m_alias);
             serializer.attribute(ns, atr_factor_intelligent, Integer.toString(m_character.m_intelligent));
@@ -391,6 +396,7 @@ public class TITFLPlayer
             serializer.attribute(ns, atr_bond_unit, Integer.toString(m_bondUnit));
             serializer.attribute(ns, atr_stock_unit, Integer.toString(m_stockUnit));
             serializer.attribute(ns, atr_current_location, currentLocationId);
+            serializer.attribute(ns, atr_job, jobId);
             serializer.attribute(ns, atr_speed_factor, Float.toString(m_speedFactor));
             serializer.attribute(ns, atr_counter, Integer.toString(m_counter));
             serializer.attribute(ns, atr_hour, Float.toString(m_hour));
@@ -533,6 +539,13 @@ public class TITFLPlayer
                 if (town != null)
                 {
                     player.m_currentLocation = town.findElement(attribValue);
+                }
+            }
+            else if (attribName.equals(atr_job))
+            {
+                if (town != null)
+                {
+                    player.m_job = town.findJob(attribValue);
                 }
             }
         }
@@ -833,14 +846,26 @@ public class TITFLPlayer
 
     public void work()
     {
+        if (m_job == null)
+        {
+            return;
+        }
+        
         if (!addHour())
             return;
 
-        m_cash += 100;
+        m_cash += m_job.wage();
 
         m_satisfaction.m_carrier += m_incre;
         int happiness = (int)(m_incre *  m_character.hardworking());
         m_happiness += happiness;
+    }
+    
+    public boolean isEmployer(TITFLTownElement element)
+    {
+        if (m_job == null)
+            return false;
+        return (m_job.townelement() == element);
     }
 
     public void relax()
@@ -861,6 +886,15 @@ public class TITFLPlayer
         if (!addHour())
             return;
 
+        if (degree.goodsRef().isDegreeBasic())
+            m_education.m_basic++;
+        else if (degree.goodsRef().isDegreeEngineering())
+            m_education.m_engineering++;
+        else if (degree.goodsRef().isDegreeBusiness())
+            m_education.m_business_finance++;
+        else if (degree.goodsRef().isDegreeAcademic())
+            m_education.m_academic++;
+        
         degree.addCredit(1);
         m_satisfaction.m_education += m_incre;
         int happiness = (int)(m_incre *  m_character.intelligent());
@@ -889,7 +923,10 @@ public class TITFLPlayer
 
     public void applyJob(TITFLJob job)
     {
-        //TODO
+        if (job.accept(this))
+        {
+            m_job = job;
+        }
     }
 
     public void withdraw(int amount)

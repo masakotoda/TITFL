@@ -63,11 +63,17 @@ public class TITFLTownElementLayout implements TITFLLayout
         setButtonActionClose(buttonClose);
 
         Button buttonWork = (Button) m_activity.findViewById(R.id.buttonWork);
-        setButtonActionWork(buttonWork);
+        if (m_element.canWork())
+            setButtonActionWork(buttonWork);
+        else
+            setButtonActionSocialize(buttonWork);
         
-        Button buttonRelax = (Button) m_activity.findViewById(R.id.buttonRelax);
-        setButtonActionRelax(buttonRelax);
-
+        Button buttonApply = (Button) m_activity.findViewById(R.id.buttonApply);
+        if (m_element.canWork())
+            setButtonActionApply(buttonApply);
+        else
+            setButtonActionExercise(buttonApply);
+        
         TextView name = (TextView) m_activity.findViewById(R.id.textViewName);
         name.setText(m_element.name());
                 
@@ -94,20 +100,57 @@ public class TITFLTownElementLayout implements TITFLLayout
             @Override
             public void onClick(View v) 
             {
-                m_element.visitor().work();
+                if (m_element.visitor().isEmployer(m_element))
+                {
+                    m_element.visitor().work();
+                }
+                else
+                {
+                    NoEtapUtility.showAlert(m_activity, "Information", "You are not working here.");
+                }
                 m_playerView.invalidate();
             }
         });
     }
     
-    protected void setButtonActionRelax(Button clicked)
+    protected void setButtonActionSocialize(Button clicked)
     {
+        clicked.setText("Socialize");
         clicked.setOnClickListener(new OnClickListener()
         {
             @Override
             public void onClick(View v) 
             {
-                m_element.visitor().relax();
+                m_element.visitor().socialize();
+                m_playerView.invalidate();
+            }
+        });
+    }
+
+    protected void setButtonActionApply(Button clicked)
+    {
+        final TITFLTownElementLayout layout = this;
+        clicked.setOnClickListener(new OnClickListener()
+        {
+            @Override
+            public void onClick(View v) 
+            {
+                DialogApplyJob dialog = new DialogApplyJob(m_element, layout);
+                dialog.show();
+                m_playerView.invalidate();
+            }
+        });
+    }
+
+    protected void setButtonActionExercise(Button clicked)
+    {
+        clicked.setText("Exercise");
+        clicked.setOnClickListener(new OnClickListener()
+        {
+            @Override
+            public void onClick(View v) 
+            {
+                m_element.visitor().exercise();
                 m_playerView.invalidate();
             }
         });

@@ -18,5 +18,9 @@
     <string name="my_courses">My Courses</string>
     <string name="all_courses">All Courses</string>
     <string name="work">Work</string>
+    <string name="relax">Relax</string>
+    <string name="socialize">Socialize</string>
+    <string name="exercise">Exercise</string>
+    <string name="apply_job">Apply Job</string>
     
 </resources>

@@ -46,6 +46,16 @@
         android:layout_toLeftOf="@+id/buttonClose"
         android:text="@string/work" />
 
+    <Button
+        android:id="@+id/buttonApply"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/buttonWork"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/buttonWork"
+        android:text="@string/apply_job" />
+    
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"

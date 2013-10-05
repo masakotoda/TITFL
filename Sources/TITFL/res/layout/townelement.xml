@@ -25,6 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/textViewName"
+        android:contentDescription="@string/blank_string"
         android:src="@drawable/marble" />
 
     <Button
@@ -34,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/playerView"
-        android:text="Close" />
+        android:text="@string/close" />
 
     <Button
         android:id="@+id/buttonWork"
@@ -43,18 +44,18 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/buttonClose"
-        android:text="Work" />
+        android:text="@string/work" />
 
     <Button
-        android:id="@+id/buttonRelax"
+        android:id="@+id/buttonApply"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/buttonWork"
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/buttonWork"
-        android:text="Relax" />
-
+        android:text="@string/apply_job" />
+    
     <ListView
         android:id="@+id/listViewGoods"
         android:layout_width="match_parent"
@@ -69,9 +70,9 @@
         android:id="@+id/textViewGreeting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/buttonRelax"
+        android:layout_below="@+id/buttonApply"
         android:layout_toRightOf="@+id/imageViewGreeting"
-        android:text="Small Text"
+        android:text="@string/dummy_string"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>

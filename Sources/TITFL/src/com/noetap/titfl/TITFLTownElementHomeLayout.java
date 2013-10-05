@@ -48,6 +48,9 @@ public class TITFLTownElementHomeLayout implements TITFLLayout
         
         Button buttonClose = (Button) m_activity.findViewById(R.id.buttonClose);
         setButtonActionClose(buttonClose);
+
+        Button buttonRelax = (Button) m_activity.findViewById(R.id.buttonRelax);
+        setButtonActionRelax(buttonRelax);
      }
     
     private void setButtonActionClose(Button clicked)
@@ -58,6 +61,19 @@ public class TITFLTownElementHomeLayout implements TITFLLayout
             public void onClick(View v) 
             {
                 m_activity.closeTownElement();
+            }
+        });
+    }
+    
+    protected void setButtonActionRelax(Button clicked)
+    {
+        clicked.setOnClickListener(new OnClickListener()
+        {
+            @Override
+            public void onClick(View v) 
+            {
+                m_element.visitor().relax();
+                m_playerView.invalidate();
             }
         });
     }

@@ -231,18 +231,48 @@ public class TITFLGoods
     
     public boolean isDegree()
     {
-        if (m_group == null)
-            return false;
-        else if (m_group.equals("degree_basic"))
+        if (isDegreeBasic())
             return true;
-        else if (m_group.equals("degree_engineering"))
+        if (isDegreeEngineering())
             return true;
-        else if (m_group.equals("degree_business"))
+        if (isDegreeBusiness())
             return true;
-        else if (m_group.equals("degree_academic"))
+        if (isDegreeAcademic())
+            return true;
+        
+        return false;
+    }
+
+    public boolean isDegreeBasic()
+    {
+        if (m_group != null && m_group.equals("degree_basic"))
             return true;
         else
-            return false;
+            return false;        
+    }
+
+    public boolean isDegreeEngineering()
+    {
+        if (m_group != null && m_group.equals("degree_engineering"))
+            return true;
+        else
+            return false;        
+    }
+    
+    public boolean isDegreeBusiness()
+    {
+        if (m_group != null && m_group.equals("degree_business"))
+            return true;
+        else
+            return false;        
+    }
+    
+    public boolean isDegreeAcademic()
+    {
+        if (m_group != null && m_group.equals("degree_academic"))
+            return true;
+        else
+            return false;        
     }
 
     public int getPrice()

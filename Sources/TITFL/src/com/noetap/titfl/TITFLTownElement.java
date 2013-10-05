@@ -202,4 +202,9 @@ public class TITFLTownElement
         TITFLActivity activity = (TITFLActivity) m_town.activity();
         activity.openTownElement(this);
     }
+    
+    public boolean canWork()
+    {
+        return (m_jobs.size() > 0);
+    }
 }

@@ -33,20 +33,27 @@ public class TITFLJob
     private static String atr_req_goodlooking = "required_factor_goodlooking";  
     private static String atr_req_physical = "required_factor_physical";  
     private static String atr_req_lucky = "required_factor_lucky";  
-    private static String atr_req_edu_basic = "reqired_edu_basic";
-    private static String atr_req_edu_engineer = "reqired_edu_engineer";
-    private static String atr_req_edu_business = "reqired_edu_business";
-    private static String atr_req_edu_academic = "reqired_edu_academic";
-    private static String atr_req_exp_basic = "reqired_exp_basic";
-    private static String atr_req_exp_engineer = "reqired_exp_engineer";
-    private static String atr_req_exp_business = "reqired_exp_business";
-    private static String atr_req_exp_academic = "reqired_exp_academic";
+    private static String atr_req_edu_basic = "required_edu_basic";
+    private static String atr_req_edu_engineer = "required_edu_engineer";
+    private static String atr_req_edu_business = "required_edu_business";
+    private static String atr_req_edu_academic = "required_edu_academic";
+    private static String atr_req_exp_basic = "required_exp_basic";
+    private static String atr_req_exp_engineer = "required_exp_engineer";
+    private static String atr_req_exp_business = "required_exp_business";
+    private static String atr_req_exp_academic = "required_exp_academic";
 
 	public TITFLJob()
 	{
 	    m_requiredCharacter = new TITFL.CharacterFactor();
 	    m_requiredEducation = new TITFL.DisciplineLevel();
 	    m_requiredExperience = new TITFL.DisciplineLevel();
+	}
+	
+	@Override
+	public String toString()
+	{
+        int wage = m_wage;
+        return m_name + " - $" + Integer.toString(wage);
 	}
 	
     public TITFLTownElement townelement()
@@ -173,4 +180,45 @@ public class TITFLJob
 
 		return ret;	
 	}
+
+    public boolean accept(TITFLPlayer applicant)
+    {
+        // Check opening
+        if (openingNumber() < 1)            
+            return false;
+
+        // Check character
+        if (applicant.character().m_intelligent < m_requiredCharacter.m_intelligent)
+            return false;
+        if (applicant.character().m_hardWorking < m_requiredCharacter.m_hardWorking)
+            return false;
+        if (applicant.character().m_goodLooking < m_requiredCharacter.m_goodLooking)
+            return false;
+        if (applicant.character().m_physical < m_requiredCharacter.m_physical)
+            return false;
+        if (applicant.character().m_lucky < m_requiredCharacter.m_lucky)
+            return false;
+
+        // Check education
+        if (applicant.education().m_basic < m_requiredEducation.m_basic)
+            return false;
+        if (applicant.education().m_engineering < m_requiredEducation.m_engineering)
+            return false;
+        if (applicant.education().m_business_finance < m_requiredEducation.m_business_finance)
+            return false;
+        if (applicant.education().m_academic < m_requiredEducation.m_academic)
+            return false;
+
+        // Check experience
+        if (applicant.experience().m_basic < m_requiredExperience.m_basic)
+            return false;
+        if (applicant.experience().m_engineering < m_requiredExperience.m_engineering)
+            return false;
+        if (applicant.experience().m_business_finance < m_requiredExperience.m_business_finance)
+            return false;
+        if (applicant.experience().m_academic < m_requiredExperience.m_academic)
+            return false;
+        
+        return true;
+    }
 }

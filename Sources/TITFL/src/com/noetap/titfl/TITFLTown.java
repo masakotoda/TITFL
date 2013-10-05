@@ -173,6 +173,19 @@ public class TITFLTown
 
         return null; // really??
     }
+    
+    public TITFLJob findJob(String jobId)
+    {
+        for (TITFLTownElement e : m_elements)
+        {
+            for (TITFLJob j : e.jobs())
+            {
+                if (j.id().equals(jobId))
+                    return j;
+            }
+        }
+        return null; // really??
+    }
 
     public void setTownMap(TITFLTownMap townMap)
     {

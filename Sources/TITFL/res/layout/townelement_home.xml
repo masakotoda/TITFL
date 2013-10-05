@@ -19,4 +19,14 @@
         android:layout_toLeftOf="@+id/playerView"
         android:text="@string/close" />
 
+    <Button
+        android:id="@+id/buttonRelax"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/buttonClose"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/buttonClose"
+        android:text="@string/relax" />
+
 </RelativeLayout>
