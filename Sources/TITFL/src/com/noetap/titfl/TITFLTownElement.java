@@ -200,9 +200,9 @@ public class TITFLTownElement
             canvas.drawBitmap(bitmap, src, rect, null);
         }
             
-        paint.setColor(Color.BLACK);
-        paint.setTextSize(32 * NoEtapUtility.getFactor(m_town.activity()));
-        canvas.drawText(m_name, rect.left, (rect.bottom), paint);            
+        //paint.setColor(Color.BLACK);
+        //paint.setTextSize(32 * NoEtapUtility.getFactor(m_town.activity()));
+        //canvas.drawText(m_name, rect.left, (rect.bottom), paint);            
     }
     
     public void open()
