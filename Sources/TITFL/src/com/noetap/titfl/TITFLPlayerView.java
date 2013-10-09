@@ -1,6 +1,7 @@
 package com.noetap.titfl;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -21,11 +22,18 @@ public class TITFLPlayerView  extends View
         setFocusable(true);
     }
     
+    static int getWidth(Activity activity)
+    {
+        int w = NoEtapUtility.getScreenWidth(activity);
+        int playerInfoW = (int)(0.6 * w);
+        return playerInfoW;
+    }
+
     public void initialize()
     {
         m_activity = (TITFLActivity)getContext();
         int w = NoEtapUtility.getScreenWidth(m_activity);
-        int playerInfoW = (int)(0.6 * w);
+        int playerInfoW = getWidth(m_activity);
 
         ViewGroup.LayoutParams params = this.getLayoutParams();
         params.width = playerInfoW;

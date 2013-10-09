@@ -5,6 +5,7 @@ import java.util.Random;
 import android.app.Activity;
 import android.content.res.AssetManager;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
@@ -13,6 +14,8 @@ import android.view.MotionEvent;
 public class TITFLTown 
 {
     final int m_roadWidth = 60;
+    private int m_offset; // Width of extra area - it's different depending on the screen ratio.
+    private Bitmap m_bitmap = null; // For background
     
     private ArrayList<Rect> m_nodeRect;
     private Activity m_activity;
@@ -228,21 +231,65 @@ public class TITFLTown
         m_economyFactor = random.nextFloat() + 1;
     }
     
+    private Bitmap getBitmap()
+    {
+        if (m_bitmap != null)
+            return m_bitmap;        
+        m_bitmap = NoEtapUtility.getBitmap(activity(), "townelement_bg001.png");
+        return m_bitmap;
+    }
+
     public void draw(Canvas canvas, Paint paint)
     {
-        paint.setARGB(255, 128, 128, 128);
+        //paint.setARGB(255, 128, 128, 128);
+        paint.setARGB(255, 128, 64, 64);
 
         int w = m_nodeRect.get(0).width();
         int h = m_nodeRect.get(0).height();
         
+        // Draw the extra area (the size of extra area is different depending on the screen ratio.)
+        Bitmap bitmap = getBitmap();
+        Rect bitmapRect = null;
+
+        if (bitmap != null)
+        {
+            bitmapRect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+            
+            int right = (int)(bitmap.getWidth() * m_offset / (float)w);
+            int left = bitmap.getWidth() - right;
+            if (right > 0 && left > 0)
+            {
+                Rect src1 = new Rect(left, 0, bitmap.getWidth(), bitmap.getHeight());
+                Rect src2 = new Rect(0, 0, right, bitmap.getHeight());
+    
+                for (int i = 0; i < TITFLTownMap.num_rows; i++)
+                {
+                    int destTop = i * h;
+                    
+                    Rect dst1 = new Rect(0, destTop, m_offset, destTop + h);
+                    canvas.drawBitmap(bitmap, src1, dst1, null);
+
+                    int destLeft = w * TITFLTownMap.num_columns + m_offset;
+                    Rect dst2 = new Rect(destLeft, destTop, destLeft + m_offset, destTop + h);
+                    canvas.drawBitmap(bitmap, src2, dst2, null);
+                }
+            }
+        }
+
         // Draw roads
         for (int i = 0; i < TITFLTownMap.num_nodes; i++)
-        {
+        {            
             TITFLTownMapNode slot = m_townMap.nodes().get(i);
+            
+            if (bitmap != null)
+            {
+                canvas.drawBitmap(bitmap, bitmapRect, m_nodeRect.get(i), null);
+            }
+
             for (int j = 0; j < slot.link().size(); j++)
             {
-                int startX = slot.x() * w + w / 2;
-                int stopX = slot.link().get(j).x() * w + w / 2;
+                int startX = m_offset + slot.x() * w + w / 2;
+                int stopX = m_offset + slot.link().get(j).x() * w + w / 2;
                 int startY = slot.y() * h + h / 2;
                 int stopY = slot.link().get(j).y() * h + h / 2;
                 
@@ -377,11 +424,14 @@ public class TITFLTown
         int eachW = w / 4;
         int eachH = (eachW * 2) / 3;
         
+        int h = NoEtapUtility.getScreenHeight(m_activity);
+        m_offset = (h - TITFLPlayerView.getWidth(m_activity) - w) / 2;
+        
         for (int i = 0; i < TITFLTownMap.num_rows; i++)
         {
             for (int j = 0; j < TITFLTownMap.num_columns; j++)
             {
-                m_nodeRect.add(new Rect(eachW * j, eachH * i, eachW * (1 + j), eachH * (1 + i)));
+                m_nodeRect.add(new Rect(m_offset + eachW * j, eachH * i, m_offset + eachW * (1 + j), eachH * (1 + i)));
             }
         }
 
