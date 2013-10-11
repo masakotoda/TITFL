@@ -50,7 +50,7 @@ public class TITFLPlayer
     private TITFLTownElement m_home;
     
     private int m_counter = -1;
-    private float m_speedFactor = 0.5f; // 1 is default. 0.5 is x2 faster. 2 is x2 slower.
+    private float m_speedFactor = 2.0f; // 1 is default. 0.5 is x2 faster. 2 is x2 slower.
     private float m_hour = 0;
     private String m_avatar_frm_01;
     private String m_avatar_frm_02;
@@ -1108,18 +1108,7 @@ public class TITFLPlayer
     {
         if (goods.isTransportation())
         {
-            if (goods.speed() < 10)
-                m_speedFactor = 2.0f;
-            else if (goods.speed() < 20)
-                m_speedFactor = 1.75f;
-            else if (goods.speed() < 30)
-                m_speedFactor = 1.5f;
-            else if (goods.speed() < 40)
-                m_speedFactor = 1.0f;
-            else if (goods.speed() < 50)
-                m_speedFactor = 0.75f;
-            else if (goods.speed() < 60)
-                m_speedFactor = 0.5f;
+            m_speedFactor = (float)(2.0 - 0.25 * goods.speed() / 10);
             m_transportation = goods;
         }
     }
