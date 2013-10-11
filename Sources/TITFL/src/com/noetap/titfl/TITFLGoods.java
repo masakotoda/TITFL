@@ -316,6 +316,14 @@ public class TITFLGoods
         else
             return false;
     }
+    
+    public boolean isTransportation()
+    {
+        if (m_speed == 0)
+            return false;
+        else
+            return true;
+    }
 
     public int getPrice()
     {

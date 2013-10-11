@@ -98,6 +98,7 @@ public class TITFLPlayer
     private static String atr_speed_factor = "speed_factor";
     private static String atr_hour = "hour";
     private static String atr_job = "job";
+    private static String atr_transportation = "transportation";
     
     public TITFLPlayer()
     {
@@ -356,6 +357,10 @@ public class TITFLPlayer
             String jobId = "";
             if (m_job != null)
                 jobId = m_job.id();
+
+            String transportationId = "";
+            if (m_transportation != null)
+                transportationId = m_transportation.id();
             
             serializer.attribute(ns, atr_name, m_name);
             serializer.attribute(ns, atr_alias, m_alias);
@@ -382,6 +387,7 @@ public class TITFLPlayer
             serializer.attribute(ns, atr_saving, Integer.toString(m_saving));
             serializer.attribute(ns, atr_current_location, currentLocationId);
             serializer.attribute(ns, atr_job, jobId);
+            serializer.attribute(ns, atr_transportation, transportationId);
             serializer.attribute(ns, atr_speed_factor, Float.toString(m_speedFactor));
             serializer.attribute(ns, atr_counter, Integer.toString(m_counter));
             serializer.attribute(ns, atr_hour, Float.toString(m_hour));
@@ -519,6 +525,13 @@ public class TITFLPlayer
                 if (town != null)
                 {
                     player.m_job = town.findJob(attribValue);
+                }
+            }
+            else if (attribName.equals(atr_transportation))
+            {
+                if (town != null)
+                {
+                    player.m_transportation = town.findGoods(attribValue);
                 }
             }
         }
@@ -791,6 +804,8 @@ public class TITFLPlayer
 
         m_counter = -1;
         ImageView marbleImg = (ImageView) activity.findViewById(R.id.imageView1);
+        if (transportation() != null)
+            marbleImg.setImageBitmap(NoEtapUtility.getBitmap(activity, transportation().id() + ".png"));
         marbleImg.startAnimation(anim);
         
         return true;
@@ -829,6 +844,7 @@ public class TITFLPlayer
         {
             TITFLBelonging belonging = new TITFLBelonging(goods, unit, acquiredWeek);
             m_belongings.add(belonging);
+            setTransportation(goods);
         }
         else
         {
@@ -1086,5 +1102,25 @@ public class TITFLPlayer
                 degrees.add(0, degree);
         }
         return degrees;
+    }
+
+    private void setTransportation(TITFLGoods goods)
+    {
+        if (goods.isTransportation())
+        {
+            if (goods.speed() < 10)
+                m_speedFactor = 2.0f;
+            else if (goods.speed() < 20)
+                m_speedFactor = 1.75f;
+            else if (goods.speed() < 30)
+                m_speedFactor = 1.5f;
+            else if (goods.speed() < 40)
+                m_speedFactor = 1.0f;
+            else if (goods.speed() < 50)
+                m_speedFactor = 0.75f;
+            else if (goods.speed() < 60)
+                m_speedFactor = 0.5f;
+            m_transportation = goods;
+        }
     }
 }
