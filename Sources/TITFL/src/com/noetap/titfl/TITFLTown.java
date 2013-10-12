@@ -15,7 +15,8 @@ public class TITFLTown
 {
     final int m_roadWidth = 60;
     private int m_offset; // Width of extra area - it's different depending on the screen ratio.
-    private Bitmap m_bitmap = null; // For background
+    private Bitmap m_backgroundTile = null;
+    private Bitmap m_backgroundMap = null;
     
     private ArrayList<Rect> m_nodeRect;
     private Activity m_activity;
@@ -231,37 +232,47 @@ public class TITFLTown
         m_economyFactor = random.nextFloat() + 1;
     }
     
-    private Bitmap getBitmap()
+    private Bitmap getBackgroundTile()
     {
-        if (m_bitmap != null)
-            return m_bitmap;        
-        m_bitmap = NoEtapUtility.getBitmap(activity(), "townelement_bg001.png");
-        return m_bitmap;
+        if (m_backgroundTile != null)
+            return m_backgroundTile;
+        m_backgroundTile = NoEtapUtility.getBitmap(activity(), "townelement_bg001.png");
+        return m_backgroundTile;
+    }
+
+    private Bitmap getBackgroundMap()
+    {
+        if (m_backgroundMap != null)
+            return m_backgroundMap;
+
+        if (m_townMap != null)
+            m_backgroundMap = NoEtapUtility.getBitmap(activity(), "townmap_" + m_townMap.id() + ".png");
+        return m_backgroundMap;
     }
 
     public void draw(Canvas canvas, Paint paint)
     {
-        //paint.setARGB(255, 128, 128, 128);
-        paint.setARGB(255, 128, 64, 64);
+        paint.setARGB(255, 144, 80, 80);
 
         int w = m_nodeRect.get(0).width();
         int h = m_nodeRect.get(0).height();
         
-        // Draw the extra area (the size of extra area is different depending on the screen ratio.)
-        Bitmap bitmap = getBitmap();
-        Rect bitmapRect = null;
-
+        // Draw background
+        Bitmap bitmap = getBackgroundTile();
         if (bitmap != null)
         {
+            Rect bitmapRect = null;
+
             bitmapRect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
-            
+
+            // Draw tiles in the extra area (the size of extra area is different depending on the screen ratio.)
             int right = (int)(bitmap.getWidth() * m_offset / (float)w);
             int left = bitmap.getWidth() - right;
             if (right > 0 && left > 0)
             {
                 Rect src1 = new Rect(left, 0, bitmap.getWidth(), bitmap.getHeight());
                 Rect src2 = new Rect(0, 0, right, bitmap.getHeight());
-    
+
                 for (int i = 0; i < TITFLTownMap.num_rows; i++)
                 {
                     int destTop = i * h;
@@ -274,18 +285,34 @@ public class TITFLTown
                     canvas.drawBitmap(bitmap, src2, dst2, null);
                 }
             }
+
+            // Draw tiles in the rest of the area
+            Rect unionRect = new Rect();
+            for (int i = 0; i < m_nodeRect.size(); i++)
+            {
+                if (bitmap != null)
+                {
+                    canvas.drawBitmap(bitmap, bitmapRect, m_nodeRect.get(i), null);
+                }
+
+                unionRect.union(m_nodeRect.get(i));
+            }
+
+            // Draw map on top of tiles
+            Bitmap backgroundMap = getBackgroundMap();
+            if (backgroundMap != null)
+            {
+                bitmapRect = new Rect(0, 0, backgroundMap.getWidth(), backgroundMap.getHeight());
+                canvas.drawBitmap(backgroundMap, bitmapRect, unionRect, null);
+            }
         }
+
 
         // Draw roads
         for (int i = 0; i < TITFLTownMap.num_nodes; i++)
         {            
             TITFLTownMapNode slot = m_townMap.nodes().get(i);
             
-            if (bitmap != null)
-            {
-                canvas.drawBitmap(bitmap, bitmapRect, m_nodeRect.get(i), null);
-            }
-
             for (int j = 0; j < slot.link().size(); j++)
             {
                 int startX = m_offset + slot.x() * w + w / 2;
@@ -302,7 +329,7 @@ public class TITFLTown
                 canvas.drawCircle(stopX, stopY, halfRoad * NoEtapUtility.getFactor(activity()), paint);
             }
         }
-        
+
         // Draw elements
         for (int i = 0; i < m_elements.size(); i++)
         {
