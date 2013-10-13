@@ -125,6 +125,12 @@ public class TITFLActivity extends Activity
         m_layout.initialize();        
     }
     
+    public void setNextPlayer(TITFLPlayer oldPlayer)
+    {
+        m_game.setNextPlayer(oldPlayer);
+        ((TITFLTownLayout) m_layout).changePlayer(m_game.getTown().activePlayer());
+    }
+
     public void invalidate()
     {
         m_layout.invalidate();

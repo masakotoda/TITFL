@@ -99,6 +99,7 @@ public class TITFLPlayer
     private static String atr_hour = "hour";
     private static String atr_job = "job";
     private static String atr_transportation = "transportation";
+    private static String atr_home = "home";
     
     public TITFLPlayer()
     {
@@ -362,6 +363,10 @@ public class TITFLPlayer
             if (m_transportation != null)
                 transportationId = m_transportation.id();
             
+            String homeId = "";
+            if (m_home != null)
+                homeId = m_home.id();
+
             serializer.attribute(ns, atr_name, m_name);
             serializer.attribute(ns, atr_alias, m_alias);
             serializer.attribute(ns, atr_factor_intelligent, Integer.toString(m_character.m_intelligent));
@@ -388,6 +393,7 @@ public class TITFLPlayer
             serializer.attribute(ns, atr_current_location, currentLocationId);
             serializer.attribute(ns, atr_job, jobId);
             serializer.attribute(ns, atr_transportation, transportationId);
+            serializer.attribute(ns, atr_home, homeId);
             serializer.attribute(ns, atr_speed_factor, Float.toString(m_speedFactor));
             serializer.attribute(ns, atr_counter, Integer.toString(m_counter));
             serializer.attribute(ns, atr_hour, Float.toString(m_hour));
@@ -441,7 +447,6 @@ public class TITFLPlayer
     private static TITFLPlayer deserializeProperties(XmlPullParser parser, TITFLTown town)
     {
         TITFLPlayer player = new TITFLPlayer();
-        new TITFLPlayer();
         int r = 0, g = 0, b = 0;
         for (int i = 0; i < parser.getAttributeCount(); i++)
         {
@@ -534,10 +539,22 @@ public class TITFLPlayer
                     player.m_transportation = town.findGoods(attribValue);
                 }
             }
+            else if (attribName.equals(atr_home))
+            {
+                if (town != null)
+                {
+                    player.m_home = town.findElement(attribValue);
+                }
+            }
         }
         
         player.m_themeColor = Color.rgb(r, g, b);
-        
+
+        if (town != null && player.m_home == null) // Just in case
+        {
+            player.m_home = town.findApartment();
+        }
+
         return player;
     }
     
@@ -651,6 +668,27 @@ public class TITFLPlayer
             top += textSize;
             count++;
         }
+
+        top = h;
+        left = textSize;
+
+        top -= textSize;
+        canvas.drawText("Home: " + m_home.name(), left, top, paint);
+
+        top -= textSize;
+        canvas.drawText("Transp: " + m_transportation.name(), left, top, paint);
+
+        top -= textSize;
+        if (m_job == null)
+            canvas.drawText("Work as: Jobless", left, top, paint);
+        else
+            canvas.drawText("Work as: " + m_job.name(), left, top, paint);
+
+        top -= textSize;
+        if (m_job == null)
+            canvas.drawText("Work at: N/A", left, top, paint);
+        else
+            canvas.drawText("Work at: " + m_job.townelement().name(), left, top, paint);
     }
     
     private int getAnim(TITFLTownMapNode current, TITFLTownMapNode next)
@@ -666,10 +704,21 @@ public class TITFLPlayer
         else
             return R.anim.anim_marble_stay;
     }
-    
+
+    public void setActive(Activity activity)
+    {
+        TITFLTownElement location = currentLocation();
+        if (location == null)
+        {
+            location = m_home;
+            setLocation(m_home);
+        }
+        goTo(activity, location, false);
+    }
+
     @SuppressWarnings("deprecation")
     @SuppressLint("NewApi")
-    public void notifyActive(Activity activity)
+    public void updateAvatar(Activity activity)
     {
         ImageView avatarImg = (ImageView) activity.findViewById(R.id.imageView2);
         //avatarImg.setBackgroundResource(R.drawable.frame_anim_empty);
@@ -720,7 +769,7 @@ public class TITFLPlayer
         {
             m_hour = 0;
             m_currentLocation.setVisitor(null);
-            m_currentLocation.town().setNextPlayer();
+            ((TITFLActivity) activity).setNextPlayer(this);
             NoEtapUtility.showAlert(activity, "Info", "User switch.");
             return false;
         }
@@ -732,7 +781,7 @@ public class TITFLPlayer
         final ArrayList<TITFLTownMapNode> route = route1;
 
         final ImageView avatarImg = (ImageView) activity.findViewById(R.id.imageView2);
-        notifyActive(activity);
+        updateAvatar(activity);
         final AnimationDrawable avatarWalk = (AnimationDrawable) avatarImg.getBackground();
 
         Animation anim = AnimationUtils.loadAnimation(activity, R.anim.anim_marble_stay);
@@ -811,6 +860,7 @@ public class TITFLPlayer
         return true;
     }
     
+    
     public void beginWeek()
     {        
         //TODO
@@ -845,6 +895,7 @@ public class TITFLPlayer
             TITFLBelonging belonging = new TITFLBelonging(goods, unit, acquiredWeek);
             m_belongings.add(belonging);
             setTransportation(goods);
+            setHome(goods);
         }
         else
         {
@@ -854,6 +905,7 @@ public class TITFLPlayer
             }
         }
     }
+
 
     public void sell(TITFLBelonging belonging, int unit)
     {
@@ -871,6 +923,7 @@ public class TITFLPlayer
             }
         }
     }
+    
 
     public void work()
     {
@@ -972,10 +1025,7 @@ public class TITFLPlayer
         //TODO
     }
 
-    public void setHome(TITFLTownElement home)
-    {
-        //TODO
-    }
+
 
     public boolean isMoving()
     {
@@ -1110,6 +1160,15 @@ public class TITFLPlayer
         {
             m_speedFactor = (float)(2.0 - 0.25 * goods.speed() / 10);
             m_transportation = goods;
+        }
+    }
+    
+    private void setHome(TITFLGoods goods)
+    {
+        TITFLTownElement element = goods.convertToTownElement();
+        if (element != null)
+        {
+            m_home = element;
         }
     }
 }

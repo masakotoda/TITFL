@@ -191,6 +191,26 @@ public class TITFLTown
         return null; // really??
     }
 
+    public TITFLTownElement findHouse()
+    {
+        for (TITFLTownElement e : m_elements)
+        {
+            if (e.isHouse())
+                return e;
+        }
+        return null;
+    }
+
+    public TITFLTownElement findApartment()
+    {
+        for (TITFLTownElement e : m_elements)
+        {
+            if (e.isApartment())
+                return e;
+        }
+        return null;
+    }
+
     public void setTownMap(TITFLTownMap townMap)
     {
         m_townMap = townMap;
@@ -202,21 +222,8 @@ public class TITFLTown
         
         if (m_activePlayer != null)
         {
-            m_activePlayer.notifyActive(m_activity);
+            m_activePlayer.setActive(m_activity);
         }
-    }
-    
-    public void setNextPlayer()
-    {
-        m_game.setNextPlayer(m_activePlayer);
-        
-        TITFLTownElement location = m_activePlayer.currentLocation();
-        if (location == null)
-        {
-            location = m_elements.get(0);
-            m_activePlayer.setLocation(location);
-        }        
-        m_activePlayer.goTo(m_activity, location, false);
     }
     
     public AssetManager getAssets()
@@ -386,7 +393,7 @@ public class TITFLTown
         for (TITFLTownElement e : m_elements)
         {
             for (TITFLGoods g : e.merchandise())
-                if (g.id().equals("goods_bicycle"))
+                if (g.isBicycle())
                     return g;            
         }
         return null;
@@ -397,12 +404,23 @@ public class TITFLTown
         for (TITFLTownElement e : m_elements)
         {
             for (TITFLGoods g : e.merchandise())
-                if (g.id().equals("goods_casual_outfit"))
+                if (g.isCasualOutfit())
                     return g;            
         }
         return null;
     }
     
+    public TITFLGoods getDefaultHome()
+    {
+        for (TITFLTownElement e : m_elements)
+        {
+            for (TITFLGoods g : e.merchandise())
+                if (g.isApartment())
+                    return g;
+        }
+        return null;
+    }
+
     public TITFLTownElement getTownElement(int slot)
     {
         if (slot < m_elements.size())

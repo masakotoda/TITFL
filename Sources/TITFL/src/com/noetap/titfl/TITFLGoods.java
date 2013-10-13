@@ -235,6 +235,30 @@ public class TITFLGoods
             return false;
     }
 
+    public boolean isApartment()
+    {
+        if (m_id.equals("goods_cheap_apartment"))
+            return true;
+        else
+            return false;
+    }
+
+    public boolean isCasualOutfit()
+    {
+        if (m_id.equals("goods_casual_outfit"))
+            return true;
+        else
+            return false;
+    }
+
+    public boolean isBicycle()
+    {
+        if (m_id.equals("goods_bicycle"))
+            return true;
+        else
+            return false;
+    }
+
     public boolean isDegree()
     {
         if (isDegreeBasic())
@@ -343,5 +367,17 @@ public class TITFLGoods
 
         NoEtapUtility.showAlert(m_townelement.town().activity(), "Information", "Please get " + m_requiredGoods + " first.");
         return false;
+    }
+
+    public TITFLTownElement convertToTownElement()
+    {
+        TITFLTownElement element = null;
+
+        if (isApartment())
+            element = m_townelement.town().findApartment();
+        else if (isHouse())
+            element = m_townelement.town().findHouse();
+
+        return element;
     }
 }

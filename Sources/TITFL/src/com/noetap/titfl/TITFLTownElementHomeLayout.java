@@ -51,6 +51,9 @@ public class TITFLTownElementHomeLayout implements TITFLLayout
 
         Button buttonRelax = (Button) m_activity.findViewById(R.id.buttonRelax);
         setButtonActionRelax(buttonRelax);
+
+        if (m_element.visitor().home() != m_element)
+            buttonRelax.setVisibility(View.GONE);
      }
     
     private void setButtonActionClose(Button clicked)

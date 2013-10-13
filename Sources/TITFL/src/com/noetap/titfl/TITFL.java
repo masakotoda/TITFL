@@ -155,10 +155,12 @@ public class TITFL
     {
         TITFLGoods bicycle = m_town.getDefaultTransportation();
         TITFLGoods outfit = m_town.getDefaultOutfit();
+        TITFLGoods apartment = m_town.getDefaultHome();
         for (TITFLPlayer player : m_players)
         {
             player.buy(bicycle, 1, 0);
             player.buy(outfit, 1, 0);
+            player.buy(apartment, 1, 0);
         }        
     }
     

@@ -11,10 +11,16 @@ public class TITFLTownLayout implements TITFLLayout
     private TITFLActivity m_activity;
     private TITFLTownView m_townView;
     private TITFLPlayerView m_playerView;
+    private TITFLPlayer m_player;
 
     public TITFLTownLayout(Activity activity)
     {
         m_activity = (TITFLActivity)activity;
+
+        if (m_activity.getTown() != null)
+        {
+            m_player = m_activity.getTown().activePlayer();
+        }
     }
     
     @Override
@@ -32,17 +38,12 @@ public class TITFLTownLayout implements TITFLLayout
         m_townView.invalidate();
 
         m_playerView = (TITFLPlayerView) m_activity.findViewById(R.id.playerView);
+        m_playerView.setPlayer(m_player);
         m_playerView.initialize();
         m_playerView.invalidate();
-        
-        if (m_activity.getTown() != null)
-        {
-            TITFLPlayer player = m_activity.getTown().activePlayer();
-            if (player != null)
-            {
-                player.notifyActive(m_activity);
-            }
-        }
+
+        if (m_player != null)
+            m_player.updateAvatar(m_activity);
         
         ImageView avatarImg = (ImageView) m_activity.findViewById(R.id.imageView2);
         avatarImg.setImageBitmap(null);
@@ -71,7 +72,14 @@ public class TITFLTownLayout implements TITFLLayout
 
         Button buttonMenu = (Button) m_activity.findViewById(R.id.ButtonMenu);
         setButtonActionMenu(buttonMenu);
-    }    
+    }
+
+    public void changePlayer(TITFLPlayer player)
+    {
+        m_player = player;
+        m_playerView.setPlayer(m_player);
+        m_playerView.invalidate();
+    }
 
     private void setButtonActionTT1(Button clicked)
     {

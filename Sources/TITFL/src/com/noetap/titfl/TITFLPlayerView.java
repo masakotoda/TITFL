@@ -81,8 +81,6 @@ public class TITFLPlayerView  extends View
 
             if (m_player != null)
                 m_player.draw(canvas, paint);
-            else if (m_activity.getTown().activePlayer() != null)
-                m_activity.getTown().activePlayer().draw(canvas, paint);
             else
                 canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(), paint);
         }

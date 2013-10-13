@@ -6,7 +6,6 @@ import org.xmlpull.v1.XmlPullParser;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.Xml;
@@ -98,9 +97,25 @@ public class TITFLTownElement
         m_node = node;
     }
     
+    public boolean isHouse()
+    {
+        if (m_id.equals("townelement_house"))
+            return true;
+        else
+            return false;
+    }
+
+    public boolean isApartment()
+    {
+        if (m_id.equals("townelement_apartment"))
+            return true;
+        else
+            return false;
+    }
+
     public boolean isHome()
     {
-        if (m_id.equals("townelement_apartment") || m_id.equals("townelement_house"))
+        if (isApartment() || isHouse())
             return true;
         else
             return false;
