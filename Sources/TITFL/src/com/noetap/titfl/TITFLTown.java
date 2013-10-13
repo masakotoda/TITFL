@@ -109,7 +109,6 @@ public class TITFLTown
         m_currentWeek = TITFL.loadInteger(key + ".currentWeek", db);
         String activePlayersName = TITFL.loadString(key + ".activePlayer", db);
         String townMapName = TITFL.loadString(key + ".townMap", db);
-        m_game.setActivePlayer(activePlayersName);
         m_game.setTownMap(townMapName);
 
         ArrayList<TITFLTownElement> newElements = new ArrayList<TITFLTownElement>();
@@ -135,6 +134,7 @@ public class TITFLTown
             }
         }
 
+        m_game.setActivePlayer(activePlayersName); // It should be called last.
         return true;
     }
     
