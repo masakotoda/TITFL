@@ -53,7 +53,7 @@ public class TITFLBelongingEvent
         TITFLBelongingEvent ret = new TITFLBelongingEvent();
         try
         {
-               parser.next(); //<belonging_event>
+            parser.next(); //<belonging_event>
             if (parser.getEventType() != XmlPullParser.START_TAG) 
                   throw new Exception();                
             String name = parser.getName();

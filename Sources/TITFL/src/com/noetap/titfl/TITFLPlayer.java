@@ -27,6 +27,9 @@ import android.widget.ImageView;
 
 public class TITFLPlayer 
 {
+    private ImageView m_avatarImg;
+    private ImageView m_marbleImg;
+
     private final float m_maxHour = 24;
     private final int m_incre = 10;
     
@@ -705,6 +708,13 @@ public class TITFLPlayer
             return R.anim.anim_marble_stay;
     }
 
+    public void setImageViews(Activity activity, ImageView avatarImg, ImageView marbleImg)
+    {
+        m_avatarImg = avatarImg;
+        m_marbleImg = marbleImg;
+        updateAvatar(activity);
+    }
+
     public void setActive(Activity activity)
     {
         TITFLTownElement location = currentLocation();
@@ -718,9 +728,8 @@ public class TITFLPlayer
 
     @SuppressWarnings("deprecation")
     @SuppressLint("NewApi")
-    public void updateAvatar(Activity activity)
+    private void updateAvatar(Activity activity)
     {
-        ImageView avatarImg = (ImageView) activity.findViewById(R.id.imageView2);
         //avatarImg.setBackgroundResource(R.drawable.frame_anim_empty);
         //AnimationDrawable avatarWalk = (AnimationDrawable)avatarImg.getBackground();
         AnimationDrawable avatarWalk = new AnimationDrawable(); 
@@ -728,9 +737,9 @@ public class TITFLPlayer
 
         int sdkVer = android.os.Build.VERSION.SDK_INT;
         if (sdkVer < 16)
-            avatarImg.setBackgroundDrawable(avatarWalk);
+            m_avatarImg.setBackgroundDrawable(avatarWalk);
         else
-            avatarImg.setBackground(avatarWalk);
+            m_avatarImg.setBackground(avatarWalk);
 
         if (avatarWalk.getNumberOfFrames() == 0)
         {
@@ -745,7 +754,7 @@ public class TITFLPlayer
             avatarWalk.addFrame(d2, 200);
             avatarWalk.addFrame(d3, 200);
             avatarWalk.addFrame(d4, 200);
-            avatarImg.setImageBitmap(null);
+            m_avatarImg.setImageBitmap(null);
         }
     }
     
@@ -770,19 +779,21 @@ public class TITFLPlayer
             m_hour = 0;
             m_currentLocation.setVisitor(null);
             ((TITFLActivity) activity).setNextPlayer(this);
-            NoEtapUtility.showAlert(activity, "Info", "User switch.");
             return false;
         }
         
         m_hour += hour;
 
         setLocation(destination);
+
+        if (m_avatarImg == null || m_marbleImg == null)
+            return true;
         
+
         final ArrayList<TITFLTownMapNode> route = route1;
 
-        final ImageView avatarImg = (ImageView) activity.findViewById(R.id.imageView2);
         updateAvatar(activity);
-        final AnimationDrawable avatarWalk = (AnimationDrawable) avatarImg.getBackground();
+        final AnimationDrawable avatarWalk = (AnimationDrawable) m_avatarImg.getBackground();
 
         Animation anim = AnimationUtils.loadAnimation(activity, R.anim.anim_marble_stay);
         anim.scaleCurrentDuration(m_speedFactor);
@@ -811,8 +822,6 @@ public class TITFLPlayer
                 }
                 else
                 {
-                    ImageView marbleImg = (ImageView) activity.findViewById(R.id.imageView1);
-
                     TITFLTownMapNode current = route.get(m_counter);
                     TITFLTownMapNode nextStop = (route.size() > m_counter + 1) ? route.get(m_counter + 1) : route.get(m_counter);
 
@@ -821,10 +830,10 @@ public class TITFLPlayer
 
                     int slot = route.get(m_counter).index();
                     Rect rect = destination.town().nodeToPosition(slot);
-                    marbleImg.layout(rect.left, rect.top, rect.left + rect.width(), rect.top + rect.height());
+                    m_marbleImg.layout(rect.left, rect.top, rect.left + rect.width(), rect.top + rect.height());
 
                     anim.scaleCurrentDuration(m_speedFactor);
-                    marbleImg.startAnimation(anim);
+                    m_marbleImg.startAnimation(anim);
                 }
             }
         
@@ -841,10 +850,9 @@ public class TITFLPlayer
                 //avatarImg.layout(rectAvatar.left, rectAvatar.top, rectAvatar.right, rectAvatar.bottom);
                 if (m_counter == -1)
                 {
-                    ImageView marbleImg = (ImageView) activity.findViewById(R.id.imageView1);
                     int slot = route.get(0).index();
                     Rect rect = destination.town().nodeToPosition(slot);
-                    marbleImg.layout(rect.left, rect.top, rect.left + rect.width(), rect.top + rect.height());
+                    m_marbleImg.layout(rect.left, rect.top, rect.left + rect.width(), rect.top + rect.height());
                 }
             }
         });
@@ -852,18 +860,28 @@ public class TITFLPlayer
         avatarWalk.start();
 
         m_counter = -1;
-        ImageView marbleImg = (ImageView) activity.findViewById(R.id.imageView1);
         if (transportation() != null)
-            marbleImg.setImageBitmap(NoEtapUtility.getBitmap(activity, transportation().id() + ".png"));
-        marbleImg.startAnimation(anim);
+            m_marbleImg.setImageBitmap(NoEtapUtility.getBitmap(activity, transportation().id() + ".png"));
+        m_marbleImg.startAnimation(anim);
         
         return true;
     }
-    
-    
-    public void beginWeek()
-    {        
-        //TODO
+
+    public void beginWeek(TITFLRandomEvent randomEvent)
+    {
+        String title = alias() + " Week " + Integer.toString(m_currentLocation.town().currentWeek());
+        String message = "===Goods Event list===\n";
+        for (TITFLBelonging x : m_belongings)
+        {
+            for (TITFLBelongingEvent e : x.events())
+            {
+                message += e.eventRef().description();
+                message += "\n";
+            }
+        }
+        message += "===Random Event ===\n";
+        message += randomEvent.description();
+        NoEtapUtility.showAlert(m_currentLocation.town().activity(), title, message);
     }
     
     public void buy(TITFLGoods goods, int unit, int acquiredWeek)
@@ -1019,13 +1037,6 @@ public class TITFLPlayer
     {
         //TODO
     }
-
-    public void loan(int loanType, int amount)
-    {
-        //TODO
-    }
-
-
 
     public boolean isMoving()
     {

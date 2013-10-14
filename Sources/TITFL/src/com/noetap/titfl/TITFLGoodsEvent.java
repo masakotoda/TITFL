@@ -132,6 +132,8 @@ public class TITFLGoodsEvent implements TITFLEvent
                 }
                 
                 ret.add(element);
+                if (element.m_goods != null)
+                    element.m_goods.events().add(element);
                 parser.next();
             }
         }

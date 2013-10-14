@@ -56,13 +56,11 @@ public class TITFL
         // 7. Initialize TITFLTown
         m_players.add(TITFLPlayer.createPlayer(m_defaultPlayers.get(0))); // <- This should be done in the steps above
         m_players.add(TITFLPlayer.createPlayer(m_defaultPlayers.get(1))); // <- This should be done in the steps above
-        NoEtapUtility.showAlert(m_activity, "TODO", "Initiate game");
-        
-        shuffleRandomEvent();
+        //NoEtapUtility.showAlert(m_activity, "TODO", "Initiate game");
         
         m_town = new TITFLTown(m_activity, this, m_townmaps.get(mapType()));
         initiatePlayers();
-        m_town.setActivePlayer(m_players.get(0));
+        setNextPlayer(null);
     }
     
     public boolean resume()
@@ -73,8 +71,6 @@ public class TITFL
         m_randomEvents = TITFLRandomEvent.loadRandomEvents(m_activity.getAssets());
         m_townmaps = TITFLTownMap.loadTownMaps(m_activity.getAssets());
         m_players = new ArrayList<TITFLPlayer>();        
-        
-        shuffleRandomEvent();
         
         m_town = new TITFLTown(m_activity, this, m_townmaps.get(mapType()));
         
@@ -165,22 +161,33 @@ public class TITFL
     }
     
     public void setNextPlayer(TITFLPlayer oldPlayer)    
-    {        
-        Iterator<TITFLPlayer> it = m_players.iterator();
-        while (it.hasNext())
+    {
+        TITFLPlayer newPlayer;
+        if (oldPlayer == null)
         {
-            if (it.next() == oldPlayer)
-                break;
-        }
-        if (it.hasNext())
-        {
-            m_town.setActivePlayer(it.next());
+            newPlayer = m_players.get(0);
         }
         else
         {
-            m_town.addCurrentWeek();
-            m_town.setActivePlayer(m_players.get(0));
+            Iterator<TITFLPlayer> it = m_players.iterator();
+            while (it.hasNext())
+            {
+                if (it.next() == oldPlayer)
+                    break;
+            }
+            if (it.hasNext())
+            {
+                newPlayer = it.next();
+            }
+            else
+            {
+                m_town.addCurrentWeek();
+                newPlayer = m_players.get(0);
+            }
         }
+
+        m_town.setActivePlayer(newPlayer);
+        newPlayer.beginWeek(getRandomEvent());
     }
     
     // used when resuming game
@@ -211,13 +218,13 @@ public class TITFL
         }
     }
 
-    private void shuffleRandomEvent()
+    private TITFLRandomEvent getRandomEvent()
     {
-        // TODO: Shuffle m_randomEvents
-        for (int i = 0; i < m_randomEvents.size(); i++)
-        {
-            ;
-        }
+        Random random = new Random();
+        int index = (int)(random.nextFloat() * m_randomEvents.size());
+        if (index == m_randomEvents.size())
+            index--;
+        return (TITFLRandomEvent) (m_randomEvents.get(index));
     }
     
     private int mapType()

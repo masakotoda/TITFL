@@ -12,6 +12,8 @@ public class TITFLTownLayout implements TITFLLayout
     private TITFLTownView m_townView;
     private TITFLPlayerView m_playerView;
     private TITFLPlayer m_player;
+    private ImageView m_avatarImg;
+    private ImageView m_marbleImg;
 
     public TITFLTownLayout(Activity activity)
     {
@@ -42,15 +44,12 @@ public class TITFLTownLayout implements TITFLLayout
         m_playerView.initialize();
         m_playerView.invalidate();
 
-        if (m_player != null)
-            m_player.updateAvatar(m_activity);
-        
-        ImageView avatarImg = (ImageView) m_activity.findViewById(R.id.imageView2);
-        avatarImg.setImageBitmap(null);
+        m_avatarImg = (ImageView) m_activity.findViewById(R.id.imageView2);
+        m_avatarImg.setImageBitmap(null);
         //avatarImg.setBackgroundResource(R.drawable.frame_anim_test);
 
-        ImageView marbleImg = (ImageView) m_activity.findViewById(R.id.imageView1);
-        marbleImg.setVisibility(View.INVISIBLE);
+        m_marbleImg = (ImageView) m_activity.findViewById(R.id.imageView1);
+        m_marbleImg.setVisibility(View.INVISIBLE);
 
         Button buttonTT1 = (Button) m_activity.findViewById(R.id.ButtonTonyTest1);
         setButtonActionTT1(buttonTT1);
@@ -72,11 +71,17 @@ public class TITFLTownLayout implements TITFLLayout
 
         Button buttonMenu = (Button) m_activity.findViewById(R.id.ButtonMenu);
         setButtonActionMenu(buttonMenu);
-    }
+
+        if (m_player != null)
+        {
+            m_player.setImageViews(m_activity, m_avatarImg, m_marbleImg);
+        }
+   }
 
     public void changePlayer(TITFLPlayer player)
     {
         m_player = player;
+        m_player.setImageViews(m_activity, m_avatarImg, m_marbleImg);
         m_playerView.setPlayer(m_player);
         m_playerView.invalidate();
     }
