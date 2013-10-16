@@ -55,7 +55,8 @@ public class TITFLPlayerView  extends View
         switch (action)
         {
             case MotionEvent.ACTION_DOWN:
-                //TODO
+                DialogPlayerStatus dialog = new DialogPlayerStatus(m_player, m_activity);
+                dialog.show();
                 invalidate();
                 break;
             default:

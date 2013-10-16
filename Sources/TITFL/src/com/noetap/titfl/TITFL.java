@@ -337,7 +337,15 @@ public class TITFL
             m_business_finance = other.m_business_finance;
             m_academic = other.m_academic;
         }
-        
+
+        void add(DisciplineLevel addition)
+        {
+            m_basic += addition.m_basic;
+            m_engineering += addition.m_engineering;
+            m_business_finance += addition.m_business_finance;
+            m_academic += addition.m_academic;
+        }
+
         int m_basic; // GED
         int m_engineering;
         int m_business_finance;

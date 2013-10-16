@@ -662,6 +662,8 @@ public class TITFLPlayer
         top += textSize;
         canvas.drawText("Cash: $" + Integer.toString(m_cash), left, top, paint);
         top += textSize;
+        canvas.drawText("Saving: $" + Integer.toString(m_saving), left, top, paint);
+        top += textSize;
 
         top += textSize;
         int count = 0;
@@ -692,8 +694,30 @@ public class TITFLPlayer
             canvas.drawText("Work at: N/A", left, top, paint);
         else
             canvas.drawText("Work at: " + m_job.townelement().name(), left, top, paint);
+
+        top -= textSize;
+
+        top -= textSize;
+        canvas.drawText("Edu.Academic: " + Integer.toString(m_education.m_academic), left, top, paint);
+        top -= textSize;
+        canvas.drawText("Edu.Engineer: " + Integer.toString(m_education.m_engineering), left, top, paint);
+        top -= textSize;
+        canvas.drawText("Edu.Business: " + Integer.toString(m_education.m_business_finance), left, top, paint);
+        top -= textSize;
+        canvas.drawText("Edu.Basic: " + Integer.toString(m_education.m_basic), left, top, paint);
+
+        top -= textSize;
+
+        top -= textSize;
+        canvas.drawText("Exp.Academic: " + Integer.toString(m_experience.m_academic), left, top, paint);
+        top -= textSize;
+        canvas.drawText("Exp.Engineer: " + Integer.toString(m_experience.m_engineering), left, top, paint);
+        top -= textSize;
+        canvas.drawText("Exp.Business: " + Integer.toString(m_experience.m_business_finance), left, top, paint);
+        top -= textSize;
+        canvas.drawText("Exp.Basic: " + Integer.toString(m_experience.m_basic), left, top, paint);
     }
-    
+
     private int getAnim(TITFLTownMapNode current, TITFLTownMapNode next)
     {
         if (next.x() < current.x())
@@ -958,6 +982,9 @@ public class TITFLPlayer
         m_satisfaction.m_carrier += m_incre;
         int happiness = (int)(m_incre *  m_character.hardworking());
         m_happiness += happiness;
+
+        m_experience.add(m_job.requiredEducation());
+        m_experience.add(m_job.requiredExperience());
     }
     
     public boolean isEmployer(TITFLTownElement element)
