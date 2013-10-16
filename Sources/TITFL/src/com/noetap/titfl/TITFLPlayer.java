@@ -1057,12 +1057,14 @@ public class TITFLPlayer
 
     public void withdraw(int amount)
     {
-        //TODO
+        m_saving -= amount;
+        m_cash += amount;
     }
 
     public void deposit(int amount)
     {
-        //TODO
+        m_saving += amount;
+        m_cash -= amount;
     }
 
     public boolean isMoving()

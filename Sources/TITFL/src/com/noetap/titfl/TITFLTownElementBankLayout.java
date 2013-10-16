@@ -4,8 +4,10 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 public class TITFLTownElementBankLayout extends TITFLTownElementLayout
@@ -42,6 +44,12 @@ public class TITFLTownElementBankLayout extends TITFLTownElementLayout
         
         ListView loan = (ListView) m_activity.findViewById(R.id.listViewLoans);
         setLoanAction(loan);
+
+        Button buttonDeposit = (Button) m_activity.findViewById(R.id.buttonDeposit);
+        setDepositAction(buttonDeposit);
+
+        Button buttonWithdraw = (Button) m_activity.findViewById(R.id.buttonWithdraw);
+        setWithdrawAction(buttonWithdraw);
     }
 
     private void setBuyableAction(ListView list)
@@ -122,5 +130,33 @@ public class TITFLTownElementBankLayout extends TITFLTownElementLayout
     {
         ListView sellable = (ListView) m_activity.findViewById(R.id.listViewSellable);
         setSellableAction(sellable);
+    }
+
+    private void setDepositAction(Button clicked)
+    {
+        final TITFLTownElementLayout layout = this;
+        clicked.setOnClickListener(new OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                DialogDepositWithdraw dialog = new DialogDepositWithdraw(m_element.visitor(), true, layout);
+                dialog.show();
+            }
+        });
+    }
+
+    private void setWithdrawAction(Button clicked)
+    {
+        final TITFLTownElementLayout layout = this;
+        clicked.setOnClickListener(new OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                DialogDepositWithdraw dialog = new DialogDepositWithdraw(m_element.visitor(), false, layout);
+                dialog.show();
+            }
+        });
     }
 }
