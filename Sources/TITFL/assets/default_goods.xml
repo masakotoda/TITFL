@@ -103,6 +103,7 @@
         goods_id="goods_food_for_1week"
         name="Food for a week"
         price="50"
+        food_value="1"
         />
         
     <goods
@@ -110,6 +111,7 @@
         goods_id="goods_food_for_2weeks"
         name="Food for 2 weeks"
         price="80"
+        food_value="2"
         />
     
     <goods
@@ -117,6 +119,7 @@
         goods_id="goods_food_for_4weeks"
         name="Food for 4 weeks"
         price="150"
+        food_value="4"
         />
     
     <goods
@@ -138,6 +141,7 @@
         goods_id="goods_cheese_burger"
         name="Cheese Burger"
         price="50"
+        food_value="1"
         />
 
     <goods
@@ -145,6 +149,7 @@
         goods_id="goods_nice_dinner"
         name="Nice Dinner"
         price="200"
+        food_value="1"
         />
         
     <goods

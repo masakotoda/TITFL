@@ -421,6 +421,24 @@ public class TITFLTown
         return null;
     }
 
+    public TITFLGoods getDefaultFood()
+    {
+        TITFLGoods ret = null;
+        int price = 1000;
+        for (TITFLTownElement e : m_elements)
+        {
+            for (TITFLGoods g : e.merchandise())
+            {
+                if (g.foodValue() >= 1 && g.price() < price)
+                {
+                    ret = g;
+                    price = g.price();
+                }
+            }
+        }
+        return ret;
+    }
+
     public TITFLTownElement getTownElement(int slot)
     {
         if (slot < m_elements.size())

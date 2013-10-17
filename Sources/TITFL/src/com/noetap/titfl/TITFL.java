@@ -152,12 +152,15 @@ public class TITFL
         TITFLGoods bicycle = m_town.getDefaultTransportation();
         TITFLGoods outfit = m_town.getDefaultOutfit();
         TITFLGoods apartment = m_town.getDefaultHome();
+        TITFLGoods food = m_town.getDefaultFood();
         for (TITFLPlayer player : m_players)
         {
             player.buy(bicycle, 1, 0);
             player.buy(outfit, 1, 0);
             player.buy(apartment, 1, 0);
-        }        
+            player.buy(food, 1, 0);
+            player.satisfaction().m_health = 100;
+        }
     }
     
     public void setNextPlayer(TITFLPlayer oldPlayer)    

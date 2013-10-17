@@ -893,19 +893,46 @@ public class TITFLPlayer
 
     public void beginWeek(TITFLRandomEvent randomEvent)
     {
-        String title = alias() + " Week " + Integer.toString(m_currentLocation.town().currentWeek());
-        String message = "===Goods Event list===\n";
+        ArrayList<String> events = new ArrayList<String>();
+
+        // Process foods
+        if (!hasFood())
+        {
+            m_hour += 4;
+            m_satisfaction.m_health -= 4;
+            events.add("No Food, less hour, less health :-(");
+        }
+        else
+        {
+            ArrayList<TITFLBelonging> consumed = consumeFood();
+            for (TITFLBelonging x : consumed)
+            {
+                String message = "You've just finished: " + x.goodsRef().name();
+                events.add(message);
+            }
+        }
+
+        // Process belongings
         for (TITFLBelonging x : m_belongings)
         {
             for (TITFLBelongingEvent e : x.events())
             {
+                String message = x.goodsRef().name();
+                message += ": ";
                 message += e.eventRef().description();
-                message += "\n";
+                events.add(message);
             }
         }
-        message += "===Random Event ===\n";
+
+        // Random event
+        String message = "Surprise! : ";
         message += randomEvent.description();
-        NoEtapUtility.showAlert(m_currentLocation.town().activity(), title, message);
+        events.add(message);
+
+        // Display all events
+        String title = alias() + " Week " + Integer.toString(currentLocation().town().currentWeek());
+        DialogBeginWeek dialog = new DialogBeginWeek(title, events, m_currentLocation.town().activity());
+        dialog.show();
     }
     
     public void buy(TITFLGoods goods, int unit, int acquiredWeek)
@@ -1210,5 +1237,51 @@ public class TITFLPlayer
         {
             m_home = element;
         }
+    }
+    
+    private boolean hasFood()
+    {
+        for (TITFLBelonging x : m_belongings)
+        {
+            if (x.goodsRef().foodValue() > 0)
+                return true;
+        }
+        return false;
+    }
+
+    private ArrayList<TITFLBelonging> consumeFood()
+    {
+        ArrayList<TITFLBelonging> consumed = new ArrayList<TITFLBelonging>();
+        for (TITFLBelonging x : m_belongings)
+        {
+            if (x.goodsRef().foodValue() > 0)
+            {
+                int weeks = m_currentLocation.town().currentWeek() - x.acquiredWeek();
+                if (weeks >= x.goodsRef().foodValue())
+                {
+                    consumed.add(x);
+                }
+                else
+                {
+                    // Remaining food may go bad if player doesn't have freezer/refrigerator
+                    if (x.goodsRef().foodValue() > 2)
+                    {
+                        if (hasFreezer())
+                            ;
+                        else
+                            consumed.add(x);
+                    }
+                    else if (x.goodsRef().foodValue() > 1)
+                    {
+                        if (hasRefrigerator() || hasFreezer())
+                            ;
+                        else
+                            consumed.add(x);
+                    }
+                }
+            }
+        }
+        m_belongings.removeAll(consumed);
+        return consumed;
     }
 }
