@@ -911,7 +911,40 @@ public class TITFLPlayer
                 events.add(message);
             }
         }
+        
+        // Process soon - expiration
+        ArrayList<TITFLBelonging> soonExpire = getSoonExpire();
+        for (TITFLBelonging x : soonExpire)
+        {
+            String message = "Get new: " + x.goodsRef().name();
+            events.add(message);
+        }
 
+        // Process other expiration
+        ArrayList<TITFLBelonging> expired = processExpiration();
+        boolean lostTransportation = false;
+        for (TITFLBelonging x : expired)
+        {
+            String message = "Expired: " + x.goodsRef().name();
+            events.add(message);
+            if (x.goodsRef() == m_transportation)
+            {
+                lostTransportation = true;
+            }
+        }
+
+        if (lostTransportation)
+        {
+            for (TITFLBelonging x : m_belongings)
+            {
+                if (x.goodsRef().isTransportation())
+                {
+                    setTransportation(x.goodsRef());
+                    break;
+                }
+            }
+        }        
+        
         // Process belongings
         for (TITFLBelonging x : m_belongings)
         {
@@ -1249,6 +1282,38 @@ public class TITFLPlayer
         return false;
     }
 
+    private ArrayList<TITFLBelonging> getSoonExpire()
+    {
+        ArrayList<TITFLBelonging> soonExpire = new ArrayList<TITFLBelonging>();
+        for (TITFLBelonging x : m_belongings)
+        {
+            int weeks = m_currentLocation.town().currentWeek() - x.acquiredWeek();
+            if (weeks + 1 == x.goodsRef().expire())
+            {
+                soonExpire.add(x);
+            }
+        }
+        return soonExpire;
+    }
+    
+    private ArrayList<TITFLBelonging> processExpiration()
+    {
+        ArrayList<TITFLBelonging> expired = new ArrayList<TITFLBelonging>();
+        for (TITFLBelonging x : m_belongings)
+        {
+            if (x.goodsRef().expire() > 0)
+            {
+                int weeks = m_currentLocation.town().currentWeek() - x.acquiredWeek();
+                if (weeks >= x.goodsRef().expire())
+                {
+                    expired.add(x);
+                }
+            }
+        }
+        m_belongings.removeAll(expired);
+        return expired;
+    }
+    
     private ArrayList<TITFLBelonging> consumeFood()
     {
         ArrayList<TITFLBelonging> consumed = new ArrayList<TITFLBelonging>();

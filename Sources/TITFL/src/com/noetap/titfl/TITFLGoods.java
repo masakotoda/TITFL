@@ -20,6 +20,7 @@ public class TITFLGoods
     private int m_foodValue;           // Value of food (How many weeks). Applicable if it's food group.
     private int m_classCredit;         // How many credits? Applicable if it's degree group.
     private int m_speed;               // Speed factor. Applicable if it's transportation group.
+    private int m_expire;              // Expire period
     private Point m_positionToDisplay; // It’s mainly for home goods & wearable merchandise
     private TITFL.CharacterFactor m_affectOnHappiness; // Affect on happy level for each characteristic
     private int m_affectOnHealth;      // Affect on health level
@@ -37,6 +38,7 @@ public class TITFLGoods
     private static String atr_foodValue = "food_value";
     private static String atr_classCredit = "class_credit";
     private static String atr_speed = "speed";
+    private static String atr_expire = "expire";
     private static String atr_displayX = "x_to_display";
     private static String atr_displayY = "y_to_display";
     private static String atr_happiness_1 = "happiness_per_intelligent_factor";
@@ -110,6 +112,11 @@ public class TITFLGoods
         return m_speed;
     }
     
+    public int expire()
+    {
+        return m_expire;
+    }
+
     public Point positionToDisplay()
     {
         return m_positionToDisplay;
@@ -167,6 +174,8 @@ public class TITFLGoods
                         goods.m_price = Integer.parseInt(attribValue);
                     else if (attribName.equals(atr_speed))
                         goods.m_speed = Integer.parseInt(attribValue);
+                    else if (attribName.equals(atr_expire))
+                        goods.m_expire = Integer.parseInt(attribValue);
                     else if (attribName.equals(atr_group))   
                         goods.m_group = attribValue;
                     else if (attribName.equals(atr_foodValue))
