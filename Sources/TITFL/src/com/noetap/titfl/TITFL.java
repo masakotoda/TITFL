@@ -56,6 +56,9 @@ public class TITFL
         // 7. Initialize TITFLTown
         m_players.add(TITFLPlayer.createPlayer(m_defaultPlayers.get(0))); // <- This should be done in the steps above
         m_players.add(TITFLPlayer.createPlayer(m_defaultPlayers.get(1))); // <- This should be done in the steps above
+        m_players.add(TITFLPlayer.createPlayer(m_defaultPlayers.get(2))); // <- This should be done in the steps above
+        m_players.add(TITFLPlayer.createPlayer(m_defaultPlayers.get(3))); // <- This should be done in the steps above
+        m_players.add(TITFLPlayer.createPlayer(m_defaultPlayers.get(4))); // <- This should be done in the steps above
         //NoEtapUtility.showAlert(m_activity, "TODO", "Initiate game");
         
         m_town = new TITFLTown(m_activity, this, m_townmaps.get(mapType()));

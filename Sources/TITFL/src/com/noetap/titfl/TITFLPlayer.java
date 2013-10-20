@@ -770,10 +770,11 @@ public class TITFLPlayer
             float factor = NoEtapUtility.getFactor(activity);
             int w = (int)(360 * factor);
             int h = (int)(700 * factor);
-            Drawable d1 = NoEtapUtility.createDrawableFromAsset(activity, m_avatar_frm_01, w, h);
-            Drawable d2 = NoEtapUtility.createDrawableFromAsset(activity, m_avatar_frm_02, w, h);
-            Drawable d3 = NoEtapUtility.createDrawableFromAsset(activity, m_avatar_frm_03, w, h);
-            Drawable d4 = NoEtapUtility.createDrawableFromAsset(activity, m_avatar_frm_04, w, h);
+            String cloth = "avatar_naked/";
+            Drawable d1 = NoEtapUtility.createDrawableFromAsset(activity, cloth + m_avatar_frm_01, w, h);
+            Drawable d2 = NoEtapUtility.createDrawableFromAsset(activity, cloth + m_avatar_frm_02, w, h);
+            Drawable d3 = NoEtapUtility.createDrawableFromAsset(activity, cloth + m_avatar_frm_03, w, h);
+            Drawable d4 = NoEtapUtility.createDrawableFromAsset(activity, cloth + m_avatar_frm_04, w, h);
             avatarWalk.addFrame(d1, 200);
             avatarWalk.addFrame(d2, 200);
             avatarWalk.addFrame(d3, 200);
