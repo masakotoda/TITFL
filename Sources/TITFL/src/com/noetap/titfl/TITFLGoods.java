@@ -260,6 +260,31 @@ public class TITFLGoods
             return false;
     }
 
+    public boolean isBusinessOutfit()
+    {
+        if (m_id.equals("goods_business_outfit"))
+            return true;
+        else
+            return false;
+    }
+
+    public boolean isDressOutfit()
+    {
+        if (m_id.equals("goods_dress_outfit"))
+            return true;
+        else
+            return false;
+    }
+
+    public boolean isOutfit()
+    {
+        if (isCasualOutfit() ||
+            isBusinessOutfit() ||
+            isDressOutfit())
+            return true;
+        else
+            return false;
+    }
     public boolean isBicycle()
     {
         if (m_id.equals("goods_bicycle"))

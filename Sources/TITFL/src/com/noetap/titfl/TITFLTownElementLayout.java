@@ -6,6 +6,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -13,6 +14,7 @@ public class TITFLTownElementLayout implements TITFLLayout
 {
     protected TITFLActivity m_activity;
     protected TITFLPlayerView m_playerView;
+    protected ImageView m_avatar;
     protected TITFLTownElement m_element;
     protected TextView m_greetingText;
 
@@ -59,6 +61,9 @@ public class TITFLTownElementLayout implements TITFLLayout
         m_greetingText = (TextView) m_activity.findViewById(R.id.textViewGreeting);
         m_greetingText.setText(m_element.greeting());
         
+        m_avatar = (ImageView) m_activity.findViewById(R.id.imageViewAvatar);
+        updateOutfit();
+
         Button buttonClose = (Button) m_activity.findViewById(R.id.buttonClose);
         setButtonActionClose(buttonClose);
 
@@ -178,5 +183,12 @@ public class TITFLTownElementLayout implements TITFLLayout
     
     public void updateSellable()
     {
+    }
+
+    public void updateOutfit()
+    {
+        int w = m_element.visitor().getAvatarWidth(m_activity);
+        int h = m_element.visitor().getAvatarHeight(m_activity);
+        m_avatar.setImageDrawable(NoEtapUtility.createDrawableFromAsset(m_activity, m_element.visitor().outfitImage(0), w, h));
     }
 }

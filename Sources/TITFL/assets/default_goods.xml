@@ -71,6 +71,26 @@
     	/>
         
     <goods
+        goods_id="goods_business_outfit"
+        name="Business Outfit"
+        townelement_id="townelement_mall"
+        price="40"
+        expire="8"
+        group="outfit"
+        greeting="You will be promoted!"
+    	/>
+    
+    <goods
+        goods_id="goods_dress_outfit"
+        name="Dress Outfit"
+        townelement_id="townelement_mall"
+        price="40"
+        expire="8"
+        group="outfit"
+        greeting="Are you going to go out tonight?"
+    	/>
+    
+    <goods
         townelement_id="townelement_realtor"
         goods_id="goods_cheap_apartment"
         name="Cheap Apartment"

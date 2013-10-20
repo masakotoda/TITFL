@@ -49,6 +49,7 @@ public class TITFLPlayer
     private TITFLJob m_job;
     private int m_lastWorkedWeek;
     private TITFLGoods m_transportation;    
+    private TITFLGoods m_outfit;
     private TITFLTownElement m_currentLocation;
     private TITFLTownElement m_home;
     
@@ -102,6 +103,7 @@ public class TITFLPlayer
     private static String atr_hour = "hour";
     private static String atr_job = "job";
     private static String atr_transportation = "transportation";
+    private static String atr_outfit = "outfit";
     private static String atr_home = "home";
     
     public TITFLPlayer()
@@ -225,7 +227,12 @@ public class TITFLPlayer
     {
         return m_transportation;    
     }
-    
+
+    public TITFLGoods outfit()
+    {
+        return m_outfit;
+    }
+
     public TITFLTownElement currentLocation()
     {
         return m_currentLocation;
@@ -366,6 +373,10 @@ public class TITFLPlayer
             if (m_transportation != null)
                 transportationId = m_transportation.id();
             
+            String outfitId = "";
+            if (m_outfit != null)
+                outfitId = m_outfit.id();
+
             String homeId = "";
             if (m_home != null)
                 homeId = m_home.id();
@@ -396,6 +407,7 @@ public class TITFLPlayer
             serializer.attribute(ns, atr_current_location, currentLocationId);
             serializer.attribute(ns, atr_job, jobId);
             serializer.attribute(ns, atr_transportation, transportationId);
+            serializer.attribute(ns, atr_outfit, outfitId);
             serializer.attribute(ns, atr_home, homeId);
             serializer.attribute(ns, atr_speed_factor, Float.toString(m_speedFactor));
             serializer.attribute(ns, atr_counter, Integer.toString(m_counter));
@@ -542,6 +554,13 @@ public class TITFLPlayer
                     player.m_transportation = town.findGoods(attribValue);
                 }
             }
+            else if (attribName.equals(atr_outfit))
+            {
+                if (town != null)
+                {
+                    player.m_outfit = town.findGoods(attribValue);
+                }
+            }
             else if (attribName.equals(atr_home))
             {
                 if (town != null)
@@ -684,6 +703,12 @@ public class TITFLPlayer
         canvas.drawText("Transp: " + m_transportation.name(), left, top, paint);
 
         top -= textSize;
+        if (m_outfit == null)
+            canvas.drawText("Outfit: Naked", left, top, paint);
+        else
+            canvas.drawText("Outfit: " + m_outfit.name(), left, top, paint);
+
+        top -= textSize;
         if (m_job == null)
             canvas.drawText("Work as: Jobless", left, top, paint);
         else
@@ -750,6 +775,55 @@ public class TITFLPlayer
         goTo(activity, location, false);
     }
 
+    public String outfitImage(int frameNum)
+    {
+        String outfit = "";
+        if (m_outfit == null)
+        {
+            outfit = "avatar_naked/";
+        }
+        else if (m_outfit.isCasualOutfit())
+        {
+            outfit = "avatar_casual/";
+        }
+        else if (m_outfit.isBusinessOutfit())
+        {
+            outfit = "avatar_business/";
+        }
+        else if (m_outfit.isDressOutfit())
+        {
+            outfit = "avatar_dress/";
+        }
+
+        switch (frameNum)
+        {
+        case 0:
+            return outfit + m_avatar_frm_01;
+        case 1:
+            return outfit + m_avatar_frm_02;
+        case 2:
+            return outfit + m_avatar_frm_03;
+        case 3:
+            return outfit + m_avatar_frm_04;
+        default:
+            return outfit + m_avatar_frm_01;
+        }
+    }
+
+    public int getAvatarWidth(Activity activity)
+    {
+        float factor = NoEtapUtility.getFactor(activity);
+        int w = (int)(360 * factor);
+        return w;
+    }
+
+    public int getAvatarHeight(Activity activity)
+    {
+        float factor = NoEtapUtility.getFactor(activity);
+        int h = (int)(700 * factor);
+        return h;
+    }
+
     @SuppressWarnings("deprecation")
     @SuppressLint("NewApi")
     private void updateAvatar(Activity activity)
@@ -767,14 +841,12 @@ public class TITFLPlayer
 
         if (avatarWalk.getNumberOfFrames() == 0)
         {
-            float factor = NoEtapUtility.getFactor(activity);
-            int w = (int)(360 * factor);
-            int h = (int)(700 * factor);
-            String cloth = "avatar_naked/";
-            Drawable d1 = NoEtapUtility.createDrawableFromAsset(activity, cloth + m_avatar_frm_01, w, h);
-            Drawable d2 = NoEtapUtility.createDrawableFromAsset(activity, cloth + m_avatar_frm_02, w, h);
-            Drawable d3 = NoEtapUtility.createDrawableFromAsset(activity, cloth + m_avatar_frm_03, w, h);
-            Drawable d4 = NoEtapUtility.createDrawableFromAsset(activity, cloth + m_avatar_frm_04, w, h);
+            int w = getAvatarWidth(activity);
+            int h = getAvatarHeight(activity);
+            Drawable d1 = NoEtapUtility.createDrawableFromAsset(activity, outfitImage(0), w, h);
+            Drawable d2 = NoEtapUtility.createDrawableFromAsset(activity, outfitImage(1), w, h);
+            Drawable d3 = NoEtapUtility.createDrawableFromAsset(activity, outfitImage(2), w, h);
+            Drawable d4 = NoEtapUtility.createDrawableFromAsset(activity, outfitImage(3), w, h);
             avatarWalk.addFrame(d1, 200);
             avatarWalk.addFrame(d2, 200);
             avatarWalk.addFrame(d3, 200);
@@ -924,6 +996,7 @@ public class TITFLPlayer
         // Process other expiration
         ArrayList<TITFLBelonging> expired = processExpiration();
         boolean lostTransportation = false;
+        boolean lostOutfit = false;
         for (TITFLBelonging x : expired)
         {
             String message = "Expired: " + x.goodsRef().name();
@@ -931,6 +1004,10 @@ public class TITFLPlayer
             if (x.goodsRef() == m_transportation)
             {
                 lostTransportation = true;
+            }
+            else if (x.goodsRef() == m_outfit)
+            {
+                lostOutfit = true;
             }
         }
 
@@ -944,8 +1021,21 @@ public class TITFLPlayer
                     break;
                 }
             }
-        }        
+        }
         
+        if (lostOutfit)
+        {
+            m_outfit = null;
+            for (TITFLBelonging x : m_belongings)
+            {
+                if (x.goodsRef().isOutfit())
+                {
+                    setOutfit(x.goodsRef());
+                    break;
+                }
+            }
+        }
+
         // Process belongings
         for (TITFLBelonging x : m_belongings)
         {
@@ -999,6 +1089,7 @@ public class TITFLPlayer
             m_belongings.add(belonging);
             setTransportation(goods);
             setHome(goods);
+            setOutfit(goods);
         }
         else
         {
@@ -1273,6 +1364,14 @@ public class TITFLPlayer
         }
     }
     
+    private void setOutfit(TITFLGoods goods)
+    {
+        if (goods.isOutfit())
+        {
+            m_outfit = goods;
+        }
+    }
+
     private boolean hasFood()
     {
         for (TITFLBelonging x : m_belongings)

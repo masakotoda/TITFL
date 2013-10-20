@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 
 public class TITFLTownElementHomeLayout implements TITFLLayout
 {
@@ -46,6 +47,11 @@ public class TITFLTownElementHomeLayout implements TITFLLayout
         m_playerView.initialize();
         m_playerView.invalidate();
         
+        ImageView avatar = (ImageView) m_activity.findViewById(R.id.imageViewAvatar);
+        int w = m_element.visitor().getAvatarWidth(m_activity);
+        int h = m_element.visitor().getAvatarHeight(m_activity);
+        avatar.setImageDrawable(NoEtapUtility.createDrawableFromAsset(m_activity, m_element.visitor().outfitImage(0), w, h));
+
         Button buttonClose = (Button) m_activity.findViewById(R.id.buttonClose);
         setButtonActionClose(buttonClose);
 

@@ -9,7 +9,16 @@
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true" />
-
+    
+    <ImageView
+        android:id="@+id/imageViewAvatar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/playerView"
+        android:layout_centerVertical="true"
+        android:contentDescription="@string/blank_string"
+        android:src="@drawable/player_a_frm0" />
+    
     <TextView
         android:id="@+id/textViewName"
         android:layout_width="wrap_content"
@@ -74,5 +83,4 @@
         android:layout_toRightOf="@+id/imageViewGreeting"
         android:text="@string/dummy_string"
         android:textAppearance="?android:attr/textAppearanceSmall" />
-
 </RelativeLayout>

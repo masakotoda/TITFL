@@ -93,6 +93,7 @@ public class DialogPurchaseGoods extends Dialog
                 m_parent.element().visitor().buy(m_goods, count, m_parent.element().town().currentWeek());
                 m_parent.greetingText().setText(m_goods.greeting());
                 m_parent.playerView().invalidate();
+                m_parent.updateOutfit();
                 m_parent.updateSellable();
                 dismiss();
             }
