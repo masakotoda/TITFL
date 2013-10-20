@@ -60,6 +60,14 @@ public class DialogPlayerStatus extends Dialog
             ary.add("Cash: $" + Integer.toString(player.cash()));
             ary.add("Saving: $" + Integer.toString(player.saving()));
             ary.add("Home: " + player.home().name());
+            if (player.outfit() == null)
+            {
+                ary.add("Outfit: Naked");
+            }
+            else
+            {
+                ary.add("Outfit: " + player.outfit().name());
+            }
             ary.add("Transp: " + player.transportation().name());
             if (player.job() == null)
             {

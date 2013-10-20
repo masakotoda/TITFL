@@ -681,8 +681,6 @@ public class TITFLPlayer
         top += textSize;
         canvas.drawText("Cash: $" + Integer.toString(m_cash), left, top, paint);
         top += textSize;
-        canvas.drawText("Saving: $" + Integer.toString(m_saving), left, top, paint);
-        top += textSize;
 
         top += textSize;
         int count = 0;
@@ -703,12 +701,6 @@ public class TITFLPlayer
         canvas.drawText("Transp: " + m_transportation.name(), left, top, paint);
 
         top -= textSize;
-        if (m_outfit == null)
-            canvas.drawText("Outfit: Naked", left, top, paint);
-        else
-            canvas.drawText("Outfit: " + m_outfit.name(), left, top, paint);
-
-        top -= textSize;
         if (m_job == null)
             canvas.drawText("Work as: Jobless", left, top, paint);
         else
@@ -720,6 +712,7 @@ public class TITFLPlayer
         else
             canvas.drawText("Work at: " + m_job.townelement().name(), left, top, paint);
 
+        /*
         top -= textSize;
 
         top -= textSize;
@@ -741,6 +734,7 @@ public class TITFLPlayer
         canvas.drawText("Exp.Business: " + Integer.toString(m_experience.m_business_finance), left, top, paint);
         top -= textSize;
         canvas.drawText("Exp.Basic: " + Integer.toString(m_experience.m_basic), left, top, paint);
+        */
     }
 
     private int getAnim(TITFLTownMapNode current, TITFLTownMapNode next)
