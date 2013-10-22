@@ -26,6 +26,7 @@ public class TITFLGoods
     private int m_affectOnHealth;      // Affect on health level
     private String m_greeting;         // Greeting upon purchase
     private String m_requiredGoods;    // Required goods to buy this goods
+    private int m_maxUnits = 1;        // Max units that player can buy at once
 
     private static String asset_xml_name = "default_goods.xml";
     private static String tag_root = "TITFL";
@@ -49,6 +50,7 @@ public class TITFLGoods
     private static String atr_health = "affect_on_health";
     private static String atr_greeting = "greeting";
     private static String atr_required_goods = "required_goods";
+    private static String atr_max_units = "max_units";
 
     public TITFLGoods()
     {
@@ -136,6 +138,11 @@ public class TITFLGoods
     {
         return m_greeting;
     }
+    
+    public int maxUnits()
+    {
+        return m_maxUnits;
+    }
 
     public static ArrayList<TITFLGoods> loadDefaultGoods(AssetManager am, TITFLTown town)
     {
@@ -202,6 +209,8 @@ public class TITFLGoods
                         goods.m_greeting = attribValue;
                     else if (attribName.equals(atr_required_goods))
                         goods.m_requiredGoods = attribValue;
+                    else if (attribName.equals(atr_max_units))
+                        goods.m_maxUnits = Integer.parseInt(attribValue);
                 }
                 
                 ret.add(goods);

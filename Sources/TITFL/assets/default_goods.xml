@@ -257,6 +257,7 @@
         goods_id="goods_whore"
         name="Whore"
         price="200"
+        max_units="3"
     	/>
 
     <goods
@@ -264,6 +265,7 @@
         goods_id="goods_dollar_pencil"
         name="Pencil"
         price="1"
+        max_units="100"
     	/>
     
     <goods
@@ -321,6 +323,7 @@
         name="Gold"
         townelement_id="townelement_bank"
         price="100"
+        max_units="100"
     	/>
     
     <goods
@@ -328,6 +331,7 @@
         name="Bond"
         townelement_id="townelement_bank"
         price="50"
+        max_units="100"
     	/>
     
     <goods
@@ -335,6 +339,7 @@
         name="Stock"
         townelement_id="townelement_bank"
         price="10"
+        max_units="100"
     	/>
         
     <goods
