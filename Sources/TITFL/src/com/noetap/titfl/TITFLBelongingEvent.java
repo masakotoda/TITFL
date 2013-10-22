@@ -90,4 +90,41 @@ public class TITFLBelongingEvent
         }
         return null;
     }
+    
+    public boolean isDue(int week)
+    {
+        if (m_eventRef == null)
+            return false;
+        
+        if (m_lastEventOccurred + m_eventRef.cycle() <= week)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+    public boolean process(TITFLPlayer owner)
+    {
+        if (m_eventRef == null)
+            return false;
+
+        int week = owner.currentLocation().town().currentWeek();
+
+        int price = eventRef().price();
+        if (!eventRef().isFixedPrice())
+            price *= owner.currentLocation().town().economyFactor();
+        
+        // Oil change can be rejected (player will lose the car though)
+        // Rent cannot be rejected (the balance may become minus.)
+        if (owner.cash() < price && eventRef().canReject())
+            return false;
+        
+        owner.pay(price);        
+        owner.addHours(eventRef().timeToPay());
+        m_lastEventOccurred = week;
+        return true;
+    }
 }

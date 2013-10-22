@@ -31,7 +31,7 @@ public class TITFLGoodsEvent implements TITFLEvent
     private static String atr_price = "price";
     private static String atr_time = "time_to_pay";
     private static String atr_can_reject = "can_reject";
-    private static String att_can_skip = "can_skipped";
+    private static String att_can_skip = "can_skip";
     private static String atr_is_fixed_price = "is_fixed_price";
     
     public TITFLGoodsEvent()

@@ -5,24 +5,34 @@
         description="Oil Change"
         goods_id="goods_mopet"
         cycle="4"
+        can_reject="true"
         price="20"
         />
     <goodsevent
-        goodsevent_id="goodsevent_fill_air"
-        description="Fill some air to the bicycle tires"
-        goods_id="goods_bicycle"
+        goodsevent_id="goodsevent_apartment_rent"
+        description="Rent is due."
+        goods_id="goods_cheap_apartment"
         cycle="4"
-        price="0"
+        price="800"
+        can_skip="false"
+        is_fixed_price="true"
         />
     <goodsevent
-        goodsevent_id="goodsevent_ring_bell"
-        description="Ring bicycle bell"
-        goods_id="goods_bicycle"
+        goodsevent_id="goodsevent_pet_dog"
+        description="Walk your dog and spend some time with it."
+        goods_id="goods_pet_dog"
         cycle="1"
-        price="0"
-        time_to_pay="0"
-        can_reject="false"
-        can_skipped="false"
-        is_fixed_price="true"
+        price="5"
+        time_to_pay="1"
+        can_reject="true"
+        />
+    <goodsevent
+        goodsevent_id="goodsevent_pet_rabbit"
+        description="Clean the litter box and feed carrot."
+        goods_id="goods_pet_rabbit"
+        cycle="2"
+        price="2"
+        time_to_pay="1"
+        can_reject="true"
         />
 </TITFL>

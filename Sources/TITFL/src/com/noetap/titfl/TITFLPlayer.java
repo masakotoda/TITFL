@@ -53,7 +53,7 @@ public class TITFLPlayer
     private TITFLTownElement m_currentLocation;
     private TITFLTownElement m_home;
     
-    private int m_counter = -1;
+    private int m_counter = -2;
     private float m_speedFactor = 2.0f; // 1 is default. 0.5 is x2 faster. 2 is x2 slower.
     private float m_hour = 0;
     private String m_avatar_frm_01;
@@ -98,7 +98,7 @@ public class TITFLPlayer
     private static String atr_theme_color_g = "theme_color_g";
     private static String atr_theme_color_b = "theme_color_b";
     private static String atr_current_location = "current_location";
-    private static String atr_counter = "counter";
+    //private static String atr_counter = "counter";
     private static String atr_speed_factor = "speed_factor";
     private static String atr_hour = "hour";
     private static String atr_job = "job";
@@ -243,10 +243,10 @@ public class TITFLPlayer
         return m_home;   
     }
     
-    public int counter()
-    {
-        return m_counter;
-    }
+    //public int counter()
+    //{
+    //    return m_counter;
+    //}
     
     public float speedFactor()
     {
@@ -410,7 +410,7 @@ public class TITFLPlayer
             serializer.attribute(ns, atr_outfit, outfitId);
             serializer.attribute(ns, atr_home, homeId);
             serializer.attribute(ns, atr_speed_factor, Float.toString(m_speedFactor));
-            serializer.attribute(ns, atr_counter, Integer.toString(m_counter));
+            //serializer.attribute(ns, atr_counter, Integer.toString(m_counter));
             serializer.attribute(ns, atr_hour, Float.toString(m_hour));
             serializer.attribute(ns, atr_avatar_frm_01, m_avatar_frm_01);
             serializer.attribute(ns, atr_avatar_frm_02, m_avatar_frm_02);
@@ -527,8 +527,8 @@ public class TITFLPlayer
                 g = Integer.parseInt(attribValue);
             else if (attribName.equals(atr_theme_color_b))
                 b = Integer.parseInt(attribValue);
-            else if (attribName.equals(atr_counter))
-                player.m_counter = Integer.parseInt(attribValue);
+            //else if (attribName.equals(atr_counter))
+            //    player.m_counter = Integer.parseInt(attribValue);
             else if (attribName.equals(atr_speed_factor))
                 player.m_speedFactor = Float.parseFloat(attribValue);
             else if (attribName.equals(atr_hour))
@@ -898,7 +898,7 @@ public class TITFLPlayer
                 if (m_counter == route.size())
                 {                    
                     avatarWalk.stop();
-                    m_counter = -1;
+                    m_counter = -2;
                     if (openDestination)
                     {
                         int delay = 10; // One of Masako's slow device doesn't work without delay.
@@ -987,10 +987,11 @@ public class TITFLPlayer
             events.add(message);
         }
 
-        // Process other expiration
-        ArrayList<TITFLBelonging> expired = processExpiration();
         boolean lostTransportation = false;
         boolean lostOutfit = false;
+ 
+        // Process other expiration
+        ArrayList<TITFLBelonging> expired = processExpiration();
         for (TITFLBelonging x : expired)
         {
             String message = "Expired: " + x.goodsRef().name();
@@ -1005,6 +1006,21 @@ public class TITFLPlayer
             }
         }
 
+        // Process belongings
+        ArrayList<TITFLBelonging> lost = processBelongingEvents(events);
+        for (TITFLBelonging x : lost)
+        {
+            if (x.goodsRef() == m_transportation)
+            {
+                lostTransportation = true;
+            }
+            else if (x.goodsRef() == m_outfit)
+            {
+                lostOutfit = true;
+            }
+        }
+
+        // Reset transportation
         if (lostTransportation)
         {
             for (TITFLBelonging x : m_belongings)
@@ -1016,7 +1032,8 @@ public class TITFLPlayer
                 }
             }
         }
-        
+
+        // Reset outfit
         if (lostOutfit)
         {
             m_outfit = null;
@@ -1027,18 +1044,6 @@ public class TITFLPlayer
                     setOutfit(x.goodsRef());
                     break;
                 }
-            }
-        }
-
-        // Process belongings
-        for (TITFLBelonging x : m_belongings)
-        {
-            for (TITFLBelongingEvent e : x.events())
-            {
-                String message = x.goodsRef().name();
-                message += ": ";
-                message += e.eventRef().description();
-                events.add(message);
             }
         }
 
@@ -1094,6 +1099,10 @@ public class TITFLPlayer
         }
     }
 
+    public void pay(int amount)
+    {
+        m_cash -= amount;
+    }
 
     public void sell(TITFLBelonging belonging, int unit)
     {
@@ -1215,7 +1224,7 @@ public class TITFLPlayer
 
     public boolean isMoving()
     {
-        if (m_counter < 0)
+        if (m_counter <= -2)
             return false;
         else
             return true;            
@@ -1290,6 +1299,15 @@ public class TITFLPlayer
         return true;
     }
     
+    public boolean addHours(float hours)
+    {
+        if (m_hour + hours > m_maxHour)
+            return false;
+
+        m_hour += hours;
+        return true;
+    }
+
     private boolean updateMortgageBalance(int price)
     {
         for (TITFLBelonging b : m_belongings)
@@ -1406,6 +1424,47 @@ public class TITFLPlayer
         }
         m_belongings.removeAll(expired);
         return expired;
+    }
+    
+    private ArrayList<TITFLBelonging> processBelongingEvents(ArrayList<String> events)
+    {
+        int week = currentLocation().town().currentWeek();
+
+        ArrayList<TITFLBelonging> lost = new ArrayList<TITFLBelonging>();
+        for (TITFLBelonging x : m_belongings)
+        {
+            boolean eventFail = false;
+            for (TITFLBelongingEvent e : x.events())
+            {
+                if (e.isDue(week))
+                {
+                    if (e.process(this))
+                    {
+                        String message = x.goodsRef().name();
+                        message += ": ";
+                        message += e.eventRef().description();
+                        events.add(message);
+                    }
+                    else
+                    {
+                        String message = x.goodsRef().name();
+                        message += ": Failed to ";
+                        message += e.eventRef().description();
+                        events.add(message);
+                        eventFail = true;
+                    }
+                }
+            }
+            if (eventFail)
+            {
+                lost.add(x);
+                String message = "You've just lost ";
+                message += x.goodsRef().name();
+                events.add(message);
+            }
+        }
+        m_belongings.remove(lost);
+        return lost;
     }
     
     private ArrayList<TITFLBelonging> consumeFood()
