@@ -106,10 +106,18 @@ public class TITFLBelongingEvent
         }
     }
     
-    public boolean process(TITFLPlayer owner)
+    public boolean process(TITFLPlayer owner, ListAdapterBeginWeek.BeginWeekItem event)
     {
         if (m_eventRef == null)
+        {
+            event.m_description = "unexpected error";
             return false;
+        }
+
+        
+        String message = event.m_description;
+        message += ": ";
+        message += eventRef().description();
 
         int week = owner.currentLocation().town().currentWeek();
 
@@ -120,9 +128,17 @@ public class TITFLBelongingEvent
         // Oil change can be rejected (player will lose the car though)
         // Rent cannot be rejected (the balance may become minus.)
         if (owner.cash() < price && eventRef().canReject())
+        {
+            message += " - FAIL!";
+            event.m_description = message;
             return false;
+        }
         
-        owner.pay(price);        
+        event.m_description = message;
+        event.m_price = price;
+        event.m_hour = eventRef().timeToPay();
+        
+        owner.pay(price);
         owner.addHours(eventRef().timeToPay());
         m_lastEventOccurred = week;
         return true;

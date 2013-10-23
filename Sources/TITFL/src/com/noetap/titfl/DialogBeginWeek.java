@@ -5,13 +5,12 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.app.Dialog;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
 public class DialogBeginWeek extends Dialog
 {    
-    public DialogBeginWeek(String title, ArrayList<String> events, Activity activity)
+    public DialogBeginWeek(String title, ArrayList<ListAdapterBeginWeek.BeginWeekItem> events, Activity activity)
     {
         super(activity);
 
@@ -19,7 +18,7 @@ public class DialogBeginWeek extends Dialog
         setTitle(title);
 
         ListView list = (ListView) findViewById(R.id.listViewEvents);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity, R.layout.list_smallfont, events);
+        ListAdapterBeginWeek adapter = new ListAdapterBeginWeek(activity, events);        
         list.setAdapter(adapter);
 
         Button okButton = (Button) findViewById(R.id.buttonOK);

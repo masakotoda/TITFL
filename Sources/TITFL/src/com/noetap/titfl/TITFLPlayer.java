@@ -12,6 +12,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.res.AssetManager;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -960,22 +961,24 @@ public class TITFLPlayer
 
     public void beginWeek(TITFLRandomEvent randomEvent)
     {
-        ArrayList<String> events = new ArrayList<String>();
+        Activity activity = currentLocation().town().activity();
+        ArrayList<ListAdapterBeginWeek.BeginWeekItem> events = new ArrayList<ListAdapterBeginWeek.BeginWeekItem>();
 
         // Process foods
         if (!hasFood())
         {
             m_hour += 4;
             m_satisfaction.m_health -= 4;
-            events.add("No Food, less hour, less health :-(");
+            events.add(new ListAdapterBeginWeek.BeginWeekItem(null, "No Food, less hour, less health :-(", 0, 4));
         }
         else
         {
             ArrayList<TITFLBelonging> consumed = consumeFood();
             for (TITFLBelonging x : consumed)
             {
+                Bitmap bm = NoEtapUtility.getBitmap(activity, x.goodsRef().id() + ".png");
                 String message = "You've just finished: " + x.goodsRef().name();
-                events.add(message);
+                events.add(new ListAdapterBeginWeek.BeginWeekItem(bm, message, 0, 0));
             }
         }
         
@@ -983,8 +986,9 @@ public class TITFLPlayer
         ArrayList<TITFLBelonging> soonExpire = getSoonExpire();
         for (TITFLBelonging x : soonExpire)
         {
+            Bitmap bm = NoEtapUtility.getBitmap(activity, x.goodsRef().id() + ".png");
             String message = "Get new: " + x.goodsRef().name();
-            events.add(message);
+            events.add(new ListAdapterBeginWeek.BeginWeekItem(bm, message, 0, 0));
         }
 
         boolean lostTransportation = false;
@@ -994,8 +998,9 @@ public class TITFLPlayer
         ArrayList<TITFLBelonging> expired = processExpiration();
         for (TITFLBelonging x : expired)
         {
+            Bitmap bm = NoEtapUtility.getBitmap(activity, x.goodsRef().id() + ".png");
             String message = "Expired: " + x.goodsRef().name();
-            events.add(message);
+            events.add(new ListAdapterBeginWeek.BeginWeekItem(bm, message, 0, 0));
             if (x.goodsRef() == m_transportation)
             {
                 lostTransportation = true;
@@ -1050,7 +1055,7 @@ public class TITFLPlayer
         // Random event
         String message = "Surprise! : ";
         message += randomEvent.description();
-        events.add(message);
+        events.add(new ListAdapterBeginWeek.BeginWeekItem(null, message, 0, 0));
 
         // Display all events
         String title = alias() + " Week " + Integer.toString(currentLocation().town().currentWeek());
@@ -1426,31 +1431,28 @@ public class TITFLPlayer
         return expired;
     }
     
-    private ArrayList<TITFLBelonging> processBelongingEvents(ArrayList<String> events)
+    private ArrayList<TITFLBelonging> processBelongingEvents(ArrayList<ListAdapterBeginWeek.BeginWeekItem> events)
     {
+        Activity activity = m_currentLocation.town().activity();
         int week = currentLocation().town().currentWeek();
 
         ArrayList<TITFLBelonging> lost = new ArrayList<TITFLBelonging>();
         for (TITFLBelonging x : m_belongings)
         {
+            Bitmap bm = NoEtapUtility.getBitmap(activity, x.goodsRef().id() + ".png");
             boolean eventFail = false;
             for (TITFLBelongingEvent e : x.events())
             {
                 if (e.isDue(week))
                 {
-                    if (e.process(this))
+                    ListAdapterBeginWeek.BeginWeekItem event = new ListAdapterBeginWeek.BeginWeekItem(bm, x.goodsRef().name(), 0, 0);
+                    if (e.process(this, event))
                     {
-                        String message = x.goodsRef().name();
-                        message += ": ";
-                        message += e.eventRef().description();
-                        events.add(message);
+                        events.add(event);
                     }
                     else
                     {
-                        String message = x.goodsRef().name();
-                        message += ": Failed to ";
-                        message += e.eventRef().description();
-                        events.add(message);
+                        events.add(event);
                         eventFail = true;
                     }
                 }
@@ -1460,10 +1462,10 @@ public class TITFLPlayer
                 lost.add(x);
                 String message = "You've just lost ";
                 message += x.goodsRef().name();
-                events.add(message);
+                events.add(new ListAdapterBeginWeek.BeginWeekItem(bm, message, 0, 0));
             }
         }
-        m_belongings.remove(lost);
+        m_belongings.removeAll(lost);
         return lost;
     }
     
