@@ -17,7 +17,7 @@
     <TextView
         android:id="@+id/description"
         android:layout_height="wrap_content"
-        android:layout_width="230dp"
+        android:layout_width="220dp"
         android:text="@string/dummy_string"
         android:layout_gravity="center"
         android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -43,7 +43,7 @@
 
     <TextView
         android:id="@+id/health"
-        android:layout_width="72dp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:gravity="center"

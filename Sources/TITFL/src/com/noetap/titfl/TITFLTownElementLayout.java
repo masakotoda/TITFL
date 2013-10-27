@@ -83,10 +83,10 @@ public class TITFLTownElementLayout implements TITFLLayout
         int w = (int)(256 * factor);
         int h = (int)(256 * factor);
         int frame_time = 400; // msec
-        Drawable d1 = NoEtapUtility.createDrawableFromAsset(m_activity, "greeter/greeter_a_frm01.png", w, h);
-        Drawable d2 = NoEtapUtility.createDrawableFromAsset(m_activity, "greeter/greeter_a_frm02.png", w, h);
-        Drawable d3 = NoEtapUtility.createDrawableFromAsset(m_activity, "greeter/greeter_a_frm03.png", w, h);
-        Drawable d4 = NoEtapUtility.createDrawableFromAsset(m_activity, "greeter/greeter_a_frm04.png", w, h);
+        Drawable d1 = NoEtapUtility.createDrawableFromAsset(m_activity, TITFLActivity.pathGreeter + "greeter_a_frm01.png", w, h);
+        Drawable d2 = NoEtapUtility.createDrawableFromAsset(m_activity, TITFLActivity.pathGreeter + "greeter_a_frm02.png", w, h);
+        Drawable d3 = NoEtapUtility.createDrawableFromAsset(m_activity, TITFLActivity.pathGreeter + "greeter_a_frm03.png", w, h);
+        Drawable d4 = NoEtapUtility.createDrawableFromAsset(m_activity, TITFLActivity.pathGreeter + "greeter_a_frm04.png", w, h);
         greeterTalk.addFrame(d1, frame_time);
         greeterTalk.addFrame(d2, frame_time);
         greeterTalk.addFrame(d3, frame_time);

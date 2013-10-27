@@ -6,6 +6,7 @@
         name="Date (Girlfriend/Boyfriend)"
         townelement_id=""
         price="0"
+        losing="You broke up with your date."
     	/>
     
     <goods
@@ -14,6 +15,7 @@
         name="Spouse (Wife/Husband)"
         townelement_id=""
         price="0"
+        losing="You got divorced."
     	/>
     
     <goods
@@ -26,6 +28,7 @@
         happiness_per_goodlooking_factor="2"
         happiness_per_physical_factor="1"
         happiness_per_lucky_factor="1" 
+        losing="Your dog died."
     	/>
     
     <goods
@@ -38,6 +41,7 @@
         happiness_per_goodlooking_factor="1"
         happiness_per_physical_factor="1"
         happiness_per_lucky_factor="5" 
+        losing="Your rabbit ran away."
     	/>
     
     <goods

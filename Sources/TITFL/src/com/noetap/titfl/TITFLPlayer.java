@@ -959,7 +959,7 @@ public class TITFLPlayer
 
         m_counter = -1;
         if (transportation() != null)
-            m_marbleImg.setImageBitmap(NoEtapUtility.getBitmap(activity, transportation().id() + ".png"));
+            m_marbleImg.setImageBitmap(NoEtapUtility.getBitmap(activity, TITFLActivity.pathGoods + transportation().id() + ".png"));
         m_marbleImg.startAnimation(anim);
         
         return true;
@@ -970,27 +970,26 @@ public class TITFLPlayer
         int week = currentLocation().town().currentWeek();
         Activity activity = currentLocation().town().activity();
         ArrayList<ListAdapterBeginWeek.BeginWeekItem> events = new ArrayList<ListAdapterBeginWeek.BeginWeekItem>();
+        Bitmap bmBlank = BitmapFactory.decodeResource(activity.getResources(), R.drawable.bg_white);
+        Bitmap bmCheck = BitmapFactory.decodeResource(activity.getResources(), R.drawable.event_check);
 
-        {
-            Bitmap bm = BitmapFactory.decodeResource(activity.getResources(), R.drawable.bg_white);
-            events.add(new ListAdapterBeginWeek.BeginWeekItem(bm, null, 0, 0, 0));
-        }
+        events.add(new ListAdapterBeginWeek.BeginWeekItem(bmBlank, null, 0, 0, 0));
         
         // Process foods
         if (!hasFood())
         {
             m_hour += 4;
             m_satisfaction.m_health -= 4;
-            events.add(new ListAdapterBeginWeek.BeginWeekItem(null, "No Food, less hour, less health :-(", 0, 4, -4));
+            events.add(new ListAdapterBeginWeek.BeginWeekItem(bmCheck, "No Food, less hour, less health :-(", 0, 4, -4));
         }
         else
         {
             ArrayList<TITFLBelonging> consumed = consumeFood();
             for (TITFLBelonging x : consumed)
             {
-                Bitmap bm = NoEtapUtility.getBitmap(activity, x.goodsRef().id() + ".png");
+                Bitmap bm = NoEtapUtility.getBitmap(activity, TITFLActivity.pathGoods + x.goodsRef().id() + ".png");
                 String message = "You've just finished: " + x.goodsRef().name();
-                events.add(new ListAdapterBeginWeek.BeginWeekItem(bm, message, 0, 0, 0));
+                events.add(new ListAdapterBeginWeek.BeginWeekItem(bm == null ? bmCheck : bm, message, 0, 0, 0));
             }
         }
         
@@ -998,9 +997,9 @@ public class TITFLPlayer
         ArrayList<TITFLBelonging> soonExpire = getSoonExpire();
         for (TITFLBelonging x : soonExpire)
         {
-            Bitmap bm = NoEtapUtility.getBitmap(activity, x.goodsRef().id() + ".png");
+            Bitmap bm = NoEtapUtility.getBitmap(activity, TITFLActivity.pathGoods + x.goodsRef().id() + ".png");
             String message = "Get new: " + x.goodsRef().name();
-            events.add(new ListAdapterBeginWeek.BeginWeekItem(bm, message, 0, 0, 0));
+            events.add(new ListAdapterBeginWeek.BeginWeekItem(bm == null ? bmCheck : bm, message, 0, 0, 0));
         }
 
         boolean lostTransportation = false;
@@ -1010,9 +1009,17 @@ public class TITFLPlayer
         ArrayList<TITFLBelonging> expired = processExpiration();
         for (TITFLBelonging x : expired)
         {
-            Bitmap bm = NoEtapUtility.getBitmap(activity, x.goodsRef().id() + ".png");
-            String message = "Expired: " + x.goodsRef().name();
-            events.add(new ListAdapterBeginWeek.BeginWeekItem(bm, message, 0, 0, 0));
+            Bitmap bm = NoEtapUtility.getBitmap(activity, TITFLActivity.pathGoods + x.goodsRef().id() + ".png");
+            String message = "";
+            if (x.goodsRef().losing() != null)
+            {
+                message = x.goodsRef().losing();
+            }
+            if (message.length() == 0)
+            {            
+                message = "Expired: " + x.goodsRef().name();
+            }
+            events.add(new ListAdapterBeginWeek.BeginWeekItem(bm == null ? bmCheck : bm, message, 0, 0, 0));
             if (x.goodsRef() == m_transportation)
             {
                 lostTransportation = true;
@@ -1037,6 +1044,21 @@ public class TITFLPlayer
             else if (x.goodsRef() == m_outfit)
             {
                 lostOutfit = true;
+            }
+        }
+
+        // Random event
+        if (week > 1)
+        {
+            TITFLBelonging losing = findBelonging(randomEvent.losing_goods());
+            ListAdapterBeginWeek.BeginWeekItem event = new ListAdapterBeginWeek.BeginWeekItem(null, "", 0, 0, 0);
+            if (randomEvent.process(this, event))
+            {
+                events.add(event);
+                if (losing != null && losing.goodsRef() == m_transportation)
+                {
+                    lostTransportation = true;
+                }
             }
         }
 
@@ -1066,17 +1088,7 @@ public class TITFLPlayer
                 }
             }
         }
-
-        // Random event
-        if (week > 1)
-        {
-            ListAdapterBeginWeek.BeginWeekItem event = new ListAdapterBeginWeek.BeginWeekItem(null, "", 0, 0, 0);
-            if (randomEvent.process(this, event))
-            {
-                events.add(event);
-            }
-        }
-
+        
         // Display all events
         String title = alias() + " Week " + Integer.toString(week);
         DialogBeginWeek dialog = new DialogBeginWeek(title, events, m_currentLocation.town().activity());
@@ -1343,6 +1355,9 @@ public class TITFLPlayer
 
     public TITFLBelonging findBelonging(String goods)
     {
+        if (goods == null)
+            return null;
+        
         for (TITFLBelonging g : m_belongings)
         {
             if (g.goodsRef().id().equals(goods))
@@ -1506,7 +1521,9 @@ public class TITFLPlayer
         ArrayList<TITFLBelonging> lost = new ArrayList<TITFLBelonging>();
         for (TITFLBelonging x : m_belongings)
         {
-            Bitmap bm = NoEtapUtility.getBitmap(activity, x.goodsRef().id() + ".png");
+            Bitmap bm = NoEtapUtility.getBitmap(activity, TITFLActivity.pathGoods + x.goodsRef().id() + ".png");
+            if (bm == null)
+                bm = BitmapFactory.decodeResource(activity.getResources(), R.drawable.goods_sample);
             boolean eventFail = false;
             for (TITFLBelongingEvent e : x.events())
             {
@@ -1519,7 +1536,7 @@ public class TITFLPlayer
                     }
                     else
                     {
-                        events.add(event);
+                        //events.add(event); // We probably don't have to explain the reason...
                         eventFail = true;
                     }
                 }
@@ -1527,8 +1544,16 @@ public class TITFLPlayer
             if (eventFail)
             {
                 lost.add(x);
-                String message = "You've just lost ";
-                message += x.goodsRef().name();
+                String message = "";
+                if (x.goodsRef().losing() != null)
+                {
+                    message += x.goodsRef().losing();
+                }
+                if (message.length() == 0)
+                {
+                    message = "You've just lost ";
+                    message += x.goodsRef().name();
+                }
                 events.add(new ListAdapterBeginWeek.BeginWeekItem(bm, message, 0, 0, 0));
             }
         }

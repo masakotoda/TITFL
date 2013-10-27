@@ -190,7 +190,7 @@ public class TITFLTownElement
         if (m_bitmap != null)
             return m_bitmap;
         
-        m_bitmap = NoEtapUtility.getBitmap(m_town.activity(), m_id + ".png");
+        m_bitmap = NoEtapUtility.getBitmap(m_town.activity(), TITFLActivity.pathElement + m_id + ".png");
         return m_bitmap;
     }
     

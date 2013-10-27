@@ -25,6 +25,7 @@ public class TITFLGoods
     private TITFL.CharacterFactor m_affectOnHappiness; // Affect on happy level for each characteristic
     private int m_affectOnHealth;      // Affect on health level
     private String m_greeting;         // Greeting upon purchase
+    private String m_losing;           // Message when losing/expiring
     private String m_requiredGoods;    // Required goods to buy this goods
     private int m_maxUnits = 1;        // Max units that player can buy at once
 
@@ -49,6 +50,7 @@ public class TITFLGoods
     private static String atr_happiness_5 = "happiness_per_lucky_factor";    
     private static String atr_health = "affect_on_health";
     private static String atr_greeting = "greeting";
+    private static String atr_losing = "losing";
     private static String atr_required_goods = "required_goods";
     private static String atr_max_units = "max_units";
 
@@ -139,6 +141,11 @@ public class TITFLGoods
         return m_greeting;
     }
     
+    public String losing()
+    {
+        return m_losing;
+    }
+    
     public int maxUnits()
     {
         return m_maxUnits;
@@ -207,6 +214,8 @@ public class TITFLGoods
                         goods.m_affectOnHealth = Integer.parseInt(attribValue);
                     else if (attribName.equals(atr_greeting))
                         goods.m_greeting = attribValue;
+                    else if (attribName.equals(atr_losing))
+                        goods.m_losing = attribValue;
                     else if (attribName.equals(atr_required_goods))
                         goods.m_requiredGoods = attribValue;
                     else if (attribName.equals(atr_max_units))

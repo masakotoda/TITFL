@@ -256,7 +256,7 @@ public class TITFLTown
     {
         if (m_backgroundTile != null)
             return m_backgroundTile;
-        m_backgroundTile = NoEtapUtility.getBitmap(activity(), "townelement_bg001.png");
+        m_backgroundTile = NoEtapUtility.getBitmap(activity(), "townelement/townelement_bg001.png");
         return m_backgroundTile;
     }
 
@@ -266,7 +266,7 @@ public class TITFLTown
             return m_backgroundMap;
 
         if (m_townMap != null)
-            m_backgroundMap = NoEtapUtility.getBitmap(activity(), "townmap_" + m_townMap.id() + ".png");
+            m_backgroundMap = NoEtapUtility.getBitmap(activity(), TITFLActivity.pathMap + m_townMap.id() + ".png");
         return m_backgroundMap;
     }
 

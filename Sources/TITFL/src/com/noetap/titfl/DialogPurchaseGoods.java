@@ -48,7 +48,7 @@ public class DialogPurchaseGoods extends Dialog
         setButtonActionOk(okButton);
 
         ImageView imageGoods = (ImageView) findViewById(R.id.imageViewGoods);
-        Bitmap bm = NoEtapUtility.getBitmap(m_parent.activity(), m_goods.id() + ".png");
+        Bitmap bm = NoEtapUtility.getBitmap(m_parent.activity(), TITFLActivity.pathGoods + m_goods.id() + ".png");
         if (bm != null)
             imageGoods.setImageBitmap(bm);
         

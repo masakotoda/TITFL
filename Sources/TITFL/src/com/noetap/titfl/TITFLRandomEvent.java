@@ -162,8 +162,11 @@ public class TITFLRandomEvent implements TITFLEvent
         owner.addHours(m_timeToPay);
         
         int price = m_price;
-        if (m_price >= 1000000) // 1 million dollars
+        if (m_price >= 1000000) // 1 million dollars - stolen/lost wallet
         {
+            if (owner.currentLocation() == owner.home())
+                return false; // You don't have such accident since you are at home.
+            
             price = owner.cash();
             if (price > 0)
                 owner.pay(price);
