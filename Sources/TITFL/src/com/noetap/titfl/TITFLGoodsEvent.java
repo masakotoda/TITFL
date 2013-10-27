@@ -29,7 +29,7 @@ public class TITFLGoodsEvent implements TITFLEvent
     private static String atr_goods_id = "goods_id";
     private static String atr_cycle = "cycle";
     private static String atr_price = "price";
-    private static String atr_time = "time_to_pay";
+    private static String atr_time_to_pay = "time_to_pay";
     private static String atr_can_reject = "can_reject";
     private static String att_can_skip = "can_skip";
     private static String atr_is_fixed_price = "is_fixed_price";
@@ -121,7 +121,7 @@ public class TITFLGoodsEvent implements TITFLEvent
                         element.m_cycle = Integer.parseInt(attribValue);
                     else if (attribName.equals(atr_price))
                         element.m_price = Integer.parseInt(attribValue);
-                    else if (attribName.equals(atr_time))
+                    else if (attribName.equals(atr_time_to_pay))
                         element.m_timeToPay = Integer.parseInt(attribValue);
                     else if (attribName.equals(atr_can_reject))
                         element.m_canReject = Boolean.parseBoolean(attribValue);

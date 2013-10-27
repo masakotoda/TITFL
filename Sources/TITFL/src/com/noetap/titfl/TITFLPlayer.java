@@ -13,6 +13,7 @@ import android.app.Activity;
 import android.content.res.AssetManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -164,6 +165,11 @@ public class TITFLPlayer
     public int happiness()
     {
         return m_happiness;    
+    }
+    
+    public void addHappiness(int happiness)
+    {
+        m_happiness += happiness;
     }
     
     public int cash()
@@ -961,15 +967,21 @@ public class TITFLPlayer
 
     public void beginWeek(TITFLRandomEvent randomEvent)
     {
+        int week = currentLocation().town().currentWeek();
         Activity activity = currentLocation().town().activity();
         ArrayList<ListAdapterBeginWeek.BeginWeekItem> events = new ArrayList<ListAdapterBeginWeek.BeginWeekItem>();
 
+        {
+            Bitmap bm = BitmapFactory.decodeResource(activity.getResources(), R.drawable.bg_white);
+            events.add(new ListAdapterBeginWeek.BeginWeekItem(bm, null, 0, 0, 0));
+        }
+        
         // Process foods
         if (!hasFood())
         {
             m_hour += 4;
             m_satisfaction.m_health -= 4;
-            events.add(new ListAdapterBeginWeek.BeginWeekItem(null, "No Food, less hour, less health :-(", 0, 4));
+            events.add(new ListAdapterBeginWeek.BeginWeekItem(null, "No Food, less hour, less health :-(", 0, 4, -4));
         }
         else
         {
@@ -978,7 +990,7 @@ public class TITFLPlayer
             {
                 Bitmap bm = NoEtapUtility.getBitmap(activity, x.goodsRef().id() + ".png");
                 String message = "You've just finished: " + x.goodsRef().name();
-                events.add(new ListAdapterBeginWeek.BeginWeekItem(bm, message, 0, 0));
+                events.add(new ListAdapterBeginWeek.BeginWeekItem(bm, message, 0, 0, 0));
             }
         }
         
@@ -988,7 +1000,7 @@ public class TITFLPlayer
         {
             Bitmap bm = NoEtapUtility.getBitmap(activity, x.goodsRef().id() + ".png");
             String message = "Get new: " + x.goodsRef().name();
-            events.add(new ListAdapterBeginWeek.BeginWeekItem(bm, message, 0, 0));
+            events.add(new ListAdapterBeginWeek.BeginWeekItem(bm, message, 0, 0, 0));
         }
 
         boolean lostTransportation = false;
@@ -1000,7 +1012,7 @@ public class TITFLPlayer
         {
             Bitmap bm = NoEtapUtility.getBitmap(activity, x.goodsRef().id() + ".png");
             String message = "Expired: " + x.goodsRef().name();
-            events.add(new ListAdapterBeginWeek.BeginWeekItem(bm, message, 0, 0));
+            events.add(new ListAdapterBeginWeek.BeginWeekItem(bm, message, 0, 0, 0));
             if (x.goodsRef() == m_transportation)
             {
                 lostTransportation = true;
@@ -1010,6 +1022,9 @@ public class TITFLPlayer
                 lostOutfit = true;
             }
         }
+        
+        // Process lottery TODO
+        
 
         // Process belongings
         ArrayList<TITFLBelonging> lost = processBelongingEvents(events);
@@ -1053,14 +1068,25 @@ public class TITFLPlayer
         }
 
         // Random event
-        String message = "Surprise! : ";
-        message += randomEvent.description();
-        events.add(new ListAdapterBeginWeek.BeginWeekItem(null, message, 0, 0));
+        if (week > 1)
+        {
+            ListAdapterBeginWeek.BeginWeekItem event = new ListAdapterBeginWeek.BeginWeekItem(null, "", 0, 0, 0);
+            if (randomEvent.process(this, event))
+            {
+                events.add(event);
+            }
+        }
 
         // Display all events
-        String title = alias() + " Week " + Integer.toString(currentLocation().town().currentWeek());
+        String title = alias() + " Week " + Integer.toString(week);
         DialogBeginWeek dialog = new DialogBeginWeek(title, events, m_currentLocation.town().activity());
         dialog.show();
+    }
+    
+    public void buyFree(TITFLGoods goods, int unit, int acquiredWeek)
+    {
+        TITFLBelonging belonging = new TITFLBelonging(goods, unit, acquiredWeek);
+        m_belongings.add(belonging);
     }
     
     public void buy(TITFLGoods goods, int unit, int acquiredWeek)
@@ -1294,6 +1320,47 @@ public class TITFLPlayer
     {
         return false;
     }
+    
+    public boolean hasHealthInsurance()
+    {
+        for (TITFLBelonging g : m_belongings)
+        {
+            if (g.goodsRef().isHealthInsurance())
+                return true;
+        }
+        return false;
+    }
+
+    public boolean hasCarInsurance()
+    {
+        for (TITFLBelonging g : m_belongings)
+        {
+            if (g.goodsRef().isCarInsurance())
+                return true;
+        }
+        return false;
+    }
+
+    public TITFLBelonging findBelonging(String goods)
+    {
+        for (TITFLBelonging g : m_belongings)
+        {
+            if (g.goodsRef().id().equals(goods))
+                return g;
+        }
+        return null;
+    }
+    
+    public int countBelongings(String goods)
+    {
+        int count = 0;
+        for (TITFLBelonging g : m_belongings)
+        {
+            if (g.goodsRef().id().equals(goods))
+                count++;
+        }
+        return count;
+    }
 
     private boolean addHour()
     {
@@ -1445,7 +1512,7 @@ public class TITFLPlayer
             {
                 if (e.isDue(week))
                 {
-                    ListAdapterBeginWeek.BeginWeekItem event = new ListAdapterBeginWeek.BeginWeekItem(bm, x.goodsRef().name(), 0, 0);
+                    ListAdapterBeginWeek.BeginWeekItem event = new ListAdapterBeginWeek.BeginWeekItem(bm, x.goodsRef().name(), 0, 0, 0);
                     if (e.process(this, event))
                     {
                         events.add(event);
@@ -1462,7 +1529,7 @@ public class TITFLPlayer
                 lost.add(x);
                 String message = "You've just lost ";
                 message += x.goodsRef().name();
-                events.add(new ListAdapterBeginWeek.BeginWeekItem(bm, message, 0, 0));
+                events.add(new ListAdapterBeginWeek.BeginWeekItem(bm, message, 0, 0, 0));
             }
         }
         m_belongings.removeAll(lost);

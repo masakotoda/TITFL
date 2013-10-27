@@ -35,4 +35,22 @@
         time_to_pay="1"
         can_reject="true"
         />
+    <goodsevent
+        goodsevent_id="goodsevent_date"
+        description="Spend some time with your date."
+        goods_id="goods_date"
+        cycle="2"
+        price="50"
+        time_to_pay="4"
+        can_reject="true"
+        />
+    <goodsevent
+        goodsevent_id="goodsevent_spouse"
+        description="Spend some time with your spouse."
+        goods_id="goods_spouse"
+        cycle="2"
+        price="50"
+        time_to_pay="4"
+        can_reject="true"
+        />
 </TITFL>

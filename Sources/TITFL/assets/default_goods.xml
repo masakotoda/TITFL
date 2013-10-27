@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TITFL>
     <goods
+        goods_id="goods_date"
+        group=""
+        name="Date (Girlfriend/Boyfriend)"
+        townelement_id=""
+        price="0"
+    	/>
+    
+    <goods
+        goods_id="goods_spouse"
+        group=""
+        name="Spouse (Wife/Husband)"
+        townelement_id=""
+        price="0"
+    	/>
+    
+    <goods
         goods_id="goods_pet_dog"
         name="Pet Dog"
         townelement_id="townelement_mall"
@@ -46,8 +62,6 @@
         name="Mopet"
         townelement_id="townelement_cardealer"
         price="500"
-        maintenance_fee="50"
-        maintenance_cycle="12"
         speed="30"
     	/>
 
@@ -56,8 +70,6 @@
         name="Crappy Car"
         townelement_id="townelement_cardealer"
         price="2000"
-        maintenance_fee="300"
-        maintenance_cycle="12"
         speed="40"
         greeting="I gurantee this car runs fine for 4 weeks."
     	/>
@@ -67,8 +79,6 @@
         name="Fancy Car"
         townelement_id="townelement_cardealer"
         price="50000"
-        maintenance_fee="200"
-        maintenance_cycle="12"
         speed="50"
         greeting="You got a fastest car in this town!"
     	/>
@@ -135,6 +145,13 @@
         price="200"
 	    />
 
+    <goods
+        townelement_id="townelement_insurance"
+        goods_id="goods_health_insurance"
+        name="Health Insurance"
+        price="200"
+	    />
+    
     <goods
         townelement_id="townelement_hospital"
         goods_id="goods_dayquil"

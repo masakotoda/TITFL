@@ -203,6 +203,13 @@ public class TITFLBelonging
                 }
             }
         }
+        for (TITFLGoods goods : town.goods())
+        {
+            if (goods.id().equals(goodsId))
+            {
+                return goods;
+            }
+        }
         return null;
     }
     

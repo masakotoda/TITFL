@@ -6,7 +6,7 @@
 
 	 <ListView
 	     android:id="@+id/listViewEvents"
-	     android:layout_width="480dp"
+	     android:layout_width="470dp"
 	     android:layout_height="200dp"
 	     android:layout_gravity="center" >
 	 </ListView>

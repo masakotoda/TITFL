@@ -11,31 +11,43 @@
         android:layout_width="48dp"
         android:layout_gravity="center"
         android:contentDescription="@string/blank_string"
-        android:src="@drawable/marble" >
+        android:src="@drawable/event_neutral" >
     </ImageView>
 
     <TextView
         android:id="@+id/description"
-        android:layout_height="48dp"
-        android:layout_width="296dp"
+        android:layout_height="wrap_content"
+        android:layout_width="230dp"
         android:text="@string/dummy_string"
+        android:layout_gravity="center"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
         android:id="@+id/price"
         android:layout_width="64dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
         android:layout_gravity="bottom"
+        android:layout_marginLeft="5dp"
+        android:gravity="center"
         android:text="@string/dummy_string"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
         android:id="@+id/hour"
+        android:layout_width="64dp"
         android:layout_height="wrap_content"
-        android:layout_width="72dp"
         android:layout_gravity="bottom"
+        android:gravity="center"
         android:text="@string/dummy_string"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/health"
+        android:layout_width="72dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:gravity="center"
+        android:text="@string/dummy_string"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </LinearLayout>

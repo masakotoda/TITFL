@@ -25,6 +25,7 @@ public class TITFLTown
     private ArrayList<TITFLTownElement> m_elements;
     private ArrayList<TITFLTownElement> m_fixedElements;
     private ArrayList<TITFLTownElement> m_randomElements;
+    private ArrayList<TITFLGoods> m_goods;
     private int m_maxSlot;
     private TITFLPlayer m_activePlayer;
     private TITFLTownMap m_townMap;
@@ -35,6 +36,7 @@ public class TITFLTown
         m_activity = activity;
         m_game = game;
         m_townMap = townMap;
+        m_goods = new ArrayList<TITFLGoods>();
         m_elements = TITFLTownElement.loadTownElements(m_activity.getAssets(), this);
 
         m_fixedElements = new ArrayList<TITFLTownElement>();
@@ -76,6 +78,11 @@ public class TITFLTown
     public ArrayList<TITFLTownElement> elements()
     {
         return m_elements;
+    }
+    
+    public ArrayList<TITFLGoods> goods()
+    {
+        return m_goods;
     }
     
     public TITFLPlayer activePlayer()
@@ -173,6 +180,12 @@ public class TITFLTown
                 if (g.id().equals(goodsId))
                     return g;
             }
+        }
+        
+        for (TITFLGoods g : goods())
+        {
+            if (g.id().equals(goodsId))
+                return g;
         }
 
         return null; // really??

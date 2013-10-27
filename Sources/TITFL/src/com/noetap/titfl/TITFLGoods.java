@@ -216,6 +216,8 @@ public class TITFLGoods
                 ret.add(goods);
                 if (goods.m_townelement != null)
                     goods.m_townelement.merchandise().add(goods);
+                else
+                    town.goods().add(goods);
                 parser.next();
             }
         }
@@ -285,6 +287,22 @@ public class TITFLGoods
             return false;
     }
 
+    public boolean isHealthInsurance()
+    {
+        if (m_id.equals("goods_health_insurance"))
+            return true;
+        else
+            return false;
+    }
+    
+    public boolean isCarInsurance()
+    {
+        if (m_id.equals("goods_car_insurance"))
+            return true;
+        else
+            return false;
+    }
+    
     public boolean isOutfit()
     {
         if (isCasualOutfit() ||

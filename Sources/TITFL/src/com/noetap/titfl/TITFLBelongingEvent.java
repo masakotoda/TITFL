@@ -135,8 +135,8 @@ public class TITFLBelongingEvent
         }
         
         event.m_description = message;
-        event.m_price = price;
-        event.m_hour = eventRef().timeToPay();
+        event.setPrice(price);
+        event.setHour(eventRef().timeToPay());
         
         owner.pay(price);
         owner.addHours(eventRef().timeToPay());
