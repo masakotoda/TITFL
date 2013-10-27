@@ -312,6 +312,14 @@ public class TITFLGoods
             return false;
     }
     
+    public boolean isLottery()
+    {
+        if (m_id.equals("goods_lottery_ticket"))
+            return true;
+        else
+            return false;
+    }
+    
     public boolean isOutfit()
     {
         if (isCasualOutfit() ||

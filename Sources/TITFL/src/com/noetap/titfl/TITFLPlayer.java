@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Random;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlSerializer;
@@ -261,6 +262,20 @@ public class TITFLPlayer
     public float hour()
     {
         return m_hour;
+    }
+    
+    public boolean isWeekOver()    
+    {
+        if (m_hour >= m_maxHour)
+            return true;
+        else
+            return false;
+    }
+    
+    public void closeWeek()
+    {
+        m_hour = 0;
+        m_currentLocation.setVisitor(null);
     }
     
     public void setLocation(TITFLTownElement destination)
@@ -759,8 +774,7 @@ public class TITFLPlayer
         
         if (m_hour + hour > m_maxHour)
         {
-            m_hour = 0;
-            m_currentLocation.setVisitor(null);
+            closeWeek();
             ((TITFLActivity) activity).setNextPlayer(this);
             return false;
         }
@@ -852,129 +866,49 @@ public class TITFLPlayer
 
     public void beginWeek(TITFLRandomEvent randomEvent)
     {
-        int week = currentLocation().town().currentWeek();
         Activity activity = currentLocation().town().activity();
         ArrayList<ListAdapterBeginWeek.BeginWeekItem> events = new ArrayList<ListAdapterBeginWeek.BeginWeekItem>();
-        Bitmap bmBlank = BitmapFactory.decodeResource(activity.getResources(), R.drawable.bg_white);
-        Bitmap bmCheck = BitmapFactory.decodeResource(activity.getResources(), R.drawable.event_check);
 
+        // This is header
+        Bitmap bmBlank = BitmapFactory.decodeResource(activity.getResources(), R.drawable.bg_white);
         events.add(new ListAdapterBeginWeek.BeginWeekItem(bmBlank, null, 0, 0, 0));
         
+        // Process lottery
+        processLottery(events);
+        
         // Process foods
-        if (!hasFood())
-        {
-            m_hour += 4;
-            m_satisfaction.m_health -= 4;
-            events.add(new ListAdapterBeginWeek.BeginWeekItem(bmCheck, "No Food, less hour, less health :-(", 0, 4, -4));
-        }
-        else
-        {
-            ArrayList<TITFLBelonging> consumed = consumeFood();
-            for (TITFLBelonging x : consumed)
-            {
-                Bitmap bm = NoEtapUtility.getBitmap(activity, TITFLActivity.pathGoods + x.goodsRef().id() + ".png");
-                String message = "You've just finished: " + x.goodsRef().name();
-                events.add(new ListAdapterBeginWeek.BeginWeekItem(bm == null ? bmCheck : bm, message, 0, 0, 0));
-            }
-        }
+        processFood(events);
         
         // Process soon - expiration
-        ArrayList<TITFLBelonging> soonExpire = getSoonExpire();
-        for (TITFLBelonging x : soonExpire)
-        {
-            Bitmap bm = NoEtapUtility.getBitmap(activity, TITFLActivity.pathGoods + x.goodsRef().id() + ".png");
-            String message = "Get new: " + x.goodsRef().name();
-            events.add(new ListAdapterBeginWeek.BeginWeekItem(bm == null ? bmCheck : bm, message, 0, 0, 0));
-        }
+        processSoonExpire(events);
 
-        boolean lostTransportation = false;
-        boolean lostOutfit = false;
- 
         // Process other expiration
-        ArrayList<TITFLBelonging> expired = processExpiration();
-        for (TITFLBelonging x : expired)
-        {
-            Bitmap bm = NoEtapUtility.getBitmap(activity, TITFLActivity.pathGoods + x.goodsRef().id() + ".png");
-            String message = "";
-            if (x.goodsRef().losing() != null)
-            {
-                message = x.goodsRef().losing();
-            }
-            if (message.length() == 0)
-            {            
-                message = "Expired: " + x.goodsRef().name();
-            }
-            events.add(new ListAdapterBeginWeek.BeginWeekItem(bm == null ? bmCheck : bm, message, 0, 0, 0));
-            if (x.goodsRef() == m_transportation)
-            {
-                lostTransportation = true;
-            }
-            else if (x.goodsRef() == m_outfit)
-            {
-                lostOutfit = true;
-            }
-        }
+        ArrayList<TITFLBelonging> lost1 = processExpiration(events);
         
-        // Process lottery TODO
-        
+        // Process loan payment
+        processLoanPayment(events);
 
         // Process belongings
-        ArrayList<TITFLBelonging> lost = processBelongingEvents(events);
-        for (TITFLBelonging x : lost)
-        {
-            if (x.goodsRef() == m_transportation)
-            {
-                lostTransportation = true;
-            }
-            else if (x.goodsRef() == m_outfit)
-            {
-                lostOutfit = true;
-            }
-        }
+        ArrayList<TITFLBelonging> lost2 = processBelongingEvents(events);
 
         // Random event
-        if (week > 1)
-        {
-            TITFLBelonging losing = findBelonging(randomEvent.losing_goods());
-            ListAdapterBeginWeek.BeginWeekItem event = new ListAdapterBeginWeek.BeginWeekItem(null, "", 0, 0, 0);
-            if (randomEvent.process(this, event))
-            {
-                events.add(event);
-                if (losing != null && losing.goodsRef() == m_transportation)
-                {
-                    lostTransportation = true;
-                }
-            }
-        }
+        ArrayList<TITFLBelonging> lost3 = processRandomEvent(randomEvent, events);
 
-        // Reset transportation
-        if (lostTransportation)
+        // Process lost belongings
+        lost1.addAll(lost2);
+        lost1.addAll(lost3);
+        processLost(lost1);
+                
+        // Set bitmap if no bitmap is set
+        Bitmap bmCheck = BitmapFactory.decodeResource(activity.getResources(), R.drawable.event_check);
+        for (ListAdapterBeginWeek.BeginWeekItem x : events)
         {
-            for (TITFLBelonging x : m_belongings)
-            {
-                if (x.goodsRef().isTransportation())
-                {
-                    setTransportation(x.goodsRef());
-                    break;
-                }
-            }
-        }
-
-        // Reset outfit
-        if (lostOutfit)
-        {
-            m_outfit = null;
-            for (TITFLBelonging x : m_belongings)
-            {
-                if (x.goodsRef().isOutfit())
-                {
-                    setOutfit(x.goodsRef());
-                    break;
-                }
-            }
+            if (null == x.m_image)
+                x.m_image = bmCheck;
         }
         
         // Display all events
+        int week = currentLocation().town().currentWeek();
         String title = alias() + " Week " + Integer.toString(week);
         DialogBeginWeek dialog = new DialogBeginWeek(title, events, m_currentLocation.town().activity());
         dialog.show();
@@ -1385,8 +1319,9 @@ public class TITFLPlayer
         return soonExpire;
     }
     
-    private ArrayList<TITFLBelonging> processExpiration()
+    private ArrayList<TITFLBelonging> processExpiration(ArrayList<ListAdapterBeginWeek.BeginWeekItem> events)
     {
+        Activity activity = m_currentLocation.town().activity();
         ArrayList<TITFLBelonging> expired = new ArrayList<TITFLBelonging>();
         for (TITFLBelonging x : m_belongings)
         {
@@ -1396,11 +1331,86 @@ public class TITFLPlayer
                 if (weeks >= x.goodsRef().expire())
                 {
                     expired.add(x);
+                    Bitmap bm = NoEtapUtility.getBitmap(activity, TITFLActivity.pathGoods + x.goodsRef().id() + ".png");
+                    String message = "";
+                    if (x.goodsRef().losing() != null)
+                    {
+                        message = x.goodsRef().losing();
+                    }
+                    if (message.length() == 0)
+                    {            
+                        message = "Expired: " + x.goodsRef().name();
+                    }
+                    events.add(new ListAdapterBeginWeek.BeginWeekItem(bm, message, 0, 0, 0));
+                }
+            }
+        }        
+        m_belongings.removeAll(expired);
+        return expired;
+    }
+    
+    private ArrayList<TITFLBelonging> processRandomEvent(TITFLRandomEvent randomEvent, ArrayList<ListAdapterBeginWeek.BeginWeekItem> events)
+    {
+        int week = currentLocation().town().currentWeek();
+
+        ArrayList<TITFLBelonging> lost = new ArrayList<TITFLBelonging>();
+        if (week > 1)
+        {
+            TITFLBelonging losing = findBelonging(randomEvent.losing_goods());
+            ListAdapterBeginWeek.BeginWeekItem event = new ListAdapterBeginWeek.BeginWeekItem(null, "", 0, 0, 0);
+            if (randomEvent.process(this, event))
+            {
+                events.add(event);
+                if (losing != null)
+                    lost.add(losing);                
+            }
+        }
+        
+        return lost;
+    }
+    
+    private void processLost(ArrayList<TITFLBelonging> lost)
+    {
+        boolean lostTransportation = false;
+        boolean lostOutfit = false;
+        for (TITFLBelonging x : lost)
+        {
+            if (x.goodsRef() == m_transportation)
+            {
+                lostTransportation = true;
+            }
+            else if (x.goodsRef() == m_outfit)
+            {
+                lostOutfit = true;
+            }
+        }
+
+        // Reset transportation
+        if (lostTransportation)
+        {
+            for (TITFLBelonging x : m_belongings)
+            {
+                if (x.goodsRef().isTransportation())
+                {
+                    setTransportation(x.goodsRef());
+                    break;
                 }
             }
         }
-        m_belongings.removeAll(expired);
-        return expired;
+    
+        // Reset outfit
+        if (lostOutfit)
+        {
+            m_outfit = null;
+            for (TITFLBelonging x : m_belongings)
+            {
+                if (x.goodsRef().isOutfit())
+                {
+                    setOutfit(x.goodsRef());
+                    break;
+                }
+            }
+        }
     }
     
     private ArrayList<TITFLBelonging> processBelongingEvents(ArrayList<ListAdapterBeginWeek.BeginWeekItem> events)
@@ -1485,5 +1495,68 @@ public class TITFLPlayer
         }
         m_belongings.removeAll(consumed);
         return consumed;
+    }
+    
+    private void processFood(ArrayList<ListAdapterBeginWeek.BeginWeekItem> events)
+    {
+        Activity activity = currentLocation().town().activity();
+        if (!hasFood())
+        {
+            m_hour += 4;
+            m_satisfaction.m_health -= 4;
+            events.add(new ListAdapterBeginWeek.BeginWeekItem(null, "No Food, less hour, less health :-(", 0, 4, -4));
+        }
+        else
+        {
+            ArrayList<TITFLBelonging> consumed = consumeFood();
+            for (TITFLBelonging x : consumed)
+            {
+                Bitmap bm = NoEtapUtility.getBitmap(activity, TITFLActivity.pathGoods + x.goodsRef().id() + ".png");
+                String message = "You've just finished: " + x.goodsRef().name();
+                events.add(new ListAdapterBeginWeek.BeginWeekItem(bm, message, 0, 0, 0));
+            }
+        }
+    }
+    
+    private void processSoonExpire(ArrayList<ListAdapterBeginWeek.BeginWeekItem> events)
+    {
+        Activity activity = currentLocation().town().activity();
+        ArrayList<TITFLBelonging> soonExpire = getSoonExpire();
+        for (TITFLBelonging x : soonExpire)
+        {
+            Bitmap bm = NoEtapUtility.getBitmap(activity, TITFLActivity.pathGoods + x.goodsRef().id() + ".png");
+            String message = "Get new: " + x.goodsRef().name();
+            events.add(new ListAdapterBeginWeek.BeginWeekItem(bm, message, 0, 0, 0));
+        }
+    }
+
+    private void processLottery(ArrayList<ListAdapterBeginWeek.BeginWeekItem> events)
+    {
+        for (TITFLBelonging x : belongings())
+        {
+            if (x.goodsRef().isLottery())
+            {
+                Random random = new Random();
+                int winningNumber = (int)(random.nextFloat() * 1000);
+                boolean won = (winningNumber < x.unit());
+                if (won)
+                {
+                    String message = "You won the lottery!";
+                    events.add(new ListAdapterBeginWeek.BeginWeekItem(null, message, -5000, 0, 0));
+                    m_cash += 5000;
+                }
+                else
+                {
+                    String message = "You didnt win the lottery...";
+                    events.add(new ListAdapterBeginWeek.BeginWeekItem(null, message, 0, 0, 0));
+                }
+                belongings().remove(x);
+            }
+        }
+    }
+    
+    private void processLoanPayment(ArrayList<ListAdapterBeginWeek.BeginWeekItem> events)
+    {
+        // TODO
     }
 }

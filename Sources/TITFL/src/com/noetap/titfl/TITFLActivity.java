@@ -123,11 +123,17 @@ public class TITFLActivity extends Activity
         m_layout.initialize();        
     }
     
-    public void closeTownElement()
+    public void closeTownElement(TITFLPlayer player)
     {
         setContentView(R.layout.activity_titfl);
         m_layout = new TITFLTownLayout(this);
         m_layout.initialize();        
+
+        if (player.isWeekOver())
+        {
+            player.closeWeek();
+            setNextPlayer(player);
+        }
     }
     
     public void setNextPlayer(TITFLPlayer oldPlayer)

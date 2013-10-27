@@ -69,7 +69,7 @@ public class TITFLTownElementHomeLayout implements TITFLLayout
             @Override
             public void onClick(View v) 
             {
-                m_activity.closeTownElement();
+                m_activity.closeTownElement(m_element.visitor());
             }
         });
     }
