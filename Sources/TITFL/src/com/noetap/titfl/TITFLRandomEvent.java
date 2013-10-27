@@ -162,6 +162,7 @@ public class TITFLRandomEvent implements TITFLEvent
         owner.addHours(m_timeToPay);
         
         int price = m_price;
+        String note = "";
         if (m_price >= 1000000) // 1 million dollars - stolen/lost wallet
         {
             if (owner.currentLocation() == owner.home())
@@ -176,9 +177,15 @@ public class TITFLRandomEvent implements TITFLEvent
         else
         {
             if (m_health_insurance_coverage > 0 && owner.hasHealthInsurance())
-                price = (int)(price * m_health_insurance_coverage);            
+            {
+                note = " (Health Insurance applied)";
+                price = (int)(price * (1 - m_health_insurance_coverage));
+            }
             if (m_car_insurance_coverage > 0 && owner.hasCarInsurance())
-                price = (int)(price * m_car_insurance_coverage);
+            {
+                note = " (Auto Insurance applied)";
+                price = (int)(price * (1 - m_car_insurance_coverage));
+            }
             owner.pay(price);
         }
         
@@ -200,7 +207,7 @@ public class TITFLRandomEvent implements TITFLEvent
             iconId = R.drawable.event_happy;        
         Bitmap bm = BitmapFactory.decodeResource(activity.getResources(), iconId);
                 
-        event.m_description = description();
+        event.m_description = description() + note;
         event.setHealth(m_health);
         event.setHour(m_timeToPay);
         event.setPrice(price);

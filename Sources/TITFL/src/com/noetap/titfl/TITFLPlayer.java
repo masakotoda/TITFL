@@ -14,9 +14,7 @@ import android.content.res.AssetManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
@@ -631,119 +629,6 @@ public class TITFLPlayer
         return ret;
     }
     
-    public void draw(Canvas canvas, Paint paint)
-    {
-        if (m_currentLocation == null)
-            return;
-
-        // Change theme color depending on the character?
-        paint.setColor(m_themeColor);
-
-        int w = canvas.getWidth();
-        int h = canvas.getHeight();
-        canvas.drawRect(0, 0, w, h, paint);
-
-        float factor = NoEtapUtility.getFactor(m_currentLocation.town().activity());
-        float textSize = 48 * factor;
-
-        paint.setARGB(255, 0, 0, 0);
-        paint.setTextSize(textSize);
-
-        float top = 0;
-        float left = textSize;
-        
-        top += textSize;
-        canvas.drawText(Float.toString(m_hour) + " " + this.m_alias, left, top, paint);
-        top += textSize;
-        
-        left += w / 2;
-        top += textSize;
-        textSize = 32 * factor;
-        paint.setTextSize(textSize);
-
-        top += textSize;
-        canvas.drawText("Wealth: " + Float.toString(getWealthLevel()), left, top, paint);
-        top += textSize;
-
-        top += textSize;
-        canvas.drawText("Education: " + Float.toString(getEducationLevel()), left, top, paint);
-        top += textSize;
-
-        top += textSize;
-        canvas.drawText("Carrier: " + Float.toString(getCarrierLevel()), left, top, paint);
-        top += textSize;
-
-        top += textSize;
-        canvas.drawText("Life: " + Float.toString(getLifeLevel()), left, top, paint);
-        top += textSize;
-
-        top += textSize;
-        canvas.drawText("Health: " + Float.toString(getHealthLevel()), left, top, paint);
-        top += textSize;
-
-        top += textSize;
-        canvas.drawText("Happiness: " + Float.toString(getHappinessLevel()), left, top, paint);
-        top += textSize;
-        
-        top += textSize;
-        canvas.drawText("Cash: $" + Integer.toString(m_cash), left, top, paint);
-        top += textSize;
-
-        top += textSize;
-        int count = 0;
-        for (int i = m_belongings.size() - 1; i >= 0 && count < 20; i--)
-        {
-            canvas.drawText(m_belongings.get(i).toString(), left, top, paint);
-            top += textSize;
-            count++;
-        }
-
-        top = h;
-        left = textSize;
-
-        top -= textSize;
-        canvas.drawText("Home: " + m_home.name(), left, top, paint);
-
-        top -= textSize;
-        canvas.drawText("Transp: " + m_transportation.name(), left, top, paint);
-
-        top -= textSize;
-        if (m_job == null)
-            canvas.drawText("Work as: Jobless", left, top, paint);
-        else
-            canvas.drawText("Work as: " + m_job.name(), left, top, paint);
-
-        top -= textSize;
-        if (m_job == null)
-            canvas.drawText("Work at: N/A", left, top, paint);
-        else
-            canvas.drawText("Work at: " + m_job.townelement().name(), left, top, paint);
-
-        /*
-        top -= textSize;
-
-        top -= textSize;
-        canvas.drawText("Edu.Academic: " + Integer.toString(m_education.m_academic), left, top, paint);
-        top -= textSize;
-        canvas.drawText("Edu.Engineer: " + Integer.toString(m_education.m_engineering), left, top, paint);
-        top -= textSize;
-        canvas.drawText("Edu.Business: " + Integer.toString(m_education.m_business_finance), left, top, paint);
-        top -= textSize;
-        canvas.drawText("Edu.Basic: " + Integer.toString(m_education.m_basic), left, top, paint);
-
-        top -= textSize;
-
-        top -= textSize;
-        canvas.drawText("Exp.Academic: " + Integer.toString(m_experience.m_academic), left, top, paint);
-        top -= textSize;
-        canvas.drawText("Exp.Engineer: " + Integer.toString(m_experience.m_engineering), left, top, paint);
-        top -= textSize;
-        canvas.drawText("Exp.Business: " + Integer.toString(m_experience.m_business_finance), left, top, paint);
-        top -= textSize;
-        canvas.drawText("Exp.Basic: " + Integer.toString(m_experience.m_basic), left, top, paint);
-        */
-    }
-
     private int getAnim(TITFLTownMapNode current, TITFLTownMapNode next)
     {
         if (next.x() < current.x())
@@ -1273,34 +1158,39 @@ public class TITFLPlayer
             return true;            
     }
     
-    private float getWealthLevel()
+    public float getWealthLevel()
     {
         return m_satisfaction.m_wealth;
     }
 
-    private float getEducationLevel()
+    public float getEducationLevel()
     {
         return m_satisfaction.m_education;
     }
 
-    private float getCarrierLevel()
+    public float getCarrierLevel()
     {
         return m_satisfaction.m_carrier;
     }
 
-    private float getLifeLevel()
+    public float getLifeLevel()
     {
         return m_satisfaction.m_life;
     }
 
-    private float getHealthLevel()
+    public float getHealthLevel()
     {
         return m_satisfaction.m_health;
     }
 
-    private float getHappinessLevel()
+    public float getHappinessLevel()
     {
         return m_happiness;
+    }
+
+    public int themeColor()
+    {
+        return m_themeColor;
     }
 
     public boolean hasRefrigerator()

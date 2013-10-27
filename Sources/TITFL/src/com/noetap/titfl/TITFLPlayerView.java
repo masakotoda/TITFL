@@ -81,12 +81,125 @@ public class TITFLPlayerView  extends View
             paint.setColor(Color.LTGRAY);
 
             if (m_player != null)
-                m_player.draw(canvas, paint);
+                drawPlayer(canvas, paint);
             else
                 canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(), paint);
         }
         catch (Exception e)
         {            
         }
+    }
+    
+    private void drawPlayer(Canvas canvas, Paint paint)
+    {
+        if (m_player.currentLocation() == null)
+            return;
+
+        // Change theme color depending on the character?
+        paint.setColor(m_player.themeColor());
+
+        int w = canvas.getWidth();
+        int h = canvas.getHeight();
+        canvas.drawRect(0, 0, w, h, paint);
+
+        float factor = NoEtapUtility.getFactor(m_player.currentLocation().town().activity());
+        float textSize = 48 * factor;
+
+        paint.setARGB(255, 0, 0, 0);
+        paint.setTextSize(textSize);
+
+        float top = 0;
+        float left = textSize;
+        
+        top += textSize;
+        canvas.drawText(Float.toString(m_player.hour()) + " " + m_player.alias(), left, top, paint);
+        top += textSize;
+        
+        left += w / 2;
+        top += textSize;
+        textSize = 32 * factor;
+        paint.setTextSize(textSize);
+
+        top += textSize;
+        canvas.drawText("Wealth: " + Float.toString(m_player.getWealthLevel()), left, top, paint);
+        top += textSize;
+
+        top += textSize;
+        canvas.drawText("Education: " + Float.toString(m_player.getEducationLevel()), left, top, paint);
+        top += textSize;
+
+        top += textSize;
+        canvas.drawText("Carrier: " + Float.toString(m_player.getCarrierLevel()), left, top, paint);
+        top += textSize;
+
+        top += textSize;
+        canvas.drawText("Life: " + Float.toString(m_player.getLifeLevel()), left, top, paint);
+        top += textSize;
+
+        top += textSize;
+        canvas.drawText("Health: " + Float.toString(m_player.getHealthLevel()), left, top, paint);
+        top += textSize;
+
+        top += textSize;
+        canvas.drawText("Happiness: " + Float.toString(m_player.getHappinessLevel()), left, top, paint);
+        top += textSize;
+        
+        top += textSize;
+        canvas.drawText("Cash: $" + Integer.toString(m_player.cash()), left, top, paint);
+        top += textSize;
+
+        top += textSize;
+        int count = 0;
+        for (int i = m_player.belongings().size() - 1; i >= 0 && count < 20; i--)
+        {
+            canvas.drawText(m_player.belongings().get(i).toString(), left, top, paint);
+            top += textSize;
+            count++;
+        }
+
+        top = h;
+        left = textSize;
+
+        top -= textSize;
+        canvas.drawText("Home: " + m_player.home().name(), left, top, paint);
+
+        top -= textSize;
+        canvas.drawText("Transp: " + m_player.transportation().name(), left, top, paint);
+
+        top -= textSize;
+        if (m_player.job() == null)
+            canvas.drawText("Work as: Jobless", left, top, paint);
+        else
+            canvas.drawText("Work as: " + m_player.job().name(), left, top, paint);
+
+        top -= textSize;
+        if (m_player.job() == null)
+            canvas.drawText("Work at: N/A", left, top, paint);
+        else
+            canvas.drawText("Work at: " + m_player.job().townelement().name(), left, top, paint);
+
+        /*
+        top -= textSize;
+
+        top -= textSize;
+        canvas.drawText("Edu.Academic: " + Integer.toString(m_education.m_academic), left, top, paint);
+        top -= textSize;
+        canvas.drawText("Edu.Engineer: " + Integer.toString(m_education.m_engineering), left, top, paint);
+        top -= textSize;
+        canvas.drawText("Edu.Business: " + Integer.toString(m_education.m_business_finance), left, top, paint);
+        top -= textSize;
+        canvas.drawText("Edu.Basic: " + Integer.toString(m_education.m_basic), left, top, paint);
+
+        top -= textSize;
+
+        top -= textSize;
+        canvas.drawText("Exp.Academic: " + Integer.toString(m_experience.m_academic), left, top, paint);
+        top -= textSize;
+        canvas.drawText("Exp.Engineer: " + Integer.toString(m_experience.m_engineering), left, top, paint);
+        top -= textSize;
+        canvas.drawText("Exp.Business: " + Integer.toString(m_experience.m_business_finance), left, top, paint);
+        top -= textSize;
+        canvas.drawText("Exp.Basic: " + Integer.toString(m_experience.m_basic), left, top, paint);
+        */        
     }
 }
