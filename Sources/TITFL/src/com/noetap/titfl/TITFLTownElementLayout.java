@@ -1,6 +1,9 @@
 package com.noetap.titfl;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -15,6 +18,7 @@ public class TITFLTownElementLayout implements TITFLLayout
     protected TITFLActivity m_activity;
     protected TITFLPlayerView m_playerView;
     protected ImageView m_avatar;
+    protected ImageView m_greeter;
     protected TITFLTownElement m_element;
     protected TextView m_greetingText;
 
@@ -50,6 +54,7 @@ public class TITFLTownElementLayout implements TITFLLayout
         m_playerView.invalidate();
     }
 
+    @SuppressLint("NewApi")
     @Override
     public void initialize()
     {
@@ -63,6 +68,31 @@ public class TITFLTownElementLayout implements TITFLLayout
         
         m_avatar = (ImageView) m_activity.findViewById(R.id.imageViewAvatar);
         updateOutfit();
+
+        m_greeter = (ImageView) m_activity.findViewById(R.id.imageViewGreeting);
+        AnimationDrawable greeterTalk = new AnimationDrawable(); 
+        greeterTalk.setOneShot(false);
+
+        int sdkVer = android.os.Build.VERSION.SDK_INT;
+        if (sdkVer < 16)
+            m_greeter.setBackgroundDrawable(greeterTalk);
+        else
+            m_greeter.setBackground(greeterTalk);
+
+        float factor = NoEtapUtility.getFactor(m_activity);
+        int w = (int)(256 * factor);
+        int h = (int)(256 * factor);
+        int frame_time = 400; // msec
+        Drawable d1 = NoEtapUtility.createDrawableFromAsset(m_activity, "greeter/greeter_a_frm01.png", w, h);
+        Drawable d2 = NoEtapUtility.createDrawableFromAsset(m_activity, "greeter/greeter_a_frm02.png", w, h);
+        Drawable d3 = NoEtapUtility.createDrawableFromAsset(m_activity, "greeter/greeter_a_frm03.png", w, h);
+        Drawable d4 = NoEtapUtility.createDrawableFromAsset(m_activity, "greeter/greeter_a_frm04.png", w, h);
+        greeterTalk.addFrame(d1, frame_time);
+        greeterTalk.addFrame(d2, frame_time);
+        greeterTalk.addFrame(d3, frame_time);
+        greeterTalk.addFrame(d4, frame_time);
+        m_greeter.setImageBitmap(null);
+        greeterTalk.start();
 
         Button buttonClose = (Button) m_activity.findViewById(R.id.buttonClose);
         setButtonActionClose(buttonClose);
