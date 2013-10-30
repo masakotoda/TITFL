@@ -490,6 +490,17 @@ public class TITFLTown
         m_elements.set(maxIndex, randomElement);
     }
     
+    public int countWorkers(TITFLJob job)
+    {
+        int ret = 0;
+        for (TITFLPlayer p : m_game.players())
+        {
+            if (job.id().equals(p.job().id()))
+                ret++;                
+        }
+        return ret;
+    }
+    
     private void initialize()
     {   
         addCurrentWeek();

@@ -87,66 +87,77 @@
     <job
         job_id="job_realtor"
         name="Realtor"
+        job_opening_base="1"
         townelement_id="townelement_realtor"
         wage_base="30"
 	    />
     <job
         job_id="job_insurance_broker"
         name="Broker"
+        job_opening_base="1"
         townelement_id="townelement_insurance"
         wage_base="30"
 	    />
     <job
         job_id="job_police_officer"
         name="Police Officer"
+        job_opening_base="1"
         townelement_id="townelement_police"
         wage_base="30"
         />
     <job
         job_id="job_hospital_assistant_nurse"
         name="Assistant Nurse"
+        job_opening_base="1"
         townelement_id="townelement_hospital"
         wage_base="30"
         />
     <job
         job_id="job_school_assistant_teacher"
         name="Assistant Teacher"
+        job_opening_base="1"
         townelement_id="townelement_school"
         wage_base="30"
         />
     <job
         job_id="job_restaurant_busboy"
         name="Bus Boy"
+        job_opening_base="1"
         townelement_id="townelement_restaurant"
         wage_base="30"
         />
     <job
         job_id="job_pawnshop_appraiser"
         name="Appraiser"
+        job_opening_base="1"
         townelement_id="townelement_pawnshop"
         wage_base="30"
         />
     <job
         job_id="job_electric_blueshirt"
         name="Blue Shirt"
+        job_opening_base="1"
         townelement_id="townelement_electric"
         wage_base="30"
         />
     <job
         job_id="job_mall_sales_advisor"
         name="Sales Advisor"
+        job_opening_base="1"
         townelement_id="townelement_mall"
         wage_base="30"
         />
     <job
         job_id="job_cardealer_sales"
         name="Auto Sales"
+        job_opening_base="1"
         townelement_id="townelement_cardealer"
         wage_base="30"
         />
     <job
         job_id="job_factory_line"
         name="Line Worker"
+        job_opening_base="1"
         townelement_id="townelement_factory"
         wage_base="30"
         />

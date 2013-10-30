@@ -224,6 +224,11 @@ public class TITFL
         }
     }
 
+    public ArrayList<TITFLPlayer> players()
+    {
+        return m_players;
+    }
+    
     private TITFLRandomEvent getRandomEvent()
     {
         Random random = new Random();

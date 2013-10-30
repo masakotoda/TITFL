@@ -437,10 +437,32 @@ public class TITFLGoods
         if (m_requiredGoods == null)
             return true;
         
+        for (TITFLBelonging b : player.belongings())            
+        {
+            if (id().equals(b.goodsRef().id()))
+            {
+                if (maxUnits() > 0 && maxUnits() >= b.unit())
+                {
+                    NoEtapUtility.showAlert(m_townelement.town().activity(), "Information", "You can't have so many " + m_requiredGoods + ".");
+                    return false;
+                }
+            }
+        }
+        
         for (TITFLBelonging b : player.belongings())
         {
             if (m_requiredGoods.equals(b.goodsRef().id()))
-                return true;
+            {
+                if (b.completedCredit() == b.goodsRef().classCredit())
+                {
+                    return true;
+                }
+                else
+                {
+                    NoEtapUtility.showAlert(m_townelement.town().activity(), "Information", "Please finish " + m_requiredGoods + " first.");
+                    return false;
+                }
+            }
         }
 
         NoEtapUtility.showAlert(m_townelement.town().activity(), "Information", "Please get " + m_requiredGoods + " first.");

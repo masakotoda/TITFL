@@ -181,13 +181,22 @@ public class TITFLJob
 		return ret;	
 	}
 
+    private int actualOpeningNumber()
+    {
+        float economy = m_townelement.town().economyFactor();
+        int opening = (int)(openingNumber() * economy);
+        int workers = m_townelement.town().countWorkers(this);
+        return opening - workers;
+    }    
+
     public boolean accept(TITFLPlayer applicant)
     {
         boolean accepted = true;
         String title = "Sorry";
         
         // Check opening
-        if (openingNumber() < 1)
+        int opening = actualOpeningNumber();
+        if (opening < 1)
             accepted = false;
         
         if (!accepted)
