@@ -1,8 +1,11 @@
 package com.noetap.titfl;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
+import android.content.res.AssetFileDescriptor;
 import android.content.res.Configuration;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +22,7 @@ public class TITFLActivity extends Activity
     
     private TITFL m_game;
     private TITFLLayout m_layout;
+    private MediaPlayer m_mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) 
@@ -38,11 +42,15 @@ public class TITFLActivity extends Activity
         
         if (!resumeGame())
             runGame();
+
+        startMusic();
     }
 
     @Override
     protected void onDestroy()
     {
+        destroyMusic();
+
         Toast.makeText(this, "Saving...", Toast.LENGTH_SHORT).show();
         saveGame();
   
@@ -156,4 +164,34 @@ public class TITFLActivity extends Activity
     {
         NoEtapUtility.showAlert(this, "Settings", "Under construction...");
     }    
+
+    private void startMusic()
+    {
+        m_mediaPlayer = new MediaPlayer();
+        try
+        {
+            AssetFileDescriptor descriptor = this.getAssets().openFd("audio/spirit_of_chivalry.ogg");
+            m_mediaPlayer.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
+            m_mediaPlayer.prepare();
+            m_mediaPlayer.setLooping(true);
+            m_mediaPlayer.setVolume(1, 1);
+            int delay = 500; // Music starts with little delay.
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    m_mediaPlayer.start();
+                }
+            }, delay);
+        }
+        catch (Exception e)
+        {
+        }
+    }
+
+    private void destroyMusic()
+    {
+        m_mediaPlayer.stop();
+        m_mediaPlayer.release();
+    }
 }
