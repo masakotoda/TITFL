@@ -3,6 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+    <ImageView
+        android:id="@+id/townView"
+        android:layout_width="320dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:contentDescription="@string/blank_string"/>
+
     <com.noetap.titfl.TITFLPlayerView
         android:id="@+id/playerView"
         android:layout_width="180dp"
@@ -18,12 +26,12 @@
         android:layout_centerVertical="true"
         android:contentDescription="@string/blank_string"
         android:src="@drawable/player_a_frm0" />
-    
+
     <TextView
         android:id="@+id/textViewName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_alignLeft="@+id/townView"
         android:layout_alignParentTop="true"
         android:text="@string/dummy_string"
         android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -32,7 +40,7 @@
         android:id="@+id/imageViewGreeting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_alignLeft="@+id/townView"
         android:layout_below="@+id/textViewName"
         android:contentDescription="@string/blank_string"
         android:src="@drawable/marble" />
@@ -43,7 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/playerView"
+        android:layout_alignRight="@id/townView"
         android:text="@string/close" />
 
     <Button
@@ -69,7 +77,7 @@
         android:id="@+id/listViewGoods"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_alignLeft="@+id/townView"
         android:layout_alignRight="@+id/buttonClose"
         android:layout_below="@+id/imageViewGreeting" >
 
