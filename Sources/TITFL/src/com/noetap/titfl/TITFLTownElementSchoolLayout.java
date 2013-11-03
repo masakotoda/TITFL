@@ -65,7 +65,8 @@ public class TITFLTownElementSchoolLayout extends TITFLTownElementLayout
         updateAllCourses();
         
         final TITFLTownElementSchoolLayout layout = this;
-        ArrayAdapter<TITFLGoods> adapter = new ArrayAdapter<TITFLGoods>(m_activity, android.R.layout.simple_list_item_1, m_allCourses);
+        //ArrayAdapter<TITFLGoods> adapter = new ArrayAdapter<TITFLGoods>(m_activity, android.R.layout.simple_list_item_1, m_allCourses);
+        ListAdapterGoods adapter = new ListAdapterGoods(m_activity, m_allCourses);
         list.setAdapter(adapter);        
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() 
         {

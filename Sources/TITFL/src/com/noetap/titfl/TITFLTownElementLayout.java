@@ -7,7 +7,6 @@ import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -218,7 +217,8 @@ public class TITFLTownElementLayout implements TITFLLayout
             return;
         
         final TITFLTownElementLayout layout = this;
-        ArrayAdapter<TITFLGoods> adapter = new ArrayAdapter<TITFLGoods>(m_activity, android.R.layout.simple_list_item_1, m_element.merchandise());
+        //ArrayAdapter<TITFLGoods> adapter = new ArrayAdapter<TITFLGoods>(m_activity, android.R.layout.simple_list_item_1, m_element.merchandise());
+        ListAdapterGoods adapter = new ListAdapterGoods(m_activity, m_element.merchandise());
         list.setAdapter(adapter);        
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() 
         {

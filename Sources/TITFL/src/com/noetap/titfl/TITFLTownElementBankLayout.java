@@ -62,7 +62,8 @@ public class TITFLTownElementBankLayout extends TITFLTownElementLayout
         }
                 
         final TITFLTownElementLayout layout = this;
-        ArrayAdapter<TITFLGoods> adapter = new ArrayAdapter<TITFLGoods>(m_activity, android.R.layout.simple_list_item_1, m_allBuyables);
+        //ArrayAdapter<TITFLGoods> adapter = new ArrayAdapter<TITFLGoods>(m_activity, android.R.layout.simple_list_item_1, m_allBuyables);
+        ListAdapterGoods adapter = new ListAdapterGoods(m_activity, m_allBuyables);
         list.setAdapter(adapter);        
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() 
         {
@@ -86,7 +87,8 @@ public class TITFLTownElementBankLayout extends TITFLTownElementLayout
         }
         
         final TITFLTownElementBankLayout layout = this;
-        ArrayAdapter<TITFLGoods> adapter = new ArrayAdapter<TITFLGoods>(m_activity, android.R.layout.simple_list_item_1, m_allLoans);
+        //ArrayAdapter<TITFLGoods> adapter = new ArrayAdapter<TITFLGoods>(m_activity, android.R.layout.simple_list_item_1, m_allLoans);
+        ListAdapterGoods adapter = new ListAdapterGoods(m_activity, m_allLoans);
         list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() 
         {
