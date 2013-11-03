@@ -23,6 +23,7 @@ public class TITFLActivity extends Activity
     private TITFL m_game;
     private TITFLLayout m_layout;
     private MediaPlayer m_mediaPlayer;
+    private TITFLSettings m_settings = new TITFLSettings();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) 
@@ -193,5 +194,10 @@ public class TITFLActivity extends Activity
     {
         m_mediaPlayer.stop();
         m_mediaPlayer.release();
+    }
+
+    public final TITFLSettings settings()
+    {
+        return m_settings;
     }
 }

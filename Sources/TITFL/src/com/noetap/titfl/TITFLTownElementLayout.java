@@ -58,9 +58,30 @@ public class TITFLTownElementLayout implements TITFLLayout
     @Override
     public void initialize()
     {
+        boolean reverse = m_activity.settings().m_reverse;
+
+        // This townView is just to make reverse layout easier.
+        View townView = m_activity.findViewById(R.id.townView);
+        if (townView == null)
+        {
+            reverse = false; // If townView is not found, do not apply reverse layout.
+        }
+        else
+        {
+            NoEtapUtility.setWidth(townView, TITFLTownView.width(m_activity));
+            if (reverse)
+            {
+                NoEtapUtility.alignParentRight(townView);
+            }
+        }
+
         m_playerView = (TITFLPlayerView) m_activity.findViewById(R.id.playerView);
         m_playerView.setPlayer(m_element.visitor());
         m_playerView.initialize();
+        if (reverse)
+        {
+            NoEtapUtility.alignParentLeft(m_playerView);
+        }
         m_playerView.invalidate();
 
         m_greetingText = (TextView) m_activity.findViewById(R.id.textViewGreeting);

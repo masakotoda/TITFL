@@ -36,11 +36,19 @@ public class TITFLTownLayout implements TITFLLayout
     public void initialize()
     {        
         m_townView = (TITFLTownView) m_activity.findViewById(R.id.townView);
+        if (m_activity.settings().m_reverse)
+        {
+            NoEtapUtility.alignParentRight(m_townView);
+        }
         m_townView.initialize();
         m_townView.invalidate();
 
         m_playerView = (TITFLPlayerView) m_activity.findViewById(R.id.playerView);
         m_playerView.setPlayer(m_player);
+        if (m_activity.settings().m_reverse)
+        {
+            NoEtapUtility.alignParentLeft(m_playerView);
+        }
         m_playerView.initialize();
         m_playerView.invalidate();
 
@@ -96,6 +104,7 @@ public class TITFLTownLayout implements TITFLLayout
                 NoEtapUtility.showAlert(m_activity, "TT1", "Write your test code!");
             }
         });
+        clicked.setVisibility(View.GONE);
     }
     
     private void setButtonActionTT2(Button clicked)
@@ -108,6 +117,7 @@ public class TITFLTownLayout implements TITFLLayout
                 NoEtapUtility.showAlert(m_activity, "TT2", "Write your test code!");
             }
         });
+        clicked.setVisibility(View.GONE);
     }
     
     private void setButtonActionWP1(Button clicked)
@@ -120,6 +130,7 @@ public class TITFLTownLayout implements TITFLLayout
                 NoEtapUtility.showAlert(m_activity, "WP1", "Write your test code!");
             }
         });
+        clicked.setVisibility(View.GONE);
     }
     
     private void setButtonActionWP2(Button clicked)
@@ -132,6 +143,7 @@ public class TITFLTownLayout implements TITFLLayout
                 NoEtapUtility.showAlert(m_activity, "WP2", "Write your test code!");
             }
         });
+        clicked.setVisibility(View.GONE);
     }
 
     private void setButtonActionMT1(Button clicked)
@@ -145,6 +157,7 @@ public class TITFLTownLayout implements TITFLLayout
                 m_activity.findViewById(R.id.townView).invalidate();
             }
         });
+        clicked.setVisibility(View.GONE);
     }
 
     private void setButtonActionMT2(Button clicked)
@@ -170,6 +183,7 @@ public class TITFLTownLayout implements TITFLLayout
                 }
             }
         });
+        clicked.setVisibility(View.GONE);
     }
     
     private void setButtonActionMenu(Button clicked)
@@ -182,5 +196,6 @@ public class TITFLTownLayout implements TITFLLayout
                 m_activity.openOptionsMenu();
             }
         });
+        clicked.setVisibility(View.GONE);
     }
 }

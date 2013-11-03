@@ -755,7 +755,17 @@ public class TITFLPlayer
             m_avatarImg.setImageBitmap(null);
         }
     }
-    
+
+    private int avatarOffset(Activity activity)
+    {
+        boolean reverse = ((TITFLActivity) activity).settings().m_reverse;
+        if (reverse)
+        {
+            return TITFLPlayerView.getWidth(activity);
+        }
+        return 0;
+    }
+
     public boolean goTo(final Activity activity, final TITFLTownElement destination, final boolean openDestination)
     {
         if (destination == null)
@@ -827,7 +837,7 @@ public class TITFLPlayer
 
                     int slot = route.get(m_counter).index();
                     Rect rect = destination.town().nodeToPosition(slot);
-                    m_marbleImg.layout(rect.left, rect.top, rect.left + rect.width(), rect.top + rect.height());
+                    m_marbleImg.layout(rect.left + avatarOffset(activity), rect.top, rect.left + rect.width() + avatarOffset(activity), rect.top + rect.height());
 
                     anim.scaleCurrentDuration(m_speedFactor);
                     m_marbleImg.startAnimation(anim);
@@ -849,7 +859,7 @@ public class TITFLPlayer
                 {
                     int slot = route.get(0).index();
                     Rect rect = destination.town().nodeToPosition(slot);
-                    m_marbleImg.layout(rect.left, rect.top, rect.left + rect.width(), rect.top + rect.height());
+                    m_marbleImg.layout(rect.left + avatarOffset(activity), rect.top, rect.left + rect.width() + avatarOffset(activity), rect.top + rect.height());
                 }
             }
         });

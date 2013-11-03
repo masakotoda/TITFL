@@ -16,6 +16,10 @@ import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.Display;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.RelativeLayout;
 
 //In future, we may want to move this to library
 public class NoEtapUtility 
@@ -194,5 +198,30 @@ public class NoEtapUtility
             }
         }
         return bmp;
+    }
+
+    static void alignParentLeft(View view)
+    {
+        LayoutParams oldParams = view.getLayoutParams();
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(oldParams.width, oldParams.height);
+        params.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
+        params.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
+        view.setLayoutParams(params);
+    }
+
+    static void alignParentRight(View view)
+    {
+        LayoutParams oldParams = view.getLayoutParams();
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(oldParams.width, oldParams.height);
+        params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
+        params.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
+        view.setLayoutParams(params);
+    }
+
+    static void setWidth(View view, int width)
+    {
+        ViewGroup.LayoutParams params = view.getLayoutParams();
+        params.width = width;
+        view.setLayoutParams(params);
     }
 }

@@ -21,14 +21,18 @@ public class TITFLTownView  extends View
         setFocusable(true);
     }
     
+    public static int width(TITFLActivity activity)
+    {
+        int w = NoEtapUtility.getScreenWidth(activity);
+        int h = NoEtapUtility.getScreenHeight(activity);
+        int playerInfoW = (int)(0.6 * w);
+        return (h - playerInfoW);
+    }
+
     public void initialize()
     {
         m_activity = (TITFLActivity)getContext();
-        int w = NoEtapUtility.getScreenWidth(m_activity);
-        int h = NoEtapUtility.getScreenHeight(m_activity);
-        int playerInfoW = (int)(0.6 * w);
-
-        m_rect = new Rect(0, 0, h - playerInfoW, w);
+        m_rect = new Rect(0, 0, width(m_activity), NoEtapUtility.getScreenWidth(m_activity));
 
         ViewGroup.LayoutParams params = this.getLayoutParams();
         params.width = m_rect.width();
