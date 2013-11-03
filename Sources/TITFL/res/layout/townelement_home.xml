@@ -3,6 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+    <ImageView
+        android:id="@+id/townView"
+        android:layout_width="320dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:contentDescription="@string/blank_string"/>
+
     <com.noetap.titfl.TITFLPlayerView
         android:id="@+id/playerView"
         android:layout_width="180dp"
@@ -25,7 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/playerView"
+        android:layout_alignRight="@+id/townView"
         android:text="@string/close" />
 
     <Button

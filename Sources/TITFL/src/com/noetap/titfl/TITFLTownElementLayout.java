@@ -77,11 +77,11 @@ public class TITFLTownElementLayout implements TITFLLayout
 
         m_playerView = (TITFLPlayerView) m_activity.findViewById(R.id.playerView);
         m_playerView.setPlayer(m_element.visitor());
-        m_playerView.initialize();
         if (reverse)
         {
             NoEtapUtility.alignParentLeft(m_playerView);
         }
+        m_playerView.initialize();
         m_playerView.invalidate();
 
         m_greetingText = (TextView) m_activity.findViewById(R.id.textViewGreeting);
