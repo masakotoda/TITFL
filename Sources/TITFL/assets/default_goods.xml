@@ -163,7 +163,31 @@
         price="10"
         />
 
+	<goods
+        townelement_id="townelement_hospital"
+        goods_id="goods_doctorvisit"
+        name="Doctor Visit"
+        price="175"
+        />
     <goods
+        townelement_id="townelement_hospital"
+        goods_id="goods_depressiontreatment"
+        name="Depression Treatment"
+        price="1000"
+        />
+    <goods
+        townelement_id="townelement_hospital"
+        goods_id="goods_viagrapills"
+        name="Viagra Pills"
+        price="200"
+        />
+    <goods
+        townelement_id="townelement_hospital"
+        goods_id="goods_breastaugmentation"
+        name="Breast Augmentation"
+        price="3500"
+        />
+   <goods
         townelement_id="townelement_grocery"
         goods_id="goods_food_for_1week"
         name="Food for a week"
