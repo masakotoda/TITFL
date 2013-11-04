@@ -17,11 +17,12 @@ public class TITFL
     private ArrayList<TITFLPlayer> m_defaultPlayers;
     private ArrayList<TITFLEvent> m_randomEvents;
     private ArrayList<TITFLTownMap> m_townmaps;
-    
+    private TITFLMainMenu m_mainMenu;
 
-    public TITFL(Activity activity)
+    public TITFL(Activity activity, TITFLMainMenu mainMenu)
     {
         m_activity = activity;
+        m_mainMenu = mainMenu;
     }
     
     public boolean dirty()
@@ -54,12 +55,16 @@ public class TITFL
         // 5. Enter your name.
         // 6. Repeat 4 & 5
         // 7. Initialize TITFLTown
-        m_players.add(TITFLPlayer.createPlayer(m_defaultPlayers.get(0))); // <- This should be done in the steps above
+        //m_players.add(TITFLPlayer.createPlayer(m_defaultPlayers.get(0))); // <- This should be done in the steps above
         //m_players.add(TITFLPlayer.createPlayer(m_defaultPlayers.get(1))); // <- This should be done in the steps above
         //m_players.add(TITFLPlayer.createPlayer(m_defaultPlayers.get(2))); // <- This should be done in the steps above
         //m_players.add(TITFLPlayer.createPlayer(m_defaultPlayers.get(3))); // <- This should be done in the steps above
         //m_players.add(TITFLPlayer.createPlayer(m_defaultPlayers.get(4))); // <- This should be done in the steps above
         //NoEtapUtility.showAlert(m_activity, "TODO", "Initiate game");
+        for (int i = 0; i < m_mainMenu.getNumOfPlayer(); i++)
+        {
+        	m_players.add(TITFLPlayer.createPlayer(m_defaultPlayers.get(i)));
+        }
         
         m_town = new TITFLTown(m_activity, this, m_townmaps.get(mapType()));
         initiatePlayers();
@@ -227,6 +232,11 @@ public class TITFL
     public ArrayList<TITFLPlayer> players()
     {
         return m_players;
+    }
+    
+    public ArrayList<TITFLPlayer> defaultPlayers()
+    {
+    	return m_defaultPlayers;
     }
     
     private TITFLRandomEvent getRandomEvent()

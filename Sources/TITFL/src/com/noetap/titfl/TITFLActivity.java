@@ -24,6 +24,7 @@ public class TITFLActivity extends Activity
     private TITFLLayout m_layout;
     private MediaPlayer m_mediaPlayer;
     private TITFLSettings m_settings = new TITFLSettings();
+    private TITFLMainMenu m_mainMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) 
@@ -39,10 +40,13 @@ public class TITFLActivity extends Activity
         //Remove notification bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        setContentView(R.layout.activity_titfl);
+        /*setContentView(R.layout.activity_titfl);
         
         if (!resumeGame())
-            runGame();
+            runGame();*/
+        
+        m_mainMenu = new TITFLMainMenu();
+        createMainScreen();              
 
         startMusic();
     }
@@ -52,8 +56,11 @@ public class TITFLActivity extends Activity
     {
         destroyMusic();
 
-        Toast.makeText(this, "Saving...", Toast.LENGTH_SHORT).show();
-        saveGame();
+        if (m_game != null)
+        {
+	        Toast.makeText(this, "Saving...", Toast.LENGTH_SHORT).show();
+	        saveGame();
+        }
   
         super.onDestroy();        
     }
@@ -98,23 +105,25 @@ public class TITFLActivity extends Activity
         return m_game.getTown();
     }
     
-    private void runGame()
+    public void runGame()
     {
-        m_game = new TITFL(this);
+        m_game = new TITFL(this, m_mainMenu);
         
         m_game.run();
 
+        setContentView(R.layout.activity_titfl);	//init townview layout first
         m_layout = new TITFLTownLayout(this);
         m_layout.initialize();        
     }
     
-    private boolean resumeGame()
+    public boolean resumeGame()
     {
-        m_game = new TITFL(this);
+        m_game = new TITFL(this, m_mainMenu);	//Resume game will have numOfPlayer = -1
         
         if (!m_game.resume())
             return false;
 
+        setContentView(R.layout.activity_titfl);	//init townview layout first
         m_layout = new TITFLTownLayout(this);
         m_layout.initialize();
         return true;
@@ -156,12 +165,12 @@ public class TITFLActivity extends Activity
         m_layout.invalidate();
     }
     
-    private void showAbout()
+    public void showAbout()
     {
         NoEtapUtility.showAlert(this, "About", "TITFL - Tony In The Fast Lane\n (c) 2013 Team noEtap");
     }
     
-    private void showSettings()
+    public void showSettings()
     {
         NoEtapUtility.showAlert(this, "Settings", "Under construction...");
     }    
@@ -199,5 +208,17 @@ public class TITFLActivity extends Activity
     public final TITFLSettings settings()
     {
         return m_settings;
+    }
+    
+    public final TITFLMainMenu mainMenu()
+    {
+    	return m_mainMenu;
+    }
+    
+    private void createMainScreen()
+    {
+    	setContentView(R.layout.main_menu);
+    	m_layout = new TITFLMainMenuLayout(this);
+    	m_layout.initialize();
     }
 }

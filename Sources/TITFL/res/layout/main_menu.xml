@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+    
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical" >
+        
+	    <Button
+	              android:id="@+id/buttonNewGame"
+	              android:layout_width="200dp"
+	              android:layout_height="wrap_content"
+	              android:text="New Game" />
+	    
+	    <Button
+	              android:id="@+id/buttonLoadGame"
+	              android:layout_width="200dp"
+	              android:layout_height="wrap_content"
+	              android:text="Load Game" />
+	    
+	    <Button
+	              android:id="@+id/buttonSettings"
+	              android:layout_width="200dp"
+	              android:layout_height="wrap_content"
+	              android:text="Settings" />
+	    
+	    <Button
+	              android:id="@+id/buttonAbout"
+	              android:layout_width="200dp"
+	              android:layout_height="wrap_content"
+	              android:text="About" />
+    
+    </LinearLayout>
+
+</RelativeLayout>
