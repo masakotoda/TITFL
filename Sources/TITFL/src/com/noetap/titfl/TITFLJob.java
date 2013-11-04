@@ -52,8 +52,9 @@ public class TITFLJob
 	@Override
 	public String toString()
 	{
-        int wage = m_wage;
-        return m_name + " - $" + Integer.toString(wage);
+        //int wage = m_wage;
+        //return m_name + " - $" + Integer.toString(wage);
+	    return m_name;
 	}
 	
     public TITFLTownElement townelement()
@@ -74,6 +75,16 @@ public class TITFLJob
     public int dressCode()
     {
         return m_dressCode;
+    }
+
+    public String dressCode(int code)
+    {
+        if (code < 2)
+            return "Casual";
+        else if (code < 3)
+            return "Business Casual";
+        else
+            return "Formal";
     }
     
     public int wage()

@@ -1076,6 +1076,12 @@ public class TITFLPlayer
 
     public void applyJob(TITFLJob job)
     {
+        if (!addHour())
+        {
+            NoEtapUtility.showAlert(m_currentLocation.town().activity(), "Sorry", "No enough time to take interview!");
+            return;
+        }
+
         if (job.accept(this))
         {
             m_job = job;

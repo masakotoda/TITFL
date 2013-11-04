@@ -5,14 +5,55 @@
     android:orientation="vertical" >
 
     <LinearLayout
+        android:id="@+id/mainLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:layout_gravity="center"
+        android:orientation="horizontal" >
+
         <ListView
             android:id="@+id/listViewJobs"
-            android:layout_width="match_parent"
+            android:choiceMode="singleChoice"
+            android:listSelector="@drawable/bg_blue"
+            android:layout_width="160dp"
             android:layout_height="200dp" >
         </ListView>
+
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textViewWage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/dummy_string"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/textViewDressCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/dummy_string" />
+
+            <TextView
+                android:id="@+id/textViewQualification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Qualification:"
+                android:layout_marginTop="10dp"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <ListView
+                android:id="@+id/listViewQualification"
+                android:layout_width="match_parent"
+                android:layout_height="100dp" />
+        </LinearLayout>
+
      </LinearLayout>
          
      <LinearLayout
@@ -25,10 +66,17 @@
          <Button
               style="?android:attr/buttonBarButtonStyle"
               android:id="@+id/buttonCancel"
-              android:layout_width="0dp"
+              android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_weight="1"
               android:text="@string/change_my_mind" />
+         <Button
+              style="?android:attr/buttonBarButtonStyle"
+              android:id="@+id/buttonApply"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:text="@string/apply_job" />
      </LinearLayout>
  </LinearLayout>
  
