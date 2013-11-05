@@ -1012,6 +1012,7 @@ public class TITFLPlayer
 
         m_experience.add(m_job.requiredEducation());
         m_experience.add(m_job.requiredExperience());
+        m_experience.m_basic++;
     }
     
     public boolean isEmployer(TITFLTownElement element)

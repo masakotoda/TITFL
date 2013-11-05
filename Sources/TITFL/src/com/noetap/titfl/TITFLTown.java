@@ -495,8 +495,11 @@ public class TITFLTown
         int ret = 0;
         for (TITFLPlayer p : m_game.players())
         {
-            if (job.id().equals(p.job().id()))
-                ret++;                
+            if (p.job() != null) // make sure if he/she is jobless.
+            {
+                if (job.id().equals(p.job().id()))
+                    ret++;
+            }
         }
         return ret;
     }
