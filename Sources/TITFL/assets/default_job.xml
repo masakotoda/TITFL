@@ -245,7 +245,7 @@
         wage_base="100"
         dress_code="3"
         required_factor_intelligent="1"
-        required_edu_academic="24"
+        required_edu_academic="16"
         required_exp_basic="100"
         required_exp_academic="200"
         />

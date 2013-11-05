@@ -359,12 +359,12 @@ public class TITFL
             m_academic = other.m_academic;
         }
 
-        void add(DisciplineLevel addition)
+        void add(DisciplineLevel addition, float factor)
         {
-            m_basic += addition.m_basic;
-            m_engineering += addition.m_engineering;
-            m_business_finance += addition.m_business_finance;
-            m_academic += addition.m_academic;
+            m_basic += (addition.m_basic * factor);
+            m_engineering += (addition.m_engineering * factor);
+            m_business_finance += (addition.m_business_finance * factor);
+            m_academic += (addition.m_academic * factor);
         }
 
         int m_basic; // GED

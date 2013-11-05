@@ -1010,8 +1010,8 @@ public class TITFLPlayer
         int happiness = (int)(m_incre *  m_character.hardworking());
         m_happiness += happiness;
 
-        m_experience.add(m_job.requiredEducation());
-        m_experience.add(m_job.requiredExperience());
+        m_experience.add(m_job.requiredEducation(), 1);
+        m_experience.add(m_job.requiredExperience(), 0.01f);
         m_experience.m_basic++;
     }
     

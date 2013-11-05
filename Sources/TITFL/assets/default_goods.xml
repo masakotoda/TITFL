@@ -364,6 +364,66 @@
     	/>
     
     <goods
+        goods_id="goods_degree_business2"
+        name="Business 2"
+        townelement_id="townelement_school"
+        price="50"
+        group="degree_business"
+        class_credit="16"
+        required_goods="goods_degree_business1"
+    	/>
+    
+    <goods
+        goods_id="goods_degree_academic1"
+        name="Quantum Physics"
+        townelement_id="townelement_school"
+        price="50"
+        group="degree_academic"
+        class_credit="8"
+        required_goods="goods_degree_ged"
+    	/>
+
+    <goods
+        goods_id="goods_degree_academic2"
+        name="Field Theory"
+        townelement_id="townelement_school"
+        price="50"
+        group="degree_academic"
+        class_credit="8"
+        required_goods="goods_degree_academic1"
+    	/>
+
+    <goods
+        goods_id="goods_degree_academic3"
+        name="Medical School 1"
+        townelement_id="townelement_school"
+        price="50"
+        group="degree_academic"
+        class_credit="8"
+        required_goods="goods_degree_ged"
+    	/>
+
+    <goods
+        goods_id="goods_degree_academic4"
+        name="Medical School 2"
+        townelement_id="townelement_school"
+        price="50"
+        group="degree_academic"
+        class_credit="8"
+        required_goods="goods_degree_academic3"
+    	/>
+    
+    <goods
+        goods_id="goods_degree_academic5"
+        name="Medical School 3"
+        townelement_id="townelement_school"
+        price="5000"
+        group="degree_academic"
+        class_credit="32"
+        required_goods="goods_degree_academic4"
+    	/>
+    
+    <goods
         goods_id="goods_gold"
         name="Gold"
         townelement_id="townelement_bank"
