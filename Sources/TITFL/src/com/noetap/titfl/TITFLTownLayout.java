@@ -35,6 +35,8 @@ public class TITFLTownLayout implements TITFLLayout
     @Override
     public void initialize()
     {        
+        m_activity.playMusic("spirit_of_chivalry.ogg");
+        
         m_townView = (TITFLTownView) m_activity.findViewById(R.id.townView);
         if (m_activity.settings().m_reverse)
         {

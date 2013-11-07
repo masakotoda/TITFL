@@ -40,15 +40,10 @@ public class TITFLActivity extends Activity
         //Remove notification bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        /*setContentView(R.layout.activity_titfl);
-        
-        if (!resumeGame())
-            runGame();*/
-        
+        startMusic();
+
         m_mainMenu = new TITFLMainMenu();
         createMainScreen();              
-
-        startMusic();
     }
 
     @Override
@@ -192,9 +187,29 @@ public class TITFLActivity extends Activity
     private void startMusic()
     {
         m_mediaPlayer = new MediaPlayer();
+    }
+
+    private void destroyMusic()
+    {
+        if (m_mediaPlayer.isPlaying())
+        {
+            m_mediaPlayer.stop();
+            m_mediaPlayer.reset();
+        }
+        m_mediaPlayer.release();
+    }
+
+    public void playMusic(String music)
+    {
+        if (m_mediaPlayer.isPlaying())
+        {
+            m_mediaPlayer.stop();
+            m_mediaPlayer.reset();
+        }
+        
         try
         {
-            AssetFileDescriptor descriptor = this.getAssets().openFd("audio/spirit_of_chivalry.ogg");
+            AssetFileDescriptor descriptor = this.getAssets().openFd("audio/" + music);
             m_mediaPlayer.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
             m_mediaPlayer.prepare();
             m_mediaPlayer.setLooping(true);
@@ -209,16 +224,10 @@ public class TITFLActivity extends Activity
             }, delay);
         }
         catch (Exception e)
-        {
+        {            
         }
     }
-
-    private void destroyMusic()
-    {
-        m_mediaPlayer.stop();
-        m_mediaPlayer.release();
-    }
-
+    
     public final TITFLSettings settings()
     {
         return m_settings;

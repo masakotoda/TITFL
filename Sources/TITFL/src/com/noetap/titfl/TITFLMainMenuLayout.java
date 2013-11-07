@@ -19,8 +19,11 @@ public class TITFLMainMenuLayout implements TITFLLayout {
 	}
 
 	@Override
-	public void initialize() {
-		Button buttonNewGame = (Button) m_activity.findViewById(R.id.buttonNewGame);
+	public void initialize() 
+	{
+        m_activity.playMusic("arabesque.ogg");
+
+	    Button buttonNewGame = (Button) m_activity.findViewById(R.id.buttonNewGame);
 		setButtonNewGameListener(buttonNewGame);
 		
 		Button buttonLoadGame = (Button) m_activity.findViewById(R.id.buttonLoadGame);
