@@ -25,7 +25,7 @@ public class TITFLPlayerView  extends View
     static int getWidth(Activity activity)
     {
         int w = NoEtapUtility.getScreenWidth(activity);
-        int playerInfoW = (int)(0.6 * w);
+        int playerInfoW = (int)(0.542 * w); // Nexus 4 has exceptional screen ratio (1184x 768 -> 1.542. The physical screen size is 1280. But on-screen button takes 96.)
         return playerInfoW;
     }
 

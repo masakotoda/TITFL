@@ -72,8 +72,14 @@ public class TITFLTownElementHomeLayout implements TITFLLayout
 
         if (m_element.visitor().home() != m_element)
             buttonRelax.setVisibility(View.GONE);
-     }
+    }
     
+    @Override
+    public void onBackPressed()
+    {
+        m_activity.closeTownElement(m_element.visitor());
+    }
+
     private void setButtonActionClose(Button clicked)
     {
         clicked.setOnClickListener(new OnClickListener()

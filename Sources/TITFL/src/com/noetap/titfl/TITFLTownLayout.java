@@ -86,6 +86,12 @@ public class TITFLTownLayout implements TITFLLayout
         }
    }
 
+    @Override
+    public void onBackPressed()
+    {
+        m_activity.createMainScreen();
+    }
+    
     public void changePlayer(TITFLPlayer player)
     {
         m_player = player;

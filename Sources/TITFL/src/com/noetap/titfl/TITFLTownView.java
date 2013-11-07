@@ -23,9 +23,8 @@ public class TITFLTownView  extends View
     
     public static int width(TITFLActivity activity)
     {
-        int w = NoEtapUtility.getScreenWidth(activity);
         int h = NoEtapUtility.getScreenHeight(activity);
-        int playerInfoW = (int)(0.6 * w);
+        int playerInfoW = TITFLPlayerView.getWidth(activity);
         return (h - playerInfoW);
     }
 

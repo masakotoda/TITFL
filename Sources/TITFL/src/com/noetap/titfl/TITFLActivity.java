@@ -100,6 +100,20 @@ public class TITFLActivity extends Activity
         super.onConfigurationChanged(newConfig);
     }
     
+    
+    @Override
+    public void onBackPressed()
+    {
+        if (m_layout != null)
+        {
+            m_layout.onBackPressed();
+        }
+        else
+        {
+            super.onBackPressed();
+        }
+    }
+
     public TITFLTown getTown()
     {
         return m_game.getTown();
@@ -215,7 +229,7 @@ public class TITFLActivity extends Activity
     	return m_mainMenu;
     }
     
-    private void createMainScreen()
+    public void createMainScreen()
     {
     	setContentView(R.layout.main_menu);
     	m_layout = new TITFLMainMenuLayout(this);

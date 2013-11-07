@@ -136,6 +136,12 @@ public class TITFLTownElementLayout implements TITFLLayout
         setListAction(list);
     }
     
+    @Override
+    public void onBackPressed()
+    {
+        m_activity.closeTownElement(m_element.visitor());
+    }
+
     protected void setButtonActionClose(Button clicked)
     {
         clicked.setOnClickListener(new OnClickListener()

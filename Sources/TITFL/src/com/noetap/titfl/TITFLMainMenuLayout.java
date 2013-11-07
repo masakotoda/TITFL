@@ -1,7 +1,6 @@
 package com.noetap.titfl;
 
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -33,7 +32,13 @@ public class TITFLMainMenuLayout implements TITFLLayout {
 		Button buttonAbout = (Button) m_activity.findViewById(R.id.buttonAbout);
 		setButtonAboutListener(buttonAbout);
 	}
-	
+
+    @Override
+    public void onBackPressed()
+    {
+        m_activity.finish();
+    }
+
 	public void setButtonNewGameListener(Button button)
 	{
 		button.setOnClickListener(new View.OnClickListener() 
