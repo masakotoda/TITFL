@@ -758,7 +758,7 @@ public class TITFLPlayer
 
     private int avatarOffset(Activity activity)
     {
-        boolean reverse = ((TITFLActivity) activity).settings().m_reverse;
+        boolean reverse = ((TITFLActivity) activity).settings().m_reverseLayout;
         if (reverse)
         {
             return TITFLPlayerView.getWidth(activity);

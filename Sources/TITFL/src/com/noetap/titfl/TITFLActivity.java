@@ -40,6 +40,7 @@ public class TITFLActivity extends Activity
         //Remove notification bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        m_settings.load(this);
         startMusic();
 
         m_mainMenu = new TITFLMainMenu();
@@ -50,6 +51,7 @@ public class TITFLActivity extends Activity
     protected void onDestroy()
     {
         destroyMusic();
+        m_settings.save(this);
 
         if (m_game != null)
         {
@@ -122,7 +124,7 @@ public class TITFLActivity extends Activity
 
         setContentView(R.layout.activity_titfl);	//init townview layout first
         m_layout = new TITFLTownLayout(this);
-        m_layout.initialize();        
+        m_layout.initialize();
     }
     
     public boolean resumeGame()
@@ -136,6 +138,13 @@ public class TITFLActivity extends Activity
         m_layout = new TITFLTownLayout(this);
         m_layout.initialize();
         return true;
+    }
+
+    public void reloadTownView()
+    {
+        setContentView(R.layout.activity_titfl);    //init townview layout first
+        m_layout = new TITFLTownLayout(this);
+        m_layout.initialize();        
     }
 
     private void saveGame()
@@ -199,8 +208,18 @@ public class TITFLActivity extends Activity
         m_mediaPlayer.release();
     }
 
+    public void updateVolume()
+    {
+        m_mediaPlayer.setVolume(settings().m_bgmVolume, settings().m_bgmVolume);
+    }
+
     public void playMusic(String music)
     {
+        if (settings().m_bgmVolume == 0)
+        {
+            return;
+        }
+
         if (m_mediaPlayer.isPlaying())
         {
             m_mediaPlayer.stop();
@@ -213,7 +232,7 @@ public class TITFLActivity extends Activity
             m_mediaPlayer.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
             m_mediaPlayer.prepare();
             m_mediaPlayer.setLooping(true);
-            m_mediaPlayer.setVolume(1, 1);
+            updateVolume();
             int delay = 500; // Music starts with little delay.
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
@@ -233,6 +252,11 @@ public class TITFLActivity extends Activity
         return m_settings;
     }
     
+    public final TITFLLayout layout()
+    {
+        return m_layout;
+    }
+
     public final TITFLMainMenu mainMenu()
     {
     	return m_mainMenu;

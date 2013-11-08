@@ -57,7 +57,7 @@ public class TITFLTownElementLayout implements TITFLLayout
     @Override
     public void initialize()
     {
-        boolean reverse = m_activity.settings().m_reverse;
+        boolean reverse = m_activity.settings().m_reverseLayout;
 
         // This townView is just to make reverse layout easier.
         View townView = m_activity.findViewById(R.id.townView);

@@ -38,7 +38,7 @@ public class TITFLTownLayout implements TITFLLayout
         m_activity.playMusic("spirit_of_chivalry.ogg");
         
         m_townView = (TITFLTownView) m_activity.findViewById(R.id.townView);
-        if (m_activity.settings().m_reverse)
+        if (m_activity.settings().m_reverseLayout)
         {
             NoEtapUtility.alignParentRight(m_townView);
         }
@@ -47,7 +47,7 @@ public class TITFLTownLayout implements TITFLLayout
 
         m_playerView = (TITFLPlayerView) m_activity.findViewById(R.id.playerView);
         m_playerView.setPlayer(m_player);
-        if (m_activity.settings().m_reverse)
+        if (m_activity.settings().m_reverseLayout)
         {
             NoEtapUtility.alignParentLeft(m_playerView);
         }
@@ -91,7 +91,8 @@ public class TITFLTownLayout implements TITFLLayout
     @Override
     public void onBackPressed()
     {
-        m_activity.createMainScreen();
+        DialogSettings dialog = new DialogSettings(m_activity);
+        dialog.show();
     }
     
     public void changePlayer(TITFLPlayer player)

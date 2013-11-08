@@ -28,4 +28,10 @@
     <string name="sell">Sell</string>
     <string name="apply_loan">Apply Loan</string>
     <string name="amount">Amount $.</string>    
+    <string name="volume">Volume</string>
+    <string name="leftPlayer">Player left, Town right</string>
+    <string name="leftTown">Town left, Player right</string>
+    <string name="exitTITFL">Exit TITFL</string>
+    <string name="backToGame">Back to Game</string>
+    <string name="mainMenu">Main Menu</string>
 </resources>
