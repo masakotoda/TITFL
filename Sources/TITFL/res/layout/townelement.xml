@@ -89,11 +89,16 @@
 	        android:layout_height="wrap_content"
 	        android:layout_alignParentTop="true"
         	android:layout_above="@+id/buttonBar">	
+        	<ImageView
+	        	android:id="@+id/imageViewInside"
+	        	android:layout_gravity="center"
+	        	android:layout_width="wrap_content"
+	        	android:layout_height="wrap_content"
+	        	android:contentDescription="@string/blank_string" />	
 	        <ListView
 	        	android:id="@+id/listViewGoods"
 	        	android:layout_width="match_parent"
-	        	android:layout_height="wrap_content" >	
-	    	</ListView>
+	        	android:layout_height="wrap_content" />	
 		</LinearLayout>
 
         <LinearLayout
@@ -107,6 +112,38 @@
 	         android:layout_marginTop="5dp"
 	         android:layout_height="40dp" >	
 	         <Button
+	              style="?android:attr/buttonBarButtonStyle"
+	              android:id="@+id/buttonBeg"
+	              android:layout_width="wrap_content"
+	              android:layout_height="wrap_content"
+	              android:layout_weight="1"
+	              android:text="@string/beg"
+	              android:textSize="13sp" />
+	         <Button
+	              style="?android:attr/buttonBarButtonStyle"
+	              android:id="@+id/buttonRelax"
+	              android:layout_width="wrap_content"
+	              android:layout_height="wrap_content"
+	              android:layout_weight="1"
+	              android:text="@string/relax"
+	              android:textSize="13sp" />
+	         <Button
+	              style="?android:attr/buttonBarButtonStyle"
+	              android:id="@+id/buttonSocialize"
+	              android:layout_width="wrap_content"
+	              android:layout_height="wrap_content"
+	              android:layout_weight="1"
+	              android:text="@string/socialize"
+	              android:textSize="13sp" />
+	         <Button
+	              style="?android:attr/buttonBarButtonStyle"
+	              android:id="@+id/buttonExercise"
+	              android:layout_width="wrap_content"
+	              android:layout_height="wrap_content"
+	              android:layout_weight="1"
+	              android:text="@string/exercise"
+	              android:textSize="13sp" />
+            <Button
 	             android:id="@+id/buttonApply"
 	             style="?android:attr/buttonBarButtonStyle"
 	             android:layout_width="wrap_content"

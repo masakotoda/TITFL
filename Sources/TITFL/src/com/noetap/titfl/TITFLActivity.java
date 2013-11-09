@@ -18,6 +18,7 @@ public class TITFLActivity extends Activity
     public static final String pathGoods = "goods/";
     public static final String pathGreeter = "greeter/";
     public static final String pathElement = "townelement/";
+    public static final String pathElementInside = "townelement_inside/";
     public static final String pathMap = "townmap/";    
     
     private TITFL m_game;

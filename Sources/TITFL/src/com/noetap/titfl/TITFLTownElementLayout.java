@@ -2,6 +2,8 @@ package com.noetap.titfl;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
@@ -10,6 +12,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -115,7 +118,6 @@ public class TITFLTownElementLayout implements TITFLLayout
         m_greeter.setImageBitmap(null);
         greeterTalk.start();
 
-        
         ImageView elementImage = (ImageView) m_activity.findViewById(R.id.imageViewBuilding);
         if (elementImage != null)
         {
@@ -130,22 +132,30 @@ public class TITFLTownElementLayout implements TITFLLayout
         setButtonActionClose(buttonClose);
 
         Button buttonWork = (Button) m_activity.findViewById(R.id.buttonWork);
-        if (m_element.canWork())
-            setButtonActionWork(buttonWork);
-        else
-            setButtonActionSocialize(buttonWork);
+        setButtonActionWork(buttonWork);
         
         Button buttonApply = (Button) m_activity.findViewById(R.id.buttonApply);
-        if (m_element.canWork())
-            setButtonActionApply(buttonApply);
-        else
-            setButtonActionExercise(buttonApply);
-        
+        setButtonActionApply(buttonApply);
+
+        Button buttonSocialize = (Button) m_activity.findViewById(R.id.buttonSocialize);
+        setButtonActionSocialize(buttonSocialize);
+                
+        Button buttonBeg = (Button) m_activity.findViewById(R.id.buttonBeg);
+        setButtonActionBeg(buttonBeg);
+
+        Button buttonExercise = (Button) m_activity.findViewById(R.id.buttonExercise);
+        setButtonActionExercise(buttonExercise);
+
+        Button buttonRelax = (Button) m_activity.findViewById(R.id.buttonRelax);
+        setButtonActionRelax(buttonRelax);
+
         TextView name = (TextView) m_activity.findViewById(R.id.textViewName);
         name.setText(m_element.name());
                 
         ListView list = (ListView) m_activity.findViewById(R.id.listViewGoods);
         setListAction(list);
+
+        setElementInsideImage();
     }
     
     @Override
@@ -168,6 +178,17 @@ public class TITFLTownElementLayout implements TITFLLayout
 
     protected void setButtonActionWork(Button clicked)
     {
+        if (clicked == null)
+        {
+            return;
+        }
+
+        if (!m_element.canWork())
+        {
+            clicked.setVisibility(View.GONE);
+            return;
+        }
+
         clicked.setOnClickListener(new OnClickListener()
         {
             @Override
@@ -188,7 +209,17 @@ public class TITFLTownElementLayout implements TITFLLayout
     
     protected void setButtonActionSocialize(Button clicked)
     {
-        clicked.setText("Socialize");
+        if (clicked == null)
+        {
+            return;
+        }
+
+        if (!m_element.canSocialize())
+        {
+            clicked.setVisibility(View.GONE);
+            return;
+        }
+
         clicked.setOnClickListener(new OnClickListener()
         {
             @Override
@@ -202,6 +233,17 @@ public class TITFLTownElementLayout implements TITFLLayout
 
     protected void setButtonActionApply(Button clicked)
     {
+        if (clicked == null)
+        {
+            return;
+        }
+
+        if (!m_element.canWork())
+        {
+            clicked.setVisibility(View.GONE);
+            return;
+        }
+
         final TITFLTownElementLayout layout = this;
         clicked.setOnClickListener(new OnClickListener()
         {
@@ -217,7 +259,17 @@ public class TITFLTownElementLayout implements TITFLLayout
 
     protected void setButtonActionExercise(Button clicked)
     {
-        clicked.setText("Exercise");
+        if (clicked == null)
+        {
+            return;
+        }
+
+        if (!m_element.canExercise())
+        {
+            clicked.setVisibility(View.GONE);
+            return;
+        }
+
         clicked.setOnClickListener(new OnClickListener()
         {
             @Override
@@ -229,6 +281,80 @@ public class TITFLTownElementLayout implements TITFLLayout
         });
     }
 
+    protected void setButtonActionRelax(Button clicked)
+    {
+        if (clicked == null)
+        {
+            return;
+        }
+
+        if (!m_element.canRelax())
+        {
+            clicked.setVisibility(View.GONE);
+            return;
+        }
+
+        clicked.setOnClickListener(new OnClickListener()
+        {
+            @Override
+            public void onClick(View v) 
+            {
+                m_element.visitor().relax();
+                m_playerView.invalidate();
+            }
+        });
+    }
+    
+    protected void setButtonActionBeg(Button clicked)
+    {
+        if (clicked == null)
+        {
+            return;
+        }
+
+        if (!m_element.canBeg())
+        {
+            clicked.setVisibility(View.GONE);
+            return;
+        }
+
+        clicked.setOnClickListener(new OnClickListener()
+        {
+            @Override
+            public void onClick(View v) 
+            {
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(m_activity);
+                alertDialogBuilder.setTitle("You are about to BEG");
+                alertDialogBuilder.setMessage("It may ruin your life. Are you sure?");
+                alertDialogBuilder.setCancelable(false);
+                
+                alertDialogBuilder.setNegativeButton("No, I have pride!", 
+                    new DialogInterface.OnClickListener() 
+                    {
+                        public void onClick(DialogInterface dialog, int id)
+                        {
+                            dialog.dismiss();
+                        }
+                    });
+
+                alertDialogBuilder.setPositiveButton("Yes, I BEG!", 
+                    new DialogInterface.OnClickListener() 
+                    {
+                        public void onClick(DialogInterface dialog, int id)
+                        {
+                            dialog.dismiss();
+                            int amount = m_element.visitor().beg();
+                            NoEtapUtility.showAlert(m_activity, "Lucky you", "A nice lady gave you $ " + Integer.toString(amount) + ". Thank her!");
+                            m_playerView.invalidate();
+                        }
+                    });
+
+                AlertDialog alertDialog = alertDialogBuilder.create();       
+                alertDialog.show();    
+            }
+        });
+    }
+    
     protected void setListAction(ListView list)
     {
         if (list == null)
@@ -248,6 +374,23 @@ public class TITFLTownElementLayout implements TITFLLayout
                 dialog.show();
             }
         });
+    }
+    
+    private void setElementInsideImage()
+    {
+         if (m_element.merchandise().size() == 0)
+         {
+             ImageView iv1 = (ImageView) m_activity.findViewById(R.id.imageViewBackground);
+             LinearLayout bb1 = (LinearLayout) m_activity.findViewById(R.id.buttonBar);
+             int bgH = NoEtapUtility.getScreenWidth(m_activity) - iv1.getHeight() - bb1.getHeight();
+             int bgW = NoEtapUtility.getScreenHeight(m_activity) - m_playerView.getWidth();
+             Drawable backGround = NoEtapUtility.createDrawableFromAsset(m_activity, m_element.getInsideImageName(), bgW, bgH);
+             if (backGround != null)
+             {
+                 ImageView noGoods = (ImageView) m_activity.findViewById(R.id.imageViewInside);
+                 noGoods.setImageDrawable(backGround);
+            }
+        }
     }
     
     public void updateSellable()

@@ -4,12 +4,14 @@
         townelement_id="townelement_apartment"
         name="Apartment"
         slot="0"
+        can_relax="true"
         />
     
     <townelement
         townelement_id="townelement_house"
         name="House"
         slot="1"
+        can_relax="true"
         />
     
     <townelement
@@ -31,6 +33,7 @@
         name="Gym"
         slot="4"
         greeting="How may I help you?"
+        can_exercise="true"
         />
         
     <townelement
@@ -59,6 +62,9 @@
         name="Park"
         slot="8"
         greeting="How may I help you?"
+        can_relax="true"
+        can_exercise="true"
+        can_beg="true"
         />
         
     <townelement
@@ -66,6 +72,7 @@
         name="College"
         slot="9"
         greeting="How may I help you?"
+        can_socialize="true"
         />
         
     <townelement
@@ -87,6 +94,7 @@
         name="Restaurant/Bar"
         slot="12"
         greeting="How may I help you?"
+        can_socialize="true"
         />
         
     <townelement
@@ -94,6 +102,8 @@
         name="Church"
         slot="13"
         greeting="How may I help you?"
+        can_socialize="true"
+        can_beg="true"
         />
         
     <townelement

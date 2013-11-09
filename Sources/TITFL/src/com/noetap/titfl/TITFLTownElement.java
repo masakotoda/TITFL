@@ -17,8 +17,12 @@ public class TITFLTownElement
     private ArrayList<TITFLJob> m_jobs;
     private String m_name;
     private String m_id;
-    private int m_slot;
+    private int m_slot;    
     private String m_greeting;
+    private boolean m_canBeg;
+    private boolean m_canRelax;
+    private boolean m_canExercise;
+    private boolean m_canSocialize;
     private Bitmap m_bitmap;
     private TITFLPlayer m_visitor;
     private TITFLTownMapNode m_node;
@@ -30,6 +34,10 @@ public class TITFLTownElement
     private static String atr_name = "name";
     private static String atr_slot = "slot";
     private static String atr_greeting = "greeting";
+    private static String atr_can_beg = "can_beg";
+    private static String atr_can_relax = "can_relax";
+    private static String atr_can_exercise = "can_exercise";
+    private static String atr_can_socialize = "can_socialize";
     
     public TITFLTownElement()
     {
@@ -65,6 +73,26 @@ public class TITFLTownElement
     public int slot()
     {
         return m_slot;
+    }
+    
+    public boolean canBeg()
+    {
+        return m_canBeg;
+    }
+    
+    public boolean canExercise()
+    {
+        return m_canExercise;
+    }
+    
+    public boolean canRelax()
+    {
+        return m_canRelax;
+    }
+    
+    public boolean canSocialize()
+    {
+        return m_canSocialize;
     }
     
     public void setSlot(int slot)
@@ -172,6 +200,14 @@ public class TITFLTownElement
                         element.m_slot = Integer.parseInt(attribValue);
                     else if (attribName.equals(atr_greeting))
                         element.m_greeting = attribValue;
+                    else if (attribName.equals(atr_can_beg))
+                        element.m_canBeg = Boolean.parseBoolean(attribValue);
+                    else if (attribName.equals(atr_can_relax))
+                        element.m_canRelax = Boolean.parseBoolean(attribValue);
+                    else if (attribName.equals(atr_can_exercise))
+                        element.m_canExercise = Boolean.parseBoolean(attribValue);
+                    else if (attribName.equals(atr_can_socialize))
+                        element.m_canSocialize = Boolean.parseBoolean(attribValue);
                 }
                 
                 element.m_town = town;
@@ -185,6 +221,11 @@ public class TITFLTownElement
         return ret;
     }
     
+    public String getInsideImageName()
+    {
+        return TITFLActivity.pathElementInside + m_id + ".png";
+    }
+
     public String getImageName()
     {
         return TITFLActivity.pathElement + m_id + ".png";

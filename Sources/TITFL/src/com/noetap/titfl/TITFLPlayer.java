@@ -31,7 +31,7 @@ public class TITFLPlayer
     private ImageView m_avatarImg;
     private ImageView m_marbleImg;
 
-    private final float m_maxHour = 24;
+    private final float m_maxHour = 40;
     private final int m_incre = 10;
     
     private String m_name;
@@ -993,6 +993,14 @@ public class TITFLPlayer
         }
     }
     
+    public int beg()
+    {
+        Random random = new Random();
+        int amount = (int)(random.nextFloat() * 100);
+        m_cash += amount;
+        m_satisfaction.m_life = 0;
+        return amount;
+    }
 
     public void work()
     {
