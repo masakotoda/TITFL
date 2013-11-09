@@ -27,105 +27,143 @@
         android:contentDescription="@string/blank_string"
         android:src="@drawable/player_a_frm0" />
     
-    <Button
-        android:id="@+id/buttonClose"
-        style="?android:attr/buttonStyleSmall"
+    <ImageView
+        android:id="@+id/imageViewBackground"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/townView"
-        android:text="@string/close" />
-
-    <Button
-        android:id="@+id/buttonWork"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/buttonClose"
-        android:text="@string/work" />
-
-    <Button
-        android:id="@+id/buttonApply"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/buttonWork"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/buttonWork"
-        android:text="@string/apply_job" />
-    
-    <TextView
-        android:id="@+id/textViewName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageViewGreeting"
         android:layout_alignLeft="@+id/townView"
-        android:layout_alignParentTop="true"
-        android:text="@string/dummy_string"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
+        android:layout_alignRight="@+id/townView"
+        android:layout_alignTop="@+id/imageViewGreeting"
+        android:background="@drawable/bg_babyblue"
+        android:contentDescription="@string/blank_string" />
+    
     <ImageView
         android:id="@+id/imageViewGreeting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/townView"
-        android:layout_below="@+id/textViewName"
         android:contentDescription="@string/blank_string"
         android:src="@drawable/marble" />
 
-    <TextView
-        android:id="@+id/textViewGreeting"
+    <ImageView
+        android:id="@+id/imageViewBuilding"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/buttonClose"
-        android:layout_toRightOf="@+id/imageViewGreeting"
-        android:text="@string/dummy_string"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:layout_alignRight="@+id/townView"
+        android:contentDescription="@string/blank_string"
+        android:src="@drawable/marble" />
     
     <LinearLayout
-        android:layout_alignLeft="@+id/townView"
-        android:layout_alignRight="@+id/townView"
-        android:baselineAligned="false"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:layout_below="@+id/imageViewGreeting"
-        android:orientation="horizontal" >
+        android:layout_toRightOf="@+id/imageViewGreeting"
+        android:orientation="vertical" >
+	    <TextView
+	        android:id="@+id/textViewName"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/dummy_string"
+	        android:textAppearance="?android:attr/textAppearanceLarge" />	
+	    <TextView
+	        android:id="@+id/textViewGreeting"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/dummy_string"
+	        android:textAppearance="?android:attr/textAppearanceSmall" />
+    </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical" >
-		    <TextView
-		        android:id="@+id/textView1"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:text="@string/all_courses"
-		        android:textAppearance="?android:attr/textAppearanceSmall" />
-            <ListView
-		        android:id="@+id/listViewAllCourses"
-		        android:layout_width="wrap_content"
-		        android:layout_height="match_parent" >
-		    </ListView>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/townView"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/townView"
+        android:layout_below="@+id/imageViewGreeting"
+        android:baselineAligned="false"
+        android:orientation="vertical" >
+
+	    <LinearLayout
+	        android:baselineAligned="false"
+	        android:layout_height="wrap_content"
+	        android:layout_width="wrap_content"
+	        android:layout_above="@+id/buttonBar"
+	        android:layout_alignParentTop="true"
+	        android:orientation="horizontal" >
+	        	
+	        <LinearLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:orientation="vertical" >
+			    <TextView
+			        android:id="@+id/textView1"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:text="@string/all_courses"
+			        android:textAppearance="?android:attr/textAppearanceSmall" />	
+	            <ListView
+	                android:id="@+id/listViewAllCourses"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content" >	
+			    </ListView>
+			</LinearLayout>
+	        
+	        <LinearLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:orientation="vertical" >
+			    <TextView
+			        android:id="@+id/textView2"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:text="@string/my_courses"
+			        android:textAppearance="?android:attr/textAppearanceSmall" />			        
+			    <ListView
+			        android:id="@+id/listViewMyCourses"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content" >		
+			    </ListView>
+			</LinearLayout>
 		</LinearLayout>
-        
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical" >
-		    <TextView
-		        android:id="@+id/textView2"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:text="@string/my_courses"
-		        android:textAppearance="?android:attr/textAppearanceSmall" />
-		        
-		    <ListView
-		        android:id="@+id/listViewMyCourses"
-		        android:layout_width="wrap_content"
-		        android:layout_height="match_parent" >		
-		    </ListView>
-		</LinearLayout>
-	</LinearLayout>    
+	
+	    <LinearLayout
+	         android:id="@+id/buttonBar"
+	         style="?android:attr/buttonBarStyle"
+	         android:divider="?android:attr/dividerVertical"
+	         android:showDividers="middle"
+	         android:background="@drawable/bg_babyblue"
+	         android:layout_alignParentBottom="true"
+	         android:layout_width="match_parent"
+	         android:layout_marginTop="5dp"
+	         android:layout_height="40dp" >	
+	         <Button
+	             android:id="@+id/buttonApply"
+	             style="?android:attr/buttonBarButtonStyle"
+	             android:layout_width="wrap_content"
+	             android:layout_height="wrap_content"
+	             android:layout_weight="1"
+	             android:text="@string/apply_job"
+	             android:textSize="13sp" />	
+	         <Button
+	              style="?android:attr/buttonBarButtonStyle"
+	              android:id="@+id/buttonWork"
+	              android:layout_width="wrap_content"
+	              android:layout_height="wrap_content"
+	              android:layout_weight="1"
+	              android:text="@string/work"
+	              android:textSize="13sp" />
+	         <Button
+	              style="?android:attr/buttonBarButtonStyle"
+	              android:id="@+id/buttonClose"
+	              android:layout_width="wrap_content"
+	              android:layout_height="wrap_content"
+	              android:layout_weight="1"
+	              android:text="@string/close"
+	              android:textSize="13sp" />
+	     </LinearLayout>
+
+    </RelativeLayout>
+    
 </RelativeLayout>

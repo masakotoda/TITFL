@@ -185,12 +185,17 @@ public class TITFLTownElement
         return ret;
     }
     
-    private Bitmap getBitmap()
+    public String getImageName()
+    {
+        return TITFLActivity.pathElement + m_id + ".png";
+    }
+    
+    public Bitmap getBitmap()
     {
         if (m_bitmap != null)
             return m_bitmap;
         
-        m_bitmap = NoEtapUtility.getBitmap(m_town.activity(), TITFLActivity.pathElement + m_id + ".png");
+        m_bitmap = NoEtapUtility.getBitmap(m_town.activity(), getImageName());
         return m_bitmap;
     }
     

@@ -2,6 +2,7 @@ package com.noetap.titfl;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.View;
@@ -113,6 +114,17 @@ public class TITFLTownElementLayout implements TITFLLayout
         greeterTalk.addFrame(d4, frame_time);
         m_greeter.setImageBitmap(null);
         greeterTalk.start();
+
+        
+        ImageView elementImage = (ImageView) m_activity.findViewById(R.id.imageViewBuilding);
+        if (elementImage != null)
+        {
+            Bitmap bm = m_element.getBitmap();
+            int elementImageW = (bm.getWidth() * h) / bm.getHeight();
+            Drawable d = NoEtapUtility.createDrawableFromAsset(m_activity, m_element.getImageName(), elementImageW, h);
+            d.setAlpha(128);
+            elementImage.setImageDrawable(d);
+        }
 
         Button buttonClose = (Button) m_activity.findViewById(R.id.buttonClose);
         setButtonActionClose(buttonClose);

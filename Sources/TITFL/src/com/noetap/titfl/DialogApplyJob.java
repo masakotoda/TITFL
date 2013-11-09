@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.app.Dialog;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -26,6 +27,7 @@ public class DialogApplyJob extends Dialog
         m_element = element;
         m_activity = m_element.town().activity();
 
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_apply_job);
         setTitle("Select a job to apply");
 
@@ -95,6 +97,15 @@ public class DialogApplyJob extends Dialog
                 selectJob(position);
             }
         });
+        list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
+        {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int position, long id)
+            {
+                selectJob(position);
+                return false;
+            }
+        });
     }
 
     private void selectJob(int position)
@@ -134,22 +145,22 @@ public class DialogApplyJob extends Dialog
         if (m_job.requiredEducation().m_basic > 0)
         {
             education = true;
-            ary.add("Basic education.");
+            ary.add("Required Basic education.");
         }
         if (m_job.requiredEducation().m_business_finance > 0)
         {
             education = true;
-            ary.add("Degree/credits in Business/Finance field.");
+            ary.add("Required Degree/credits in Business/Finance field.");
         }
         if (m_job.requiredEducation().m_engineering > 0)
         {
             education = true;
-            ary.add("Degree/credits in Engineering field.");
+            ary.add("Required Degree/credits in Engineering field.");
         }
         if (m_job.requiredEducation().m_academic > 0)
         {
             education = true;
-            ary.add("Degree/credits in Academic field.");
+            ary.add("Required Degree/credits in Academic field.");
         }
         if (education == false)
         {
@@ -160,22 +171,22 @@ public class DialogApplyJob extends Dialog
         if (m_job.requiredExperience().m_basic > 0)
         {
             experience = true;
-            ary.add("Basic work experience.");
+            ary.add("Required Basic work experience.");
         }
         if (m_job.requiredExperience().m_business_finance > 0)
         {
             experience = true;
-            ary.add("Work experience in Business/Finance field.");
+            ary.add("Required Work experience in Business/Finance field.");
         }
         if (m_job.requiredExperience().m_engineering > 0)
         {
             experience = true;
-            ary.add("Work experience in Engineering field.");
+            ary.add("Required Work experience in Engineering field.");
         }
         if (m_job.requiredExperience().m_academic > 0)
         {
             experience = true;
-            ary.add("Work experience Academic field.");
+            ary.add("Required Work experience Academic field.");
         }
         if (experience == false)
         {
