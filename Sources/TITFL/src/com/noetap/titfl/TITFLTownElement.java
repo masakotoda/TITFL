@@ -3,6 +3,7 @@ package com.noetap.titfl;
 import java.io.InputStream;
 import java.util.ArrayList;
 import org.xmlpull.v1.XmlPullParser;
+
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -240,6 +241,21 @@ public class TITFLTownElement
         return m_bitmap;
     }
     
+    public String getGreeterFrame(int frame)
+    {
+        String path = TITFLActivity.pathGreeter + id() + "_01.png";
+        Bitmap bm = NoEtapUtility.getBitmap(m_town.activity(), path);
+        if (bm == null)
+        {
+            path = TITFLActivity.pathGreeter + "greeter_a_frm0" + Integer.toString(frame) + ".png";
+        }
+        else
+        {
+            path = TITFLActivity.pathGreeter + id() + "_0" + Integer.toString(frame) + ".png";
+        }
+        return path;
+    }
+
     public void draw(Canvas canvas, Paint paint)
     {
         //TODO
