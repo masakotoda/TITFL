@@ -378,17 +378,23 @@ public class TITFLTownElementLayout implements TITFLLayout
     
     private void setElementInsideImage()
     {
-         if (m_element.merchandise().size() == 0)
-         {
-             ImageView iv1 = (ImageView) m_activity.findViewById(R.id.imageViewBackground);
-             LinearLayout bb1 = (LinearLayout) m_activity.findViewById(R.id.buttonBar);
-             int bgH = NoEtapUtility.getScreenWidth(m_activity) - iv1.getHeight() - bb1.getHeight();
-             int bgW = NoEtapUtility.getScreenHeight(m_activity) - m_playerView.getWidth();
-             Drawable backGround = NoEtapUtility.createDrawableFromAsset(m_activity, m_element.getInsideImageName(), bgW, bgH);
-             if (backGround != null)
-             {
-                 ImageView noGoods = (ImageView) m_activity.findViewById(R.id.imageViewInside);
-                 noGoods.setImageDrawable(backGround);
+        ImageView iv1 = (ImageView) m_activity.findViewById(R.id.imageViewBackground);
+        LinearLayout bb1 = (LinearLayout) m_activity.findViewById(R.id.buttonBar);
+        {
+            if (bb1 != null)
+                bb1.setBackgroundColor(m_element.visitor().themeColorLight());            
+            if (iv1 != null)
+                iv1.setBackgroundColor(m_element.visitor().themeColorLight());            
+        }
+        if (m_element.merchandise().size() == 0)
+        {
+            int bgH = NoEtapUtility.getScreenWidth(m_activity) - iv1.getHeight() - bb1.getHeight();
+            int bgW = NoEtapUtility.getScreenHeight(m_activity) - m_playerView.getWidth();
+            Drawable backGround = NoEtapUtility.createDrawableFromAsset(m_activity, m_element.getInsideImageName(), bgW, bgH);
+            if (backGround != null)
+            {
+                ImageView noGoods = (ImageView) m_activity.findViewById(R.id.imageViewInside);
+                noGoods.setImageDrawable(backGround);
             }
         }
     }

@@ -864,6 +864,9 @@ public class TITFLPlayer
             }
         });
         
+        if (!openDestination)
+            return true;
+
         avatarWalk.start();
 
         m_counter = -1;
@@ -1150,6 +1153,14 @@ public class TITFLPlayer
     public int themeColor()
     {
         return m_themeColor;
+    }
+
+    public int themeColorLight()
+    {
+        int red = Math.min(255, (int)(Color.red(m_themeColor) * 1.1));
+        int green = Math.min(255, (int)(Color.green(m_themeColor) * 1.1));
+        int blue = Math.min(255, (int)(Color.blue(m_themeColor) * 1.1));        
+        return Color.argb(255, red, green, blue);
     }
 
     public boolean hasRefrigerator()
