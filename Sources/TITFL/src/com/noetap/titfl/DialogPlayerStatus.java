@@ -47,7 +47,7 @@ public class DialogPlayerStatus extends Dialog
             ArrayList<String> ary = new ArrayList<String>();
             ary.add("Wealth: " + Integer.toString(player.satisfaction().m_wealth));
             ary.add("Education: " + Integer.toString(player.satisfaction().m_education));
-            ary.add("Carrier: " + Integer.toString(player.satisfaction().m_education));
+            ary.add("Career: " + Integer.toString(player.satisfaction().m_career));
             ary.add("Life: " + Integer.toString(player.satisfaction().m_life));
             ary.add("Health: " + Integer.toString(player.satisfaction().m_health));
             ary.add("Happiness: " + Integer.toString(player.happiness()));

@@ -129,7 +129,7 @@ public class TITFLPlayerView  extends View
         top += textSize;
 
         top += textSize;
-        canvas.drawText("Carrier: " + Float.toString(m_player.getCarrierLevel()), left, top, paint);
+        canvas.drawText("Career: " + Float.toString(m_player.getCareerLevel()), left, top, paint);
         top += textSize;
 
         top += textSize;

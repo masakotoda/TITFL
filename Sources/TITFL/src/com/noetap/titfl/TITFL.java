@@ -385,14 +385,14 @@ public class TITFL
             m_health = other.m_health;
             m_wealth = other.m_wealth;
             m_education = other.m_education;
-            m_carrier = other.m_carrier;
+            m_career = other.m_career;
             m_life = other.m_life;
         }
 
         int m_health;
         int m_wealth;
         int m_education;
-        int m_carrier;
+        int m_career;
         int m_life;
     }
 }

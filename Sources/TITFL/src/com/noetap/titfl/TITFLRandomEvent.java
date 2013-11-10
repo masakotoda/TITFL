@@ -34,12 +34,12 @@ public class TITFLRandomEvent implements TITFLEvent
     //private static String atr_trigger_1 = "trigger_health";
     //private static String atr_trigger_2 = "trigger_wealth";
     //private static String atr_trigger_3 = "trigger_education";
-    //private static String atr_trigger_4 = "trigger_carrier";
+    //private static String atr_trigger_4 = "trigger_career";
     //private static String atr_trigger_5 = "trigger_life";
     //private static String atr_affect_1 = "affect_health";
     //private static String atr_affect_2 = "affect_wealth";
     //private static String atr_affect_3 = "affect_education";
-    //private static String atr_affect_4 = "affect_carrier";
+    //private static String atr_affect_4 = "affect_career";
     //private static String atr_affect_5 = "affect_life";
     private static String atr_price = "price";
     private static String atr_time_to_pay = "time_to_pay";
@@ -267,7 +267,7 @@ public class TITFLRandomEvent implements TITFLEvent
                     //else if (attribName.equals(atr_trigger_3))
                     //    element.m_trigger.m_education = Integer.parseInt(attribValue);
                     //else if (attribName.equals(atr_trigger_4))
-                    //    element.m_trigger.m_carrier = Integer.parseInt(attribValue);
+                    //    element.m_trigger.m_career = Integer.parseInt(attribValue);
                     //else if (attribName.equals(atr_trigger_5))
                     //    element.m_trigger.m_life = Integer.parseInt(attribValue);
                     //else if (attribName.equals(atr_affect_1))
@@ -277,7 +277,7 @@ public class TITFLRandomEvent implements TITFLEvent
                     //else if (attribName.equals(atr_affect_3))
                     //    element.m_affect.m_education= Integer.parseInt(attribValue);
                     //else if (attribName.equals(atr_affect_4))
-                    //    element.m_affect.m_carrier = Integer.parseInt(attribValue);
+                    //    element.m_affect.m_career = Integer.parseInt(attribValue);
                     //else if (attribName.equals(atr_affect_5))
                     //    element.m_affect.m_life = Integer.parseInt(attribValue);
                     else if (attribName.equals(atr_happiness_1))

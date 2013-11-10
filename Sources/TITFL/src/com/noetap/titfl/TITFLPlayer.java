@@ -86,7 +86,7 @@ public class TITFLPlayer
     private static String atr_satisfaction_health = "satisfaction_health";
     private static String atr_satisfaction_wealth = "satisfaction_wealth";
     private static String atr_satisfaction_education = "satisfaction_education";
-    private static String atr_satisfaction_carrier = "satisfaction_carrier";
+    private static String atr_satisfaction_career = "satisfaction_career";
     private static String atr_satisfaction_life = "satisfaction_life";
     private static String atr_happiness = "happiness";
     private static String atr_cash = "cash";
@@ -419,7 +419,7 @@ public class TITFLPlayer
             serializer.attribute(ns, atr_satisfaction_health, Integer.toString(m_satisfaction.m_health));
             serializer.attribute(ns, atr_satisfaction_wealth, Integer.toString(m_satisfaction.m_wealth));
             serializer.attribute(ns, atr_satisfaction_education, Integer.toString(m_satisfaction.m_education));
-            serializer.attribute(ns, atr_satisfaction_carrier, Integer.toString(m_satisfaction.m_carrier));
+            serializer.attribute(ns, atr_satisfaction_career, Integer.toString(m_satisfaction.m_career));
             serializer.attribute(ns, atr_satisfaction_life, Integer.toString(m_satisfaction.m_life));
             serializer.attribute(ns, atr_happiness, Integer.toString(m_happiness));
             serializer.attribute(ns, atr_cash, Integer.toString(m_cash));
@@ -523,8 +523,8 @@ public class TITFLPlayer
                 player.m_satisfaction.m_wealth = Integer.parseInt(attribValue);
             else if (attribName.equals(atr_satisfaction_education))
                 player.m_satisfaction.m_education = Integer.parseInt(attribValue);
-            else if (attribName.equals(atr_satisfaction_carrier))
-                player.m_satisfaction.m_carrier = Integer.parseInt(attribValue);
+            else if (attribName.equals(atr_satisfaction_career))
+                player.m_satisfaction.m_career = Integer.parseInt(attribValue);
             else if (attribName.equals(atr_satisfaction_life))
                 player.m_satisfaction.m_life = Integer.parseInt(attribValue);
             else if (attribName.equals(atr_happiness))
@@ -1017,7 +1017,7 @@ public class TITFLPlayer
 
         m_cash += m_job.wage();
 
-        m_satisfaction.m_carrier += m_incre;
+        m_satisfaction.m_career += m_incre;
         int happiness = (int)(m_incre *  m_character.hardworking());
         m_happiness += happiness;
 
@@ -1130,9 +1130,9 @@ public class TITFLPlayer
         return m_satisfaction.m_education;
     }
 
-    public float getCarrierLevel()
+    public float getCareerLevel()
     {
-        return m_satisfaction.m_carrier;
+        return m_satisfaction.m_career;
     }
 
     public float getLifeLevel()
