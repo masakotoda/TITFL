@@ -3,7 +3,11 @@ package com.noetap.titfl;
 import java.io.InputStream;
 import java.util.ArrayList;
 import org.xmlpull.v1.XmlPullParser;
+
+import android.app.Activity;
 import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.util.Xml;
 
@@ -28,6 +32,8 @@ public class TITFLGoods
     private String m_losing;           // Message when losing/expiring
     private String m_requiredGoods;    // Required goods to buy this goods
     private int m_maxUnits = 1;        // Max units that player can buy at once
+    private Bitmap m_bitmap = null;
+    static private Bitmap m_defaultBitmap = null;
 
     private static String asset_xml_name = "default_goods.xml";
     private static String tag_root = "TITFL";
@@ -84,6 +90,28 @@ public class TITFLGoods
     public String id()
     {
         return m_id;
+    }
+
+    public String getImageName()
+    {
+        return TITFLActivity.pathGoods + m_id + ".png";
+    }
+
+    public Bitmap getBitmap()
+    {
+        if (m_bitmap != null)
+            return m_bitmap;
+
+        Activity activity = m_townelement.town().activity();
+        m_bitmap = NoEtapUtility.getBitmap(activity, getImageName());
+        if (m_bitmap == null)
+        {
+            if (m_defaultBitmap == null)
+                m_defaultBitmap = BitmapFactory.decodeResource(activity.getResources(), R.drawable.goods_sample);
+            m_bitmap = m_defaultBitmap;
+        }
+
+        return m_bitmap;
     }
 
     public String name()

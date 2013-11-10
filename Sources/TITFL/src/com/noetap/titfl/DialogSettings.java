@@ -138,6 +138,7 @@ public class DialogSettings extends Dialog
             public void onClick(View v) 
             {
                 updateSettings();
+                m_activity.saveGame();
                 m_activity.createMainScreen();
                 dismiss();
             }

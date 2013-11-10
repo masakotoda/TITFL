@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,10 +41,11 @@ public class ListAdapterGoods  extends BaseAdapter
 
         TITFLGoods item = m_items.get(position);
             
-        String iconPath = TITFLActivity.pathGoods + item.id() + ".png";
-        Bitmap bm = NoEtapUtility.getBitmap(m_activity, iconPath);
-        if (bm == null)
-            bm = BitmapFactory.decodeResource(m_activity.getResources(), R.drawable.goods_sample);
+        //String iconPath = TITFLActivity.pathGoods + item.id() + ".png";
+        //Bitmap bm = NoEtapUtility.getBitmap(m_activity, iconPath);
+        //if (bm == null)
+        //    bm = BitmapFactory.decodeResource(m_activity.getResources(), R.drawable.goods_sample);
+        Bitmap bm = item.getBitmap();
 
         TextView description = (TextView) gridView.findViewById(R.id.description);
         description.setText(item.toString());

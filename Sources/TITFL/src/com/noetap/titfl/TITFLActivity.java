@@ -20,11 +20,17 @@ public class TITFLActivity extends Activity
     public static final String pathElement = "townelement/";
     public static final String pathElementInside = "townelement_inside/";
     public static final String pathMap = "townmap/";    
+
+    class MediaPlayerHolder
+    {
+        public MediaPlayer m_mediaPlayer;
+        public String m_currentMusic;
+    };
     
     private TITFL m_game;
     private TITFLLayout m_layout;
-    private MediaPlayer m_mediaPlayer;
     private TITFLSettings m_settings = new TITFLSettings();
+    private MediaPlayerHolder m_mediaPlayer;
     private TITFLMainMenu m_mainMenu;
 
     @Override
@@ -148,7 +154,7 @@ public class TITFLActivity extends Activity
         m_layout.initialize();        
     }
 
-    private void saveGame()
+    public void saveGame()
     {        
         if (m_game.dirty())
             m_game.save();
@@ -196,22 +202,24 @@ public class TITFLActivity extends Activity
 
     private void startMusic()
     {
-        m_mediaPlayer = new MediaPlayer();
+        m_mediaPlayer = new MediaPlayerHolder();
+        m_mediaPlayer.m_mediaPlayer = new MediaPlayer();
     }
 
     private void destroyMusic()
     {
-        if (m_mediaPlayer.isPlaying())
+        if (m_mediaPlayer.m_mediaPlayer.isPlaying())
         {
-            m_mediaPlayer.stop();
-            m_mediaPlayer.reset();
+            m_mediaPlayer.m_mediaPlayer.stop();
+            m_mediaPlayer.m_mediaPlayer.reset();
+            m_mediaPlayer.m_currentMusic = "";
         }
-        m_mediaPlayer.release();
+        m_mediaPlayer.m_mediaPlayer.release();
     }
 
     public void updateVolume()
     {
-        m_mediaPlayer.setVolume(settings().m_bgmVolume, settings().m_bgmVolume);
+        m_mediaPlayer.m_mediaPlayer.setVolume(settings().m_bgmVolume, settings().m_bgmVolume);
     }
 
     public void playMusic(String music)
@@ -221,25 +229,34 @@ public class TITFLActivity extends Activity
             return;
         }
 
-        if (m_mediaPlayer.isPlaying())
+        if (m_mediaPlayer.m_mediaPlayer.isPlaying())
         {
-            m_mediaPlayer.stop();
-            m_mediaPlayer.reset();
+            if (music.equals(m_mediaPlayer.m_currentMusic))
+            {
+                return;
+            }
+            else
+            {
+                m_mediaPlayer.m_mediaPlayer.stop();
+                m_mediaPlayer.m_mediaPlayer.reset();
+                m_mediaPlayer.m_currentMusic = "";
+            }
         }
         
         try
         {
             AssetFileDescriptor descriptor = this.getAssets().openFd("audio/" + music);
-            m_mediaPlayer.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
-            m_mediaPlayer.prepare();
-            m_mediaPlayer.setLooping(true);
+            m_mediaPlayer.m_currentMusic = music;
+            m_mediaPlayer.m_mediaPlayer.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
+            m_mediaPlayer.m_mediaPlayer.prepare();
+            m_mediaPlayer.m_mediaPlayer.setLooping(true);
             updateVolume();
             int delay = 500; // Music starts with little delay.
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    m_mediaPlayer.start();
+                    m_mediaPlayer.m_mediaPlayer.start();
                 }
             }, delay);
         }

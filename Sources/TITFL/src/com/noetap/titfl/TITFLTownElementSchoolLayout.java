@@ -93,6 +93,7 @@ public class TITFLTownElementSchoolLayout extends TITFLTownElementLayout
             {
                 TITFLBelonging degree = m_myCourses.get(position);
                 m_element.visitor().study(degree);
+                //adapter.notifyDataSetChanged();
                 setMyCourseAction(list);
                 m_playerView.invalidate();
             }
