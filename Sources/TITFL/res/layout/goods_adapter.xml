@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/image"
-        android:layout_height="32dp"
-        android:layout_width="32dp"
+        android:layout_height="40dp"
+        android:layout_width="40dp"
         android:layout_gravity="center"
         android:contentDescription="@string/blank_string"
         android:src="@drawable/event_neutral" >
