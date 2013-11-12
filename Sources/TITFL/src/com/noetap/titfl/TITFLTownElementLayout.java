@@ -57,6 +57,7 @@ public class TITFLTownElementLayout implements TITFLLayout
         m_playerView.invalidate();
     }
 
+    @SuppressWarnings("deprecation")
     @SuppressLint("NewApi")
     @Override
     public void initialize()

@@ -50,7 +50,7 @@ public class DialogPlayerStatus extends Dialog
             ary.add("Career: " + Integer.toString(player.satisfaction().m_career));
             ary.add("Life: " + Integer.toString(player.satisfaction().m_life));
             ary.add("Health: " + Integer.toString(player.satisfaction().m_health));
-            ary.add("Happiness: " + Integer.toString(player.happiness()));
+            ary.add("Happiness: " + Integer.toString(player.satisfaction().m_happiness));
             ListView list = (ListView) findViewById(R.id.ListViewSatisfaction);
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity, R.layout.list_smallfont, ary);
             list.setAdapter(adapter);

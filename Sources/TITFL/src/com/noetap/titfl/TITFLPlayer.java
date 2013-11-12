@@ -41,7 +41,7 @@ public class TITFLPlayer
     private TITFL.DisciplineLevel m_education;
     private TITFL.DisciplineLevel m_experience;
     private TITFL.Satisfaction  m_satisfaction;
-    private int m_happiness;
+    //private int m_happiness;
     
     private int m_cash;
     private int m_saving;
@@ -161,14 +161,9 @@ public class TITFLPlayer
         return m_satisfaction;
     }
     
-    public int happiness()
-    {
-        return m_happiness;    
-    }
-    
     public void addHappiness(int happiness)
     {
-        m_happiness += happiness;
+        m_satisfaction.m_happiness += happiness;
     }
     
     public int cash()
@@ -421,7 +416,7 @@ public class TITFLPlayer
             serializer.attribute(ns, atr_satisfaction_education, Integer.toString(m_satisfaction.m_education));
             serializer.attribute(ns, atr_satisfaction_career, Integer.toString(m_satisfaction.m_career));
             serializer.attribute(ns, atr_satisfaction_life, Integer.toString(m_satisfaction.m_life));
-            serializer.attribute(ns, atr_happiness, Integer.toString(m_happiness));
+            serializer.attribute(ns, atr_happiness, Integer.toString(m_satisfaction.m_happiness));
             serializer.attribute(ns, atr_cash, Integer.toString(m_cash));
             serializer.attribute(ns, atr_saving, Integer.toString(m_saving));
             serializer.attribute(ns, atr_current_location, currentLocationId);
@@ -528,7 +523,7 @@ public class TITFLPlayer
             else if (attribName.equals(atr_satisfaction_life))
                 player.m_satisfaction.m_life = Integer.parseInt(attribValue);
             else if (attribName.equals(atr_happiness))
-                player.m_happiness = Integer.parseInt(attribValue);
+                player.m_satisfaction.m_happiness = Integer.parseInt(attribValue);
             else if (attribName.equals(atr_cash))
                 player.m_cash = Integer.parseInt(attribValue);
             else if (attribName.equals(atr_saving))
@@ -1019,7 +1014,7 @@ public class TITFLPlayer
 
         m_satisfaction.m_career += m_incre;
         int happiness = (int)(m_incre *  m_character.hardworking());
-        m_happiness += happiness;
+        m_satisfaction.m_happiness += happiness;
 
         m_experience.add(m_job.requiredEducation(), 1);
         m_experience.add(m_job.requiredExperience(), 0.01f);
@@ -1040,7 +1035,7 @@ public class TITFLPlayer
 
         m_satisfaction.m_life += m_incre;
         int happiness = (int)(m_incre *  m_character.lucky());
-        m_happiness += happiness;
+        m_satisfaction.m_happiness += happiness;
     }
 
     public void study(TITFLBelonging degree)
@@ -1063,7 +1058,7 @@ public class TITFLPlayer
         degree.addCredit(1);
         m_satisfaction.m_education += m_incre;
         int happiness = (int)(m_incre *  m_character.intelligent());
-        m_happiness += happiness;
+        m_satisfaction.m_happiness += happiness;
     }
 
     public void exercise()
@@ -1073,7 +1068,7 @@ public class TITFLPlayer
 
         m_satisfaction.m_health += m_incre;
         int happiness = (int)(m_incre *  m_character.physical());
-        m_happiness += happiness;
+        m_satisfaction.m_happiness += happiness;
     }
 
     public void socialize()
@@ -1083,7 +1078,7 @@ public class TITFLPlayer
 
         m_satisfaction.m_life += m_incre;
         int happiness = (int)(m_incre *  m_character.goodlooking());
-        m_happiness += happiness;
+        m_satisfaction.m_happiness += happiness;
     }
 
     public void applyJob(TITFLJob job)
@@ -1119,10 +1114,40 @@ public class TITFLPlayer
         else
             return true;            
     }
+
+    public boolean isWinner(TITFL.Satisfaction goal)
+    {
+        if (goal.m_career > m_satisfaction.m_career)
+            return false;
+        if (goal.m_education > m_satisfaction.m_education)
+            return false;
+        if (goal.m_happiness > m_satisfaction.m_happiness)
+            return false;
+        if (goal.m_health > m_satisfaction.m_health)
+            return false;
+        if (goal.m_life > m_satisfaction.m_life)
+            return false;
+        if (goal.m_wealth > getWealthLevel())
+            return false;
+        return true;
+    }
     
     public float getWealthLevel()
     {
-        return m_satisfaction.m_wealth;
+        int wealth = 0;
+        wealth += m_cash;
+        wealth += m_saving;
+        for (TITFLBelonging x : m_belongings)
+        {
+            TITFLTownElement townelement = x.goodsRef().townelement();
+            if (x.goodsRef().isLoan())
+                wealth -= x.loanAmount();
+            else if (townelement != null && townelement.isBank())
+                wealth+= x.goodsRef().getPrice();
+            else if (x.goodsRef().isHouse())
+                wealth += x.goodsRef().getPrice();
+        }
+        return wealth;
     }
 
     public float getEducationLevel()
@@ -1147,7 +1172,55 @@ public class TITFLPlayer
 
     public float getHappinessLevel()
     {
-        return m_happiness;
+        return m_satisfaction.m_happiness;
+    }
+
+    public int getWealthPercent(int goal)
+    {
+        if (goal == 0 || goal < getWealthLevel())
+            return 100;
+        else
+            return (int)(100 * getWealthLevel()) / goal;
+    }
+
+    public int getEducationPercent(int goal)
+    {
+        if (goal == 0 || goal < getEducationLevel())
+            return 100;
+        else
+            return (int)(100 * getEducationLevel()) / goal;
+    }
+
+    public int getCareerPercent(int goal)
+    {
+        if (goal == 0 || goal < getCareerLevel())
+            return 100;
+        else
+            return (int)(100 * getCareerLevel()) / goal;
+    }
+
+    public int getLifePercent(int goal)
+    {
+        if (goal == 0 || goal < getLifeLevel())
+            return 100;
+        else
+            return (int)(100 * getLifeLevel()) / goal;
+    }
+
+    public int getHealthPercent(int goal)
+    {
+        if (goal == 0 || goal < getHealthLevel())
+            return 100;
+        else
+            return (int)(100 * getHealthLevel()) / goal;
+    }
+
+    public int getHappinessPercent(int goal)
+    {
+        if (goal == 0 || goal < getHealthLevel())
+            return 100;
+        else
+            return (int)(100 * getHealthLevel()) / goal;
     }
 
     public int themeColor()

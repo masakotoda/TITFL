@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+	android:layout_alignParentLeft="true"
+	android:layout_alignParentTop="true"
+	android:orientation="vertical" >
+
+	<ImageView
+	    android:id="@+id/imageViewAvatar"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="center"
+	    android:contentDescription="@string/blank_string"
+	    android:src="@drawable/player_a_frm0" />
+
+	<LinearLayout
+	    style="?android:attr/buttonBarStyle"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:background="@drawable/bg_babyblue"
+	    android:divider="?android:attr/dividerVertical"
+	    android:showDividers="middle" >
+
+	    <Button
+	        android:id="@+id/buttonOK"
+	        style="?android:attr/buttonBarButtonStyle"
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:text="@string/close" />
+    </LinearLayout>
+</LinearLayout>

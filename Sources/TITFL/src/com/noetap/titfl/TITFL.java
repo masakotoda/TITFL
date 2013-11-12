@@ -17,6 +17,7 @@ public class TITFL
     private ArrayList<TITFLPlayer> m_defaultPlayers;
     private ArrayList<TITFLEvent> m_randomEvents;
     private ArrayList<TITFLTownMap> m_townmaps;
+    private TITFL.Satisfaction m_goal;
     private TITFLMainMenu m_mainMenu;
 
     public TITFL(Activity activity, TITFLMainMenu mainMenu)
@@ -46,6 +47,7 @@ public class TITFL
         m_randomEvents = TITFLRandomEvent.loadRandomEvents(m_activity.getAssets());
         m_townmaps = TITFLTownMap.loadTownMaps(m_activity.getAssets());
         m_players = new ArrayList<TITFLPlayer>();        
+        m_goal = new TITFL.Satisfaction();
         
         // TODO
         // 1. Select Level.
@@ -60,12 +62,18 @@ public class TITFL
         //m_players.add(TITFLPlayer.createPlayer(m_defaultPlayers.get(2))); // <- This should be done in the steps above
         //m_players.add(TITFLPlayer.createPlayer(m_defaultPlayers.get(3))); // <- This should be done in the steps above
         //m_players.add(TITFLPlayer.createPlayer(m_defaultPlayers.get(4))); // <- This should be done in the steps above
-        //NoEtapUtility.showAlert(m_activity, "TODO", "Initiate game");
+        m_goal.m_wealth = 10000;    // <- This should be done in the steps above
+        m_goal.m_career = 1000;     // <- This should be done in the steps above
+        m_goal.m_life = 1000;       // <- This should be done in the steps above
+        m_goal.m_education = 200;   // <- This should be done in the steps above
+        m_goal.m_health = 200;      // <- This should be done in the steps above
+        m_goal.m_happiness = 200;   // <- This should be done in the steps above
+
         for (int i = 0; i < m_mainMenu.getNumOfPlayer(); i++)
         {
         	m_players.add(TITFLPlayer.createPlayer(m_defaultPlayers.get(i)));
         }
-        
+
         m_town = new TITFLTown(m_activity, this, m_townmaps.get(mapType()));
         initiatePlayers();
         setNextPlayer(null);
@@ -78,7 +86,7 @@ public class TITFL
         m_defaultPlayers = TITFLPlayer.loadDefaultPlayers(m_activity.getAssets());
         m_randomEvents = TITFLRandomEvent.loadRandomEvents(m_activity.getAssets());
         m_townmaps = TITFLTownMap.loadTownMaps(m_activity.getAssets());
-        m_players = new ArrayList<TITFLPlayer>();        
+        m_players = new ArrayList<TITFLPlayer>();
         
         m_town = new TITFLTown(m_activity, this, m_townmaps.get(mapType()));
         
@@ -123,11 +131,15 @@ public class TITFL
             m_players.get(i).save(key + ".player." + Integer.toString(i), db);
         }
 
+        m_goal.save(key + ".goal", db);
+
         return true;
     }
     
     private boolean load(String key, SQLiteDatabase db)
     {        
+        m_goal = TITFL.Satisfaction.load(key + ".goal", db);
+
         int numPlayers = TITFL.loadInteger(key + ".num_players", db);
         m_players = new ArrayList<TITFLPlayer>();
         for (int i = 0; i < numPlayers; i++)
@@ -198,7 +210,15 @@ public class TITFL
         }
 
         m_town.setActivePlayer(newPlayer);
-        newPlayer.beginWeek(getRandomEvent());
+        if (newPlayer.isWinner(m_goal))
+        {
+            DialogWinner dialog = new DialogWinner(newPlayer, m_activity);
+            dialog.show();
+        }
+        else
+        {
+            newPlayer.beginWeek(getRandomEvent());
+        }
     }
     
     // used when resuming game
@@ -238,7 +258,12 @@ public class TITFL
     {
     	return m_defaultPlayers;
     }
-    
+
+    public Satisfaction goal()
+    {
+        return m_goal;
+    }
+
     private TITFLRandomEvent getRandomEvent()
     {
         Random random = new Random();
@@ -387,10 +412,35 @@ public class TITFL
             m_education = other.m_education;
             m_career = other.m_career;
             m_life = other.m_life;
+            m_happiness = other.m_happiness;
+        }
+
+        public boolean save(String key, SQLiteDatabase db)
+        {
+            TITFL.save(key + ".career", this.m_career, db);
+            TITFL.save(key + ".wealth", this.m_wealth, db);
+            TITFL.save(key + ".education", this.m_education, db);
+            TITFL.save(key + ".health", this.m_health, db);
+            TITFL.save(key + ".life", this.m_life, db);
+            TITFL.save(key + ".happiness", this.m_happiness, db);
+            return true;
+        }
+
+        public static Satisfaction load(String key, SQLiteDatabase db)
+        {
+            Satisfaction ret = new Satisfaction();
+            ret.m_career = TITFL.loadInteger(key + ".career", db);
+            ret.m_wealth = TITFL.loadInteger(key + ".wealth", db);
+            ret.m_education = TITFL.loadInteger(key + ".education", db);
+            ret.m_health = TITFL.loadInteger(key + ".health", db);
+            ret.m_life = TITFL.loadInteger(key + ".life", db);
+            ret.m_happiness = TITFL.loadInteger(key + ".happiness", db);
+            return ret;
         }
 
         int m_health;
         int m_wealth;
+        int m_happiness;
         int m_education;
         int m_career;
         int m_life;

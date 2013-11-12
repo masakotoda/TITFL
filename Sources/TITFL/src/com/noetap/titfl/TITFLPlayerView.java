@@ -120,28 +120,30 @@ public class TITFLPlayerView  extends View
         textSize = 32 * factor;
         paint.setTextSize(textSize);
 
+        final TITFL.Satisfaction goal = m_activity.game().goal();
+
         top += textSize;
-        canvas.drawText("Wealth: " + Float.toString(m_player.getWealthLevel()), left, top, paint);
+        canvas.drawText("Wealth: " + Integer.toString(m_player.getWealthPercent(goal.m_wealth)) + "%", left, top, paint);
         top += textSize;
 
         top += textSize;
-        canvas.drawText("Education: " + Float.toString(m_player.getEducationLevel()), left, top, paint);
+        canvas.drawText("Education: " + Integer.toString(m_player.getEducationPercent(goal.m_education)) + "%", left, top, paint);
         top += textSize;
 
         top += textSize;
-        canvas.drawText("Career: " + Float.toString(m_player.getCareerLevel()), left, top, paint);
+        canvas.drawText("Career: " + Integer.toString(m_player.getCareerPercent(goal.m_career)) + "%", left, top, paint);
         top += textSize;
 
         top += textSize;
-        canvas.drawText("Life: " + Float.toString(m_player.getLifeLevel()), left, top, paint);
+        canvas.drawText("Life: " + Integer.toString(m_player.getLifePercent(goal.m_life)) + "%", left, top, paint);
         top += textSize;
 
         top += textSize;
-        canvas.drawText("Health: " + Float.toString(m_player.getHealthLevel()), left, top, paint);
+        canvas.drawText("Health: " + Integer.toString(m_player.getHealthPercent(goal.m_health)) + "%", left, top, paint);
         top += textSize;
 
         top += textSize;
-        canvas.drawText("Happiness: " + Float.toString(m_player.getHappinessLevel()), left, top, paint);
+        canvas.drawText("Happiness: " + Integer.toString(m_player.getHappinessPercent(goal.m_happiness)) + "%", left, top, paint);
         top += textSize;
         
         top += textSize;

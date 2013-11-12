@@ -159,6 +159,11 @@ public class TITFLActivity extends Activity
         if (m_game.dirty())
             m_game.save();
     }
+
+    public void endGame(TITFLPlayer winner)
+    {
+        // TODO
+    }
     
     public void openTownElement(TITFLTownElement element)
     {
@@ -279,7 +284,12 @@ public class TITFLActivity extends Activity
     {
     	return m_mainMenu;
     }
-    
+
+    public final TITFL game()
+    {
+        return m_game;
+    }
+
     public void createMainScreen()
     {
     	setContentView(R.layout.main_menu);
