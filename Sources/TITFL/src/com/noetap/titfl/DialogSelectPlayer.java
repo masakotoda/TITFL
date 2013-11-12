@@ -13,7 +13,7 @@ public class DialogSelectPlayer extends Dialog {
 	{
 		super(parent);
 		setContentView(R.layout.dialog_player_select);
-        setTitle("Player Selection");
+        setTitle("Select number of players");
         
         m_activity = parent;
         
