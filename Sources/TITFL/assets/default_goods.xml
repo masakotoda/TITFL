@@ -75,7 +75,7 @@
         townelement_id="townelement_cardealer"
         price="2000"
         speed="40"
-        greeting="I gurantee this car runs fine for 4 weeks."
+        greeting="I guarantee this car runs fine for 4 weeks."
     	/>
 
     <goods
@@ -161,6 +161,7 @@
         goods_id="goods_dayquil"
         name="Day Quil"
         price="10"
+        max_units="5"
         />
 
 	<goods
@@ -240,7 +241,37 @@
         price="200"
         food_value="1"
         />
+    <goods
+        townelement_id="townelement_restaurant"
+        goods_id="goods_seafood"
+        name="Seafood Dinner"
+        price="300"
+        food_value="1"
+        />
+     <goods
+        townelement_id="townelement_restaurant"
+        goods_id="goods_steak"
+        name="Steak Dinner"
+        price="100"
+        food_value="1"
+        />
+    
+     <goods
+        townelement_id="townelement_restaurant"
+        goods_id="goods_lobsters"
+        name="Lobster Dinner"
+        price="300"
+        food_value="1"
+        />   
         
+     <goods
+        townelement_id="townelement_restaurant"
+        goods_id="goods_Pho"
+        name="Pho Delicious"
+        price="50"
+        food_value="1"
+        />     
+                 
     <goods
         townelement_id="townelement_church"
         goods_id="goods_donation"

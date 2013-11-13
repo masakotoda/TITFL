@@ -23,6 +23,7 @@ public class DialogPurchaseGoods extends Dialog
         setContentView(R.layout.purchase_goods);
         setTitle("Would you like to buy?");
 
+        int maxUnits = defaultPurchaseUnits(goods.maxUnits());
         m_quantity = (EditText) findViewById(R.id.editTextQuantity);
         m_quantity.setText("1");
 
@@ -32,14 +33,32 @@ public class DialogPurchaseGoods extends Dialog
         TextView priceText = (TextView) findViewById(R.id.textViewPrice);
         priceText.setText("$" + m_goods.getPrice());
 
+        Button resetButton = (Button) findViewById(R.id.buttonReset);
+        setButtonActionReset(resetButton);
+        
         Button add1Button = (Button) findViewById(R.id.buttonAdd1);
         setButtonActionAdd(add1Button, 1);
         
         Button add10Button = (Button) findViewById(R.id.buttonAdd10);
-        setButtonActionAdd(add10Button, 10);
+        if (maxUnits >= 10)
+        {
+        	setButtonActionAdd(add10Button, 10);
+        	m_quantity.setText("10");
+        }
+        else
+        {
+        	add10Button.setVisibility(View.GONE);
+        }
 
         Button add100Button = (Button) findViewById(R.id.buttonAdd100);
-        setButtonActionAdd(add100Button, 100);
+        if (maxUnits >= 100)
+        {
+        	setButtonActionAdd(add100Button, 100);
+        }
+        else
+        {
+        	add100Button.setVisibility(View.GONE);
+        }
 
         Button cancelButton = (Button) findViewById(R.id.buttonCancel);
         setButtonActionCancel(cancelButton);
@@ -54,6 +73,35 @@ public class DialogPurchaseGoods extends Dialog
         
     }
 
+    private int defaultPurchaseUnits(int maxUnits)
+    {
+    	int units = 1;
+    	
+    	if (maxUnits > 0 && maxUnits < 10) units = maxUnits;
+    	else if (maxUnits >= 10 && maxUnits <= 99) units = 10;
+    	else if (maxUnits >= 100 ) units = 100;
+    	
+    	return units;
+    }
+    
+    private void setButtonActionReset(Button clicked)
+    {
+        clicked.setOnClickListener(new View.OnClickListener() 
+        {
+            @Override
+            public void onClick(View v) 
+            {
+            	int maxUnits = defaultPurchaseUnits(m_goods.maxUnits());
+            	if (maxUnits < 10)
+                   	m_quantity.setText("1");
+            	else if (maxUnits >= 10 && maxUnits < 100)
+                   	m_quantity.setText("10");
+            	else if (maxUnits >= 100)
+                   	m_quantity.setText("100");
+            }
+        });
+    }
+    
     private void setButtonActionAdd(Button clicked, final int addition)
     {
         clicked.setOnClickListener(new View.OnClickListener() 
@@ -63,8 +111,14 @@ public class DialogPurchaseGoods extends Dialog
             {
                 String countStr = m_quantity.getText().toString();
                 int count = NoEtapUtility.parseInt(countStr);
-                countStr = Integer.toString(count + addition);
-                m_quantity.setText(countStr);
+                //countStr = Integer.toString(count + addition);
+                //m_quantity.setText(countStr);
+                int maxUnits = defaultPurchaseUnits(m_goods.maxUnits());
+                if (count + addition <= maxUnits)
+                {
+                	countStr = Integer.toString(count + addition);
+	                m_quantity.setText(countStr);
+                }
             }
         });
     }
