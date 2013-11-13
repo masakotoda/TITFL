@@ -77,8 +77,7 @@ public class DialogPurchaseGoods extends Dialog
     {
     	int units = 1;
     	
-    	if (maxUnits > 0 && maxUnits < 10) units = maxUnits;
-    	else if (maxUnits >= 10 && maxUnits <= 99) units = 10;
+    	if (maxUnits >= 10 && maxUnits <= 99) units = 10;
     	else if (maxUnits >= 100 ) units = 100;
     	
     	return units;
@@ -91,7 +90,7 @@ public class DialogPurchaseGoods extends Dialog
             @Override
             public void onClick(View v) 
             {
-            	int maxUnits = defaultPurchaseUnits(m_goods.maxUnits());
+            	int maxUnits = m_goods.maxUnits();
             	if (maxUnits < 10)
                    	m_quantity.setText("1");
             	else if (maxUnits >= 10 && maxUnits < 100)
@@ -113,7 +112,7 @@ public class DialogPurchaseGoods extends Dialog
                 int count = NoEtapUtility.parseInt(countStr);
                 //countStr = Integer.toString(count + addition);
                 //m_quantity.setText(countStr);
-                int maxUnits = defaultPurchaseUnits(m_goods.maxUnits());
+                int maxUnits = m_goods.maxUnits();
                 if (count + addition <= maxUnits)
                 {
                 	countStr = Integer.toString(count + addition);
