@@ -103,6 +103,7 @@ public class TITFLPlayer
     private static String atr_speed_factor = "speed_factor";
     private static String atr_hour = "hour";
     private static String atr_job = "job";
+    private static String atr_last_worked_week = "last_worked_week";
     private static String atr_transportation = "transportation";
     private static String atr_outfit = "outfit";
     private static String atr_home = "home";
@@ -421,6 +422,7 @@ public class TITFLPlayer
             serializer.attribute(ns, atr_saving, Integer.toString(m_saving));
             serializer.attribute(ns, atr_current_location, currentLocationId);
             serializer.attribute(ns, atr_job, jobId);
+            serializer.attribute(ns, atr_last_worked_week, Integer.toString(m_lastWorkedWeek));
             serializer.attribute(ns, atr_transportation, transportationId);
             serializer.attribute(ns, atr_outfit, outfitId);
             serializer.attribute(ns, atr_home, homeId);
@@ -548,6 +550,8 @@ public class TITFLPlayer
                 player.m_speedFactor = Float.parseFloat(attribValue);
             else if (attribName.equals(atr_hour))
                 player.m_hour = Float.parseFloat(attribValue);
+            else if (attribName.equals(atr_last_worked_week))
+                player.m_lastWorkedWeek = Integer.parseInt(attribValue);
             else if (attribName.equals(atr_current_location))
             {
                 if (town != null)
@@ -1000,24 +1004,66 @@ public class TITFLPlayer
         return amount;
     }
 
+    private void showNoTimeMessage(String action)
+    {
+        NoEtapUtility.showAlert(m_currentLocation.town().activity(), "Sorry", "No enough time to " + action + ". Close and try next week again.");
+    }
+
+    private int outfitCode()
+    {
+        if (m_outfit == null)
+            return 0;
+        else if (m_outfit.isCasualOutfit())
+            return 1;
+        else if (m_outfit.isBusinessOutfit())
+            return 2;
+        else if (m_outfit.isDressOutfit())
+            return 3;
+        else
+            return 0;
+    }
+
     public void work()
     {
         if (m_job == null)
         {
             return;
         }
-        
-        if (!addHour())
+
+        if (m_lastWorkedWeek + 2 < m_currentLocation.town().currentWeek())
+        {
+            NoEtapUtility.showAlert(m_currentLocation.town().activity(), "You are fired", "I'm sorry, but you are fired since you didn't come to work regulary.");
+            m_job = null;
+            m_satisfaction.m_career -= 10; // It hurts your career.
             return;
+        }
+        
+        if (outfitCode() < m_job.dressCode())
+        {
+            NoEtapUtility.showAlert(m_currentLocation.town().activity(), "Info", "You are not properly dressed. Buy new cloth or go home and change your cloth.");
+            return;
+        }
 
-        m_cash += m_job.wage();
+        float added = addHour();
+        if (added == 0)
+        {
+            showNoTimeMessage("Work");
+            return;
+        }
 
-        m_satisfaction.m_career += m_incre;
-        int happiness = (int)(m_incre *  m_character.hardworking());
-        m_satisfaction.m_happiness += happiness;
+        m_lastWorkedWeek = m_currentLocation.town().currentWeek();
+        int wage = (int)(added * m_job.getWage());
+        int care = (int)(added * m_incre);
+        int happ = (int)(added * m_incre * m_character.hardworking());
+        float educFactor = added * 1;
+        float expeFactor = added * 0.01f;
 
-        m_experience.add(m_job.requiredEducation(), 1);
-        m_experience.add(m_job.requiredExperience(), 0.01f);
+        m_cash += wage;
+
+        m_satisfaction.m_career += care;
+        m_satisfaction.m_happiness += happ;
+        m_experience.add(m_job.requiredEducation(), educFactor);
+        m_experience.add(m_job.requiredExperience(), expeFactor);
         m_experience.m_basic++;
     }
     
@@ -1030,68 +1076,112 @@ public class TITFLPlayer
 
     public void relax()
     {
-        if (!addHour())
+        float added = addHour();
+        if (added == 0)
+        {
+            showNoTimeMessage("Relax");
             return;
+        }
 
-        m_satisfaction.m_life += m_incre;
-        int happiness = (int)(m_incre *  m_character.lucky());
-        m_satisfaction.m_happiness += happiness;
+        int life = (int)(added * m_incre);
+        int happ = (int)(added * m_incre * m_character.lucky());
+
+        m_satisfaction.m_life += life;
+        m_satisfaction.m_happiness += happ;
     }
 
     public void study(TITFLBelonging degree)
     {
         if (degree.completedCredit() >= degree.goodsRef().classCredit())
+        {
+            NoEtapUtility.showAlert(m_currentLocation.town().activity(), "Info", "You already acquired the selected degree.");
             return;
+        }
         
-        if (!addHour())
+        float added = addHour();
+        if (added == 0)
+        {
+            showNoTimeMessage("Study");
             return;
+        }
+        
+        int educ = (int)(added * m_incre);
+        int happ = (int)(added * m_incre * m_character.intelligent());
+        int cred = (int)(added * 1);
 
-        if (degree.goodsRef().isDegreeBasic())
-            m_education.m_basic++;
-        else if (degree.goodsRef().isDegreeEngineering())
-            m_education.m_engineering++;
-        else if (degree.goodsRef().isDegreeBusiness())
-            m_education.m_business_finance++;
-        else if (degree.goodsRef().isDegreeAcademic())
-            m_education.m_academic++;
-        
-        degree.addCredit(1);
-        m_satisfaction.m_education += m_incre;
-        int happiness = (int)(m_incre *  m_character.intelligent());
-        m_satisfaction.m_happiness += happiness;
+        if (cred < 1)
+        {
+            ; // Not enough to earn credit
+        }
+        else
+        {
+            if (degree.goodsRef().isDegreeBasic())
+                m_education.m_basic++;
+            else if (degree.goodsRef().isDegreeEngineering())
+                m_education.m_engineering++;
+            else if (degree.goodsRef().isDegreeBusiness())
+                m_education.m_business_finance++;
+            else if (degree.goodsRef().isDegreeAcademic())
+                m_education.m_academic++;
+
+            degree.addCredit(1);
+        }
+
+        m_satisfaction.m_education += educ;
+        m_satisfaction.m_happiness += happ;
     }
 
     public void exercise()
     {
-        if (!addHour())
+        float added = addHour();
+        if (added == 0)
+        {
+            showNoTimeMessage("Exercise");
             return;
+        }
 
-        m_satisfaction.m_health += m_incre;
-        int happiness = (int)(m_incre *  m_character.physical());
-        m_satisfaction.m_happiness += happiness;
+        int heal = (int)(added * m_incre);
+        int happ = (int)(added * m_incre *  m_character.physical());
+
+        m_satisfaction.m_health += heal;
+        m_satisfaction.m_happiness += happ;
     }
 
     public void socialize()
     {
-        if (!addHour())
+        float added = addHour();
+        if (added == 0)
+        {
+            showNoTimeMessage("Socialize");
             return;
+        }
 
-        m_satisfaction.m_life += m_incre;
-        int happiness = (int)(m_incre *  m_character.goodlooking());
-        m_satisfaction.m_happiness += happiness;
+        int life = (int)(added * m_incre);
+        int happ = (int)(added * m_incre *  m_character.goodlooking());
+
+        m_satisfaction.m_life +=life;
+        m_satisfaction.m_happiness += happ;
     }
 
     public void applyJob(TITFLJob job)
     {
-        if (!addHour())
+        float added = addHour();
+        if (added == 0)
         {
-            NoEtapUtility.showAlert(m_currentLocation.town().activity(), "Sorry", "No enough time to take interview!");
+            showNoTimeMessage("Interview");
+            return;
+        }
+
+        if (added < 1)
+        {
+            NoEtapUtility.showAlert(m_currentLocation.town().activity(), "Sorry", "Interview didn't go well!");
             return;
         }
 
         if (job.accept(this))
         {
             m_job = job;
+            m_lastWorkedWeek = m_currentLocation.town().currentWeek();
         }
     }
 
@@ -1310,22 +1400,26 @@ public class TITFLPlayer
         return count;
     }
 
-    private boolean addHour()
+    private float addHour()
     {
-        if (m_hour + 1 > m_maxHour)
-            return false;
+        if (m_hour >= m_maxHour)
+            return 0;
 
-        m_hour++;
-        return true;
+        float add = 1;
+        if (m_hour + 1 >= m_maxHour)
+            add = m_maxHour - m_hour;
+
+        m_hour += add;
+        return add;
     }
     
-    public boolean addHours(float hours)
+    public float addHours(float hours)
     {
         if (m_hour + hours > m_maxHour)
-            return false;
+            return 0;
 
         m_hour += hours;
-        return true;
+        return hours;
     }
 
     private boolean updateMortgageBalance(int price)

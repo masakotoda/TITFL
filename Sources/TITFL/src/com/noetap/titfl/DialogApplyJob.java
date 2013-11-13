@@ -126,7 +126,7 @@ public class DialogApplyJob extends Dialog
         m_job = m_element.jobs().get(position);
 
         textQualification.setText("Description:");
-        textWage.setText("Wage: $ " + Integer.toString(m_job.wage()));
+        textWage.setText("Wage: $ " + Integer.toString(m_job.getWage()));
         textDressCode.setText("Dress Code: " + m_job.dressCode(m_job.dressCode()));
 
         ArrayList<String> ary = new ArrayList<String>();

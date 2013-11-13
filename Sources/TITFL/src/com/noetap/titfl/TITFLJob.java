@@ -91,7 +91,14 @@ public class TITFLJob
     {
         return m_wage;
     }
-    
+
+    public int getWage()
+    {
+        float economy = m_townelement.town().economyFactor();
+        int wage = (int)(economy * wage());
+        return wage;
+    }
+
     public int openingNumber()
     {
         return m_openingNumber;
