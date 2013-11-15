@@ -12,14 +12,20 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ListAdapterGoods  extends BaseAdapter
+public class ListAdapterPicture  extends BaseAdapter
 {
+    public static class PictureItem
+    {
+        public String m_label;
+        public Bitmap m_picture;
+    }
+    
     private Activity m_activity;
-    private ArrayList<TITFLGoods> m_items;
+    private ArrayList<PictureItem> m_items;
          
-    public ListAdapterGoods(
+    public ListAdapterPicture(
         Activity activity, 
-        ArrayList<TITFLGoods> items) 
+        ArrayList<PictureItem> items) 
     {
         m_activity = activity;
         m_items = items;
@@ -32,23 +38,19 @@ public class ListAdapterGoods  extends BaseAdapter
         {    
             LayoutInflater inflater = (LayoutInflater) m_activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             gridView = new View(m_activity);    
-            gridView = inflater.inflate(R.layout.adapter_goods, null);
+            gridView = inflater.inflate(R.layout.adapter_picture, null);
         }
         else 
         {
             gridView = convertView;
         }
 
-        TITFLGoods item = m_items.get(position);
+        PictureItem item = m_items.get(position);
             
-        //String iconPath = TITFLActivity.pathGoods + item.id() + ".png";
-        //Bitmap bm = NoEtapUtility.getBitmap(m_activity, iconPath);
-        //if (bm == null)
-        //    bm = BitmapFactory.decodeResource(m_activity.getResources(), R.drawable.goods_sample);
-        Bitmap bm = item.getBitmap();
+        Bitmap bm = item.m_picture;
 
         TextView description = (TextView) gridView.findViewById(R.id.description);
-        description.setText(item.toString());
+        description.setText(item.m_label);
 
         ImageView imageView = (ImageView) gridView.findViewById(R.id.image);
         if (bm != null)

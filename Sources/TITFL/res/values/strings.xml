@@ -36,4 +36,7 @@
     <string name="backToGame">Back to Game</string>
     <string name="mainMenu">Main Menu</string>
     <string name="beg">Beg</string>
+	<string name="loan_payment">Loan Payment</string>
+	<string name="invest_buy">Invest - Buy</string>
+	<string name="invest_sell">Invest - Sell</string>
 </resources>

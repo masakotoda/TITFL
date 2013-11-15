@@ -86,7 +86,7 @@ public class ListAdapterBeginWeek extends BaseAdapter
         {    
             LayoutInflater inflater = (LayoutInflater) m_activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             gridView = new View(m_activity);    
-            gridView = inflater.inflate(R.layout.begin_week_adapter, null);
+            gridView = inflater.inflate(R.layout.adapter_begin_week, null);
         }
         else 
         {
