@@ -54,6 +54,7 @@ public class DialogPurchaseGoods extends Dialog
         if (maxUnits >= 100)
         {
         	setButtonActionAdd(add100Button, 100);
+        	m_quantity.setText("100");
         }
         else
         {
