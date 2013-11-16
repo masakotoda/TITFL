@@ -22,14 +22,14 @@
         <LinearLayout
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="10dp"
             android:orientation="vertical" >
 
             <TextView
                 android:id="@+id/textViewWage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:text="@string/dummy_string"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
