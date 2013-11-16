@@ -12,17 +12,17 @@ import android.widget.ListAdapter;
 
 public class TITFLTownElementBankLayout extends TITFLTownElementLayout
 {
-    private ArrayList<TITFLGoods> m_allLoans;
-    private ArrayList<TITFLGoods> m_allBuyables;
-    private ArrayList<TITFLBelonging> m_allSellables;
+    private ArrayList<TITFLItem> m_allLoans;
+    private ArrayList<TITFLItem> m_allBuyables;
+    private ArrayList<TITFLItem> m_allSellables;
 
     public TITFLTownElementBankLayout(Activity activity, TITFLTownElement element) 
     {
         super(activity, element);
 
-        m_allLoans = new ArrayList<TITFLGoods>();
-        m_allBuyables = new ArrayList<TITFLGoods>();
-        m_allSellables = new ArrayList<TITFLBelonging>();
+        m_allLoans = new ArrayList<TITFLItem>();
+        m_allBuyables = new ArrayList<TITFLItem>();
+        m_allSellables = new ArrayList<TITFLItem>();
     }
     
     @Override
@@ -280,12 +280,27 @@ public class TITFLTownElementBankLayout extends TITFLTownElementLayout
                 m_allBuyables.add(g);
         }
 
-        DialogInvestBuy dialog = new DialogInvestBuy(m_allBuyables, this);
+        DialogInvestBuySell dialog = new DialogInvestBuySell(m_allBuyables, this, true);
         dialog.show();
     }
     
     private void investSell()    
     {
+        m_allSellables.clear();
         
+        for (TITFLBelonging b : m_element.visitor().belongings())
+        {
+            if (b.goodsRef().townelement() == m_element && !b.goodsRef().isLoan())
+                m_allSellables.add(b);
+        }
+
+        if (m_allSellables.size() == 0)
+        {
+            NoEtapUtility.showAlert(m_activity, "Sorry", "You have nothing to sell.");
+            return;
+        }
+
+        DialogInvestBuySell dialog = new DialogInvestBuySell(m_allSellables, this, false);
+        dialog.show();
     }
 }

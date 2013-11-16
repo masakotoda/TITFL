@@ -5,19 +5,18 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 public class TITFLTownElementSchoolLayout extends TITFLTownElementLayout
 {
-    private ArrayList<TITFLGoods> m_allCourses;
-    private ArrayList<TITFLBelonging> m_myCourses;
+    private ArrayList<TITFLItem> m_allCourses;
+    private ArrayList<TITFLItem> m_myCourses;
     
     public TITFLTownElementSchoolLayout(Activity activity, TITFLTownElement element) 
     {
         super(activity, element);
 
-        m_allCourses = new ArrayList<TITFLGoods>();
+        m_allCourses = new ArrayList<TITFLItem>();
     }
     
     @Override
@@ -38,11 +37,12 @@ public class TITFLTownElementSchoolLayout extends TITFLTownElementLayout
         setAllCourseAction(list);
     }    
     
-    private static boolean findGoods(TITFLGoods g, ArrayList<TITFLBelonging> belongings)
+    private static boolean findGoods(TITFLGoods g, ArrayList<TITFLItem> belongings)
     {
-        for (TITFLBelonging b : belongings)
+        for (TITFLItem b : belongings)
         {
-            if (b.goodsRef() == g)
+            TITFLBelonging belonging = (TITFLBelonging)b;
+            if (belonging.goodsRef() == g)
                 return true;
         }
         return false;
@@ -73,7 +73,7 @@ public class TITFLTownElementSchoolLayout extends TITFLTownElementLayout
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long id) 
             {
-                final TITFLGoods goods = m_allCourses.get(position);
+                TITFLGoods goods = (TITFLGoods) m_allCourses.get(position);
                 DialogEnrollCourse dialog = new DialogEnrollCourse(goods, layout);
                 dialog.show();
             }
@@ -84,14 +84,15 @@ public class TITFLTownElementSchoolLayout extends TITFLTownElementLayout
     {
         m_myCourses = m_element.visitor().getDegrees();
         
-        ArrayAdapter<TITFLBelonging> adapter = new ArrayAdapter<TITFLBelonging>(m_activity, android.R.layout.simple_list_item_1, m_myCourses);
+        //ArrayAdapter<TITFLBelonging> adapter = new ArrayAdapter<TITFLBelonging>(m_activity, android.R.layout.simple_list_item_1, m_myCourses);
+        ListAdapterGoods adapter = new ListAdapterGoods(m_activity, m_myCourses);
         list.setAdapter(adapter);        
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() 
         {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long id) 
             {
-                TITFLBelonging degree = m_myCourses.get(position);
+                TITFLBelonging degree = (TITFLBelonging) m_myCourses.get(position);
                 m_element.visitor().study(degree);
                 //adapter.notifyDataSetChanged();
                 setMyCourseAction(list);

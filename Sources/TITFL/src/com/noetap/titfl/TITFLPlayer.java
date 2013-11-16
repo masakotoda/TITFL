@@ -1461,9 +1461,9 @@ public class TITFLPlayer
         return false;
     }
 
-    public ArrayList<TITFLBelonging> getDegrees()
+    public ArrayList<TITFLItem> getDegrees()
     {
-        ArrayList<TITFLBelonging> degrees = new ArrayList<TITFLBelonging>();
+        ArrayList<TITFLItem> degrees = new ArrayList<TITFLItem>();
         for (TITFLBelonging degree : m_belongings)            
         {
             if (degree.goodsRef().isDegree())

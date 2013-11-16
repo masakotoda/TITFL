@@ -15,11 +15,11 @@ import android.widget.TextView;
 public class ListAdapterGoods  extends BaseAdapter
 {
     private Activity m_activity;
-    private ArrayList<TITFLGoods> m_items;
+    private ArrayList<TITFLItem> m_items;
          
     public ListAdapterGoods(
         Activity activity, 
-        ArrayList<TITFLGoods> items) 
+        ArrayList<TITFLItem> items) 
     {
         m_activity = activity;
         m_items = items;
@@ -39,7 +39,7 @@ public class ListAdapterGoods  extends BaseAdapter
             gridView = convertView;
         }
 
-        TITFLGoods item = m_items.get(position);
+        TITFLItem item = m_items.get(position);
             
         //String iconPath = TITFLActivity.pathGoods + item.id() + ".png";
         //Bitmap bm = NoEtapUtility.getBitmap(m_activity, iconPath);

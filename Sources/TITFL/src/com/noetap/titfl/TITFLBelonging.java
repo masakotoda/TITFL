@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlSerializer;
 
-public class TITFLBelonging 
+import android.graphics.Bitmap;
+
+public class TITFLBelonging implements TITFLItem
 {
     private ArrayList<TITFLBelongingEvent> m_events;
     private TITFLGoods m_goodsRef;
@@ -225,5 +227,29 @@ public class TITFLBelonging
         m_completedPayment += payment;
         if (m_completedPayment > m_loanAmount)
             m_completedPayment = m_loanAmount;
+    }
+
+    @Override
+    public Bitmap getBitmap() 
+    {
+        if (m_goodsRef == null)
+            return null;
+        return m_goodsRef.getBitmap();
+    }
+
+    @Override
+    public String name() 
+    {
+        if (m_goodsRef == null)
+            return null;
+        return m_goodsRef.name();
+    }
+
+    @Override
+    public int getPrice() 
+    {
+        if (m_goodsRef == null)
+            return 0;
+        return m_goodsRef.getPrice();
     }
 }

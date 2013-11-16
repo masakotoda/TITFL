@@ -11,7 +11,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.util.Xml;
 
-public class TITFLGoods
+public class TITFLGoods implements TITFLItem
 {
     private TITFLTownElement m_townelement;      // Parent element
     

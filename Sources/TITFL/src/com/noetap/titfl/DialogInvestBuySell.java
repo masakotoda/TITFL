@@ -13,18 +13,20 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class DialogInvestBuy extends Dialog
+public class DialogInvestBuySell extends Dialog
 {    
     private TITFLTownElementLayout m_parent;
-    private TITFLGoods m_goods;
-    private ArrayList<TITFLGoods> m_allBuyable;
+    private TITFLItem m_item;
+    private ArrayList<TITFLItem> m_allBuyable;
     private EditText m_quantity;
+    private boolean m_buy;
     
-    public DialogInvestBuy(ArrayList<TITFLGoods> allBuyable, TITFLTownElementLayout parent)
+    public DialogInvestBuySell(ArrayList<TITFLItem> allBuyable, TITFLTownElementLayout parent, boolean buy)
     {
         super(parent.activity());
         m_parent = parent;
         m_allBuyable = allBuyable;
+        m_buy = buy;
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_invest_buy);
@@ -36,7 +38,10 @@ public class DialogInvestBuy extends Dialog
         nameText.setText("Investment");
         
         TextView priceText = (TextView) findViewById(R.id.textViewPrice);
-        priceText.setText("Please select investment to purchase.");
+        if (m_buy)
+            priceText.setText("Please select investment to purchase.");
+        else
+            priceText.setText("Please select investment to sell.");
         
         ImageView imageView = (ImageView) findViewById(R.id.imageViewGoods);
         imageView.setVisibility(View.GONE);
@@ -71,17 +76,37 @@ public class DialogInvestBuy extends Dialog
     
     private void setButtonActionOk(Button clicked)
     {
+        if (m_buy)
+            clicked.setText("Buy");
+        else
+            clicked.setText("Sell");
+            
         clicked.setOnClickListener(new View.OnClickListener() 
         {
             @Override
             public void onClick(View v) 
             {
-                if (m_goods != null)
+                if (m_item == null)
+                    return;
+                
+                String countStr = m_quantity.getText().toString();
+                int count = NoEtapUtility.parseInt(countStr);
+
+                if (m_buy)
                 {
-                    String countStr = m_quantity.getText().toString();
-                    int count = NoEtapUtility.parseInt(countStr);
-                    m_parent.element().visitor().buy(m_goods, count, m_parent.element().town().currentWeek());
-                    m_parent.greetingText().setText(m_goods.greeting());
+                    TITFLGoods goods = (TITFLGoods) m_item;
+                    m_parent.element().visitor().buy(goods, count, m_parent.element().town().currentWeek());
+                    m_parent.greetingText().setText(goods.greeting());
+                    m_parent.playerView().invalidate();
+                    m_parent.updateSellable();
+                    dismiss();
+                }
+                else
+                {
+                    TITFLBelonging belonging = (TITFLBelonging) m_item;
+                    if (count > belonging.unit())
+                        count = belonging.unit();
+                    m_parent.element().visitor().sell(belonging, count);
                     m_parent.playerView().invalidate();
                     m_parent.updateSellable();
                     dismiss();
@@ -99,18 +124,17 @@ public class DialogInvestBuy extends Dialog
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long id) 
             {
-                TITFLGoods goods = m_allBuyable.get(position);
-                m_goods = goods;
+                m_item = m_allBuyable.get(position);
 
                 TextView nameText = (TextView) findViewById(R.id.textViewName);
-                nameText.setText(goods.name());
+                nameText.setText(m_item.name());
                 
                 TextView priceText = (TextView) findViewById(R.id.textViewPrice);
-                priceText.setText("Price: $" + goods.getPrice());
+                priceText.setText("Price: $" + m_item.getPrice());
                 
                 ImageView imageView = (ImageView) findViewById(R.id.imageViewGoods);
                 imageView.setVisibility(View.VISIBLE);
-                imageView.setImageBitmap(goods.getBitmap());
+                imageView.setImageBitmap(m_item.getBitmap());
                 
                 TextView textView = (TextView) findViewById(R.id.textViewQuantity);
                 textView.setVisibility(View.VISIBLE);

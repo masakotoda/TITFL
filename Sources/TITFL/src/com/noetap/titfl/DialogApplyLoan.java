@@ -14,10 +14,10 @@ import android.widget.TextView;
 public class DialogApplyLoan extends Dialog
 {    
     private TITFLTownElementLayout m_parent;
-    private TITFLGoods m_goods;
-    private ArrayList<TITFLGoods> m_allLoans;
+    private TITFLItem m_goods;
+    private ArrayList<TITFLItem> m_allLoans;
     
-    public DialogApplyLoan(ArrayList<TITFLGoods> allLoans, TITFLTownElementLayout parent)
+    public DialogApplyLoan(ArrayList<TITFLItem> allLoans, TITFLTownElementLayout parent)
     {
         super(parent.activity());
         m_parent = parent;
@@ -66,7 +66,7 @@ public class DialogApplyLoan extends Dialog
             {
                 if (m_goods != null)
                 {
-                    m_parent.element().visitor().buy(m_goods, 1, m_parent.element().town().currentWeek());
+                    m_parent.element().visitor().buy((TITFLGoods)m_goods, 1, m_parent.element().town().currentWeek());
                     m_parent.playerView().invalidate();
                     dismiss();
                 }
@@ -83,7 +83,7 @@ public class DialogApplyLoan extends Dialog
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long id) 
             {
-                final TITFLGoods goods = m_allLoans.get(position);
+                final TITFLItem goods = m_allLoans.get(position);
                 m_goods = goods;
                 TextView nameText = (TextView) findViewById(R.id.textViewName);
                 nameText.setText(goods.name());

@@ -1,5 +1,7 @@
 package com.noetap.titfl;
 
+import java.util.ArrayList;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -363,14 +365,17 @@ public class TITFLTownElementLayout implements TITFLLayout
         
         final TITFLTownElementLayout layout = this;
         //ArrayAdapter<TITFLGoods> adapter = new ArrayAdapter<TITFLGoods>(m_activity, android.R.layout.simple_list_item_1, m_element.merchandise());
-        ListAdapterGoods adapter = new ListAdapterGoods(m_activity, m_element.merchandise());
+        ArrayList<TITFLItem> items = new ArrayList<TITFLItem>();
+        for (TITFLGoods x : m_element.merchandise())
+            items.add(x);
+        ListAdapterGoods adapter = new ListAdapterGoods(m_activity, items);
         list.setAdapter(adapter);        
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() 
         {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long id) 
             {
-                final TITFLGoods goods = m_element.merchandise().get(position);
+                final TITFLGoods goods = (TITFLGoods) m_element.merchandise().get(position);
                 DialogPurchaseGoods dialog = new DialogPurchaseGoods(goods, layout);
                 dialog.show();
             }
