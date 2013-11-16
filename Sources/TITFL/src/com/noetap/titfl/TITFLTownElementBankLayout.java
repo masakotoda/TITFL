@@ -255,7 +255,15 @@ public class TITFLTownElementBankLayout extends TITFLTownElementLayout
     
     private void applyLoan()
     {
+        m_allLoans.clear();
+        for (TITFLGoods g : m_element.merchandise())
+        {
+            if (g.isLoan())
+                m_allLoans.add(g);
+        }
         
+        DialogApplyLoan dialog = new DialogApplyLoan(m_allLoans, this);
+        dialog.show();
     }
     
     private void loanPayment()
@@ -265,7 +273,15 @@ public class TITFLTownElementBankLayout extends TITFLTownElementLayout
     
     private void investBuy()
     {
-        
+        m_allBuyables.clear();
+        for (TITFLGoods g : m_element.merchandise())
+        {
+            if (!g.isLoan())
+                m_allBuyables.add(g);
+        }
+
+        DialogInvestBuy dialog = new DialogInvestBuy(m_allBuyables, this);
+        dialog.show();
     }
     
     private void investSell()    
