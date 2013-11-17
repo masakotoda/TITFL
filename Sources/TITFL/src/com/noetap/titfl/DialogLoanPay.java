@@ -110,7 +110,7 @@ public class DialogLoanPay extends Dialog
                 textView.setVisibility(View.VISIBLE);
 
                 m_payment.setVisibility(View.VISIBLE);
-                m_payment.setText(Integer.toString(Math.min(100, m_item.loanAmount())));                
+                m_payment.setText(Integer.toString(Math.min(100, remaining)));                
             }
         });
     }

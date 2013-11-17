@@ -1021,6 +1021,12 @@ public class TITFLPlayer
     
     public int beg()
     {
+        float added = addHour();
+        if (added == 0)
+        {
+            return 0;
+        }
+
         Random random = new Random();
         int amount = (int)(random.nextFloat() * 100);
         m_cash += amount;
