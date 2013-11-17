@@ -12,17 +12,9 @@ import android.widget.ListAdapter;
 
 public class TITFLTownElementBankLayout extends TITFLTownElementLayout
 {
-    private ArrayList<TITFLItem> m_allLoans;
-    private ArrayList<TITFLItem> m_allBuyables;
-    private ArrayList<TITFLItem> m_allSellables;
-
     public TITFLTownElementBankLayout(Activity activity, TITFLTownElement element) 
     {
         super(activity, element);
-
-        m_allLoans = new ArrayList<TITFLItem>();
-        m_allBuyables = new ArrayList<TITFLItem>();
-        m_allSellables = new ArrayList<TITFLItem>();
     }
     
     @Override
@@ -174,37 +166,38 @@ public class TITFLTownElementBankLayout extends TITFLTownElementLayout
         ArrayList<ListAdapterPicture.PictureItem> actions = new ArrayList<ListAdapterPicture.PictureItem>();
 
         ListAdapterPicture.PictureItem item;
-        Bitmap bmHappy = BitmapFactory.decodeResource(m_activity.getResources(), R.drawable.event_happy);
-        Bitmap bmUnhappy = BitmapFactory.decodeResource(m_activity.getResources(), R.drawable.event_unhappy);
+        Bitmap bmCash = BitmapFactory.decodeResource(m_activity.getResources(), R.drawable.icon_cash);
+        Bitmap bmLoan = BitmapFactory.decodeResource(m_activity.getResources(), R.drawable.icon_loan);
+        Bitmap bmInvest = BitmapFactory.decodeResource(m_activity.getResources(), R.drawable.icon_invest);
 
         item = new ListAdapterPicture.PictureItem();
         item.m_label = "Deposit";
-        item.m_picture = bmHappy;
+        item.m_picture = bmCash;
         actions.add(item);
 
         item = new ListAdapterPicture.PictureItem();
         item.m_label = "Withdraw";
-        item.m_picture = bmUnhappy;
+        item.m_picture = bmCash;
         actions.add(item);
 
         item = new ListAdapterPicture.PictureItem();
         item.m_label = "Apply Loan";
-        item.m_picture = bmHappy;
+        item.m_picture = bmLoan;
         actions.add(item);
 
         item = new ListAdapterPicture.PictureItem();
         item.m_label = "Loan Payment";
-        item.m_picture = bmUnhappy;
+        item.m_picture = bmLoan;
         actions.add(item);
 
         item = new ListAdapterPicture.PictureItem();
         item.m_label = "Invest - Buy";
-        item.m_picture = bmHappy;
+        item.m_picture = bmInvest;
         actions.add(item);
 
         item = new ListAdapterPicture.PictureItem();
         item.m_label = "Invest - Sell";
-        item.m_picture = bmUnhappy;
+        item.m_picture = bmInvest;
         actions.add(item);
 
         ListAdapterPicture adapter = new ListAdapterPicture(m_activity, actions);
@@ -255,52 +248,65 @@ public class TITFLTownElementBankLayout extends TITFLTownElementLayout
     
     private void applyLoan()
     {
-        m_allLoans.clear();
+        ArrayList<TITFLItem> allLoans = new ArrayList<TITFLItem>();
         for (TITFLGoods g : m_element.merchandise())
         {
             if (g.isLoan())
-                m_allLoans.add(g);
+                allLoans.add(g);
         }
         
-        DialogApplyLoan dialog = new DialogApplyLoan(m_allLoans, this);
+        DialogApplyLoan dialog = new DialogApplyLoan(allLoans, this);
         dialog.show();
     }
     
     private void loanPayment()
     {
-        
+        ArrayList<TITFLItem> allLoans = new ArrayList<TITFLItem>();        
+        for (TITFLBelonging b : m_element.visitor().belongings())
+        {
+            if (b.goodsRef().townelement() == m_element && b.goodsRef().isLoan())
+                allLoans.add(b);
+        }
+
+        if (allLoans.size() == 0)
+        {
+            NoEtapUtility.showAlert(m_activity, "Information", "You don't owe anything.");
+            return;
+        }
+
+        DialogLoanPay dialog = new DialogLoanPay(allLoans, this);
+        dialog.show();
     }
     
     private void investBuy()
     {
-        m_allBuyables.clear();
+        ArrayList<TITFLItem> allBuyables = new ArrayList<TITFLItem>();
         for (TITFLGoods g : m_element.merchandise())
         {
             if (!g.isLoan())
-                m_allBuyables.add(g);
+                allBuyables.add(g);
         }
 
-        DialogInvestBuySell dialog = new DialogInvestBuySell(m_allBuyables, this, true);
+        DialogInvestBuySell dialog = new DialogInvestBuySell(allBuyables, this, true);
         dialog.show();
     }
     
     private void investSell()    
     {
-        m_allSellables.clear();
-        
+        ArrayList<TITFLItem> allSellables = new ArrayList<TITFLItem>();
         for (TITFLBelonging b : m_element.visitor().belongings())
         {
             if (b.goodsRef().townelement() == m_element && !b.goodsRef().isLoan())
-                m_allSellables.add(b);
+                allSellables.add(b);
         }
 
-        if (m_allSellables.size() == 0)
+        if (allSellables.size() == 0)
         {
             NoEtapUtility.showAlert(m_activity, "Sorry", "You have nothing to sell.");
             return;
         }
 
-        DialogInvestBuySell dialog = new DialogInvestBuySell(m_allSellables, this, false);
+        DialogInvestBuySell dialog = new DialogInvestBuySell(allSellables, this, false);
         dialog.show();
     }
 }

@@ -995,6 +995,30 @@ public class TITFLPlayer
         }
     }
     
+    public void makePayment(TITFLBelonging belonging, int payment)
+    {
+        int balance = belonging.loanAmount() - belonging.completedPayment();
+        if (payment > balance)
+            payment = balance;
+        if (payment > cash())
+            payment = cash();
+        
+        if (payment == 0)
+        {
+            NoEtapUtility.showAlert(currentLocation().town().activity(), "Sorry", "You have no money to make payment.");
+            return;
+        }
+
+        belonging.addPayment(payment);
+        pay(payment);
+        
+        if (belonging.loanAmount() == belonging.completedPayment())
+        {
+            m_belongings.remove(belonging);
+            NoEtapUtility.showAlert(currentLocation().town().activity(), "Congrats", "You paid it off!");
+        }
+    }
+    
     public int beg()
     {
         Random random = new Random();

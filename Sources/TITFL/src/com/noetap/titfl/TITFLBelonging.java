@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlSerializer;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 public class TITFLBelonging implements TITFLItem
 {
@@ -49,7 +51,7 @@ public class TITFLBelonging implements TITFLItem
         if (goodsRef().isDegree())
             ret = ret + " - " + Integer.toString(m_completedCredit) + "/" + Integer.toString(goodsRef().classCredit());
         else if (goodsRef().isLoan())
-            ret = ret + " - $" + Integer.toString(m_loanAmount);
+            ; // ret = ret + " - $" + Integer.toString(m_loanAmount);
         else
             ret = ret + " - " + Integer.toString(m_unit);
         return ret;
@@ -234,6 +236,20 @@ public class TITFLBelonging implements TITFLItem
     {
         if (m_goodsRef == null)
             return null;
+        if (m_goodsRef.isDegree())
+        {
+            Bitmap bm;
+            Activity activity = m_goodsRef.townelement().town().activity();
+            if (completedCredit() >= goodsRef().classCredit())
+            {
+                bm = BitmapFactory.decodeResource(activity.getResources(), R.drawable.icon_award);
+            }
+            else
+            {
+                bm = BitmapFactory.decodeResource(activity.getResources(), R.drawable.icon_study);
+            }
+            return bm;
+        }
         return m_goodsRef.getBitmap();
     }
 

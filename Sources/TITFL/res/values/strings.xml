@@ -39,4 +39,7 @@
 	<string name="loan_payment">Loan Payment</string>
 	<string name="invest_buy">Invest - Buy</string>
 	<string name="invest_sell">Invest - Sell</string>
+	<string name="payment">Payment $</string>
+	<string name="pay">Pay</string>
+	<string name="qualification">Qualification:</string>		
 </resources>
