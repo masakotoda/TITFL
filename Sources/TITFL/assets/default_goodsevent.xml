@@ -53,4 +53,28 @@
         time_to_pay="4"
         can_reject="true"
         />
+    <goodsevent
+        goodsevent_id="goods_general_loan_financial_charge"
+        description="General loan financial charge."
+        goods_id="goods_general_loan"
+        cycle="4"
+        price="-1"
+        can_skip="false"
+       />
+    <goodsevent
+        goodsevent_id="student_loan_financial_charge"
+        description="Student loan financial charge."
+        goods_id="goods_student_loan"
+        cycle="4"
+        price="-1"
+        can_skip="false"
+       />
+    <goodsevent
+        goodsevent_id="goods_mortgage_financial_charge"
+        description="Mortgage financial charge."
+        goods_id="goods_mortgage"
+        cycle="4"
+        price="-1"
+        can_skip="false"
+       />
 </TITFL>

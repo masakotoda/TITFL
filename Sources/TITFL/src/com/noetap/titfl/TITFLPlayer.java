@@ -897,9 +897,6 @@ public class TITFLPlayer
         // Process other expiration
         ArrayList<TITFLBelonging> lost1 = processExpiration(events);
         
-        // Process loan payment
-        processLoanPayment(events);
-
         // Process belongings
         ArrayList<TITFLBelonging> lost2 = processBelongingEvents(events);
 
@@ -1001,18 +998,21 @@ public class TITFLPlayer
         if (payment > balance)
             payment = balance;
         if (payment > cash())
-            payment = cash();
+            payment = Math.max(0, cash());
         
         if (payment == 0)
         {
-            NoEtapUtility.showAlert(currentLocation().town().activity(), "Sorry", "You have no money to make payment.");
-            return;
+            if (balance > 0)
+                NoEtapUtility.showAlert(currentLocation().town().activity(), "Sorry", "You have no money to make payment.");
         }
-
-        belonging.addPayment(payment);
-        pay(payment);
+        else
+        {
+            belonging.addPayment(payment);
+            pay(payment);
+            balance = belonging.loanAmount() - belonging.completedPayment();
+        }
         
-        if (belonging.loanAmount() == belonging.completedPayment())
+        if (balance == 0)
         {
             m_belongings.remove(belonging);
             NoEtapUtility.showAlert(currentLocation().town().activity(), "Congrats", "You paid it off!");
@@ -1337,10 +1337,10 @@ public class TITFLPlayer
 
     public int getHappinessPercent(int goal)
     {
-        if (goal == 0 || goal < getHealthLevel())
+        if (goal == 0 || goal < getHappinessLevel())
             return 100;
         else
-            return (int)(100 * getHealthLevel()) / goal;
+            return (int)(100 * getHappinessLevel()) / goal;
     }
 
     public int themeColor()
@@ -1786,10 +1786,5 @@ public class TITFLPlayer
                 belongings().remove(x);
             }
         }
-    }
-    
-    private void processLoanPayment(ArrayList<ListAdapterBeginWeek.BeginWeekItem> events)
-    {
-        // TODO
     }
 }

@@ -41,7 +41,7 @@ public class TITFLBelonging implements TITFLItem
         m_unit = unit;
         
         for (TITFLGoodsEvent event : m_goodsRef.events())
-            m_events.add(new TITFLBelongingEvent(event));
+            m_events.add(new TITFLBelongingEvent(event, this));
     }
     
     @Override
@@ -180,7 +180,7 @@ public class TITFLBelonging implements TITFLItem
                 
             for (int i = 0; i < count; i++)
             {
-                TITFLBelongingEvent event = TITFLBelongingEvent.deserialize(parser, ret.m_goodsRef);
+                TITFLBelongingEvent event = TITFLBelongingEvent.deserialize(parser, ret);
                  if (event != null)
                        ret.m_events.add(event);
             }
