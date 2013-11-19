@@ -36,8 +36,11 @@ public class DialogSelectPlayer extends Dialog {
             public void onClick(View v) 
             {
             	m_activity.mainMenu().setNumOfPlayer((Integer)v.getTag());            	
-                m_activity.runGame();
+                //m_activity.runGame();
                 
+            	DialogSelectTown townSelect = new DialogSelectTown(m_activity);
+            	townSelect.show();
+            	
                 dismiss();
             }
         });
