@@ -32,6 +32,7 @@ public class TITFLActivity extends Activity
     private TITFLSettings m_settings = new TITFLSettings();
     private MediaPlayerHolder m_mediaPlayer;
     private TITFLMainMenu m_mainMenu;
+    private TITFLTextToSpeech m_tts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) 
@@ -49,6 +50,7 @@ public class TITFLActivity extends Activity
 
         m_settings.load(this);
         startMusic();
+        m_tts = new TITFLTextToSpeech(this);
 
         m_mainMenu = new TITFLMainMenu();
         createMainScreen();              
@@ -57,6 +59,7 @@ public class TITFLActivity extends Activity
     @Override
     protected void onDestroy()
     {
+        m_tts.destroy();
         destroyMusic();
         m_settings.save(this);
 
@@ -270,6 +273,11 @@ public class TITFLActivity extends Activity
         }
     }
     
+    public void speakOut(String text)
+    {
+        m_tts.speakOut(text);
+    }
+
     public final TITFLSettings settings()
     {
         return m_settings;

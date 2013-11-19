@@ -18,21 +18,21 @@
         townelement_id="townelement_realtor"
         name="Real Estate Agent"
         slot="2"
-        greeting="Are you looking for new home?"
+        greeting="My name is Mary. I just got my realtor license. Are you looking for new home?"
 	    />
         
     <townelement
         townelement_id="townelement_insurance"
         name="Insurance Agent"
         slot="3"
-        greeting="We sell peace of mind!"
+        greeting="My name is Jessica. We sell peace of mind!"
 	    />
 
     <townelement
         townelement_id="townelement_gym"
         name="Gym"
         slot="4"
-        greeting="How may I help you?"
+        greeting="My name is Jim, personal trainer. Do you wanna be just like me?"
         can_exercise="true"
         />
         
@@ -40,28 +40,28 @@
         townelement_id="townelement_police"
         name="Police Station"
         slot="5"
-        greeting="Did you kill someone or what?"
+        greeting="My name is Zooey. Just graduated police academy. Did you kill someone or what?"
         />
         
     <townelement
         townelement_id="townelement_hospital"
         name="Hospital"
         slot="6"
-        greeting="How may I help you?"
+        greeting="My name is Nancy, head nurse in this hospital. How do you feel today?"
         />
 
     <townelement
         townelement_id="townelement_bank"
         name="Bank"
         slot="7"
-        greeting="How may I help you?"
+        greeting="My name is Missy. How may I help you?"
         />
         
     <townelement
         townelement_id="townelement_park"
         name="Park"
         slot="8"
-        greeting="How may I help you?"
+        greeting="My name is Bill, park ranger. I'm responsible to the peace of this park."
         can_relax="true"
         can_exercise="true"
         can_beg="true"
@@ -71,7 +71,7 @@
         townelement_id="townelement_school"
         name="College"
         slot="9"
-        greeting="How may I help you?"
+        greeting="Welcome to University Genius."
         can_socialize="true"
         />
         

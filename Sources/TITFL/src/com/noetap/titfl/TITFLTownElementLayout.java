@@ -159,6 +159,8 @@ public class TITFLTownElementLayout implements TITFLLayout
         setListAction(list);
 
         setElementInsideImage();
+
+        m_activity.speakOut(m_element.greeting());
     }
     
     @Override
