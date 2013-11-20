@@ -74,7 +74,7 @@ public class TITFL
         	m_players.add(TITFLPlayer.createPlayer(m_defaultPlayers.get(i)));
         }
 
-        m_town = new TITFLTown(m_activity, this, m_townmaps.get(mapType()));
+        m_town = new TITFLTown(m_activity, this, m_townmaps.get(m_mainMenu.getTownID() - 1));
         initiatePlayers();
         setNextPlayer(null);
     }

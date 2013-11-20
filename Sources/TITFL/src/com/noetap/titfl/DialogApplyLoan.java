@@ -1,28 +1,42 @@
 package com.noetap.titfl;
 
+import java.util.ArrayList;
+
 import android.app.Dialog;
 import android.view.View;
+import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class DialogApplyLoan extends Dialog
 {    
     private TITFLTownElementLayout m_parent;
-    private TITFLGoods m_goods;
+    private TITFLItem m_goods;
+    private ArrayList<TITFLItem> m_allLoans;
     
-    public DialogApplyLoan(TITFLGoods goods, TITFLTownElementLayout parent)
+    public DialogApplyLoan(ArrayList<TITFLItem> allLoans, TITFLTownElementLayout parent)
     {
         super(parent.activity());
         m_parent = parent;
-        m_goods = goods;
+        m_allLoans = allLoans;
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_apply_loan);
-        setTitle("Would you like to apply for loan?");
+
+        ListView list = (ListView) findViewById(R.id.listViewLoans);
+        setActionListView(list);
 
         TextView nameText = (TextView) findViewById(R.id.textViewName);
-        nameText.setText(goods.name());
+        nameText.setText("Apply Loan");
         
         TextView priceText = (TextView) findViewById(R.id.textViewPrice);
-        priceText.setText("Fee: $" + goods.getPrice());
+        priceText.setText("Please select type of loan to apply.");
+        
+        ImageView imageView = (ImageView) findViewById(R.id.imageViewGoods);
+        imageView.setVisibility(View.GONE);
 
         Button cancelButton = (Button) findViewById(R.id.buttonCancel);
         setButtonActionCancel(cancelButton);
@@ -50,9 +64,36 @@ public class DialogApplyLoan extends Dialog
             @Override
             public void onClick(View v) 
             {
-                m_parent.element().visitor().buy(m_goods, 1, m_parent.element().town().currentWeek());
-                m_parent.playerView().invalidate();
-                dismiss();
+                if (m_goods != null)
+                {
+                    m_parent.element().visitor().buy((TITFLGoods)m_goods, 1, m_parent.element().town().currentWeek());
+                    m_parent.playerView().invalidate();
+                    dismiss();
+                }
+            }
+        });
+    }
+
+    void setActionListView(ListView list)
+    {
+        ListAdapterGoods adapter = new ListAdapterGoods(m_parent.activity(), m_allLoans);
+        list.setAdapter(adapter);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() 
+        {
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long id) 
+            {
+                final TITFLItem goods = m_allLoans.get(position);
+                m_goods = goods;
+                TextView nameText = (TextView) findViewById(R.id.textViewName);
+                nameText.setText(goods.name());
+                
+                TextView priceText = (TextView) findViewById(R.id.textViewPrice);
+                priceText.setText("Fee: $" + goods.getPrice());
+                
+                ImageView imageView = (ImageView) findViewById(R.id.imageViewGoods);
+                imageView.setVisibility(View.VISIBLE);
+                imageView.setImageBitmap(goods.getBitmap());
             }
         });
     }

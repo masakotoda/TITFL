@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:contentDescription="@string/blank_string"/>
+        android:contentDescription="@string/blank_string" />
 
     <com.noetap.titfl.TITFLPlayerView
         android:id="@+id/playerView"
@@ -26,7 +26,7 @@
         android:layout_centerVertical="true"
         android:contentDescription="@string/blank_string"
         android:src="@drawable/player_a_frm0" />
-    
+
     <ImageView
         android:id="@+id/imageViewBackground"
         android:layout_width="wrap_content"
@@ -37,7 +37,7 @@
         android:layout_alignTop="@+id/imageViewGreeting"
         android:background="@drawable/bg_babyblue"
         android:contentDescription="@string/blank_string" />
-    
+
     <ImageView
         android:id="@+id/imageViewGreeting"
         android:layout_width="wrap_content"
@@ -54,26 +54,28 @@
         android:layout_alignRight="@+id/townView"
         android:contentDescription="@string/blank_string"
         android:src="@drawable/marble" />
-    
+
     <LinearLayout
-        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/imageViewGreeting"
         android:orientation="vertical" >
-	    <TextView
-	        android:id="@+id/textViewName"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="@string/dummy_string"
-	        android:textAppearance="?android:attr/textAppearanceLarge" />	
-	    <TextView
-	        android:id="@+id/textViewGreeting"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="@string/dummy_string"
-	        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/textViewName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dummy_string"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/textViewGreeting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dummy_string"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
     </LinearLayout>
-    
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -84,112 +86,66 @@
         android:baselineAligned="false"
         android:orientation="vertical" >
 
-	    <LinearLayout
-	        android:baselineAligned="false"
+        <LinearLayout
+	        android:orientation="horizontal"
+	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
-	        android:layout_width="wrap_content"
-	        android:layout_above="@+id/buttonBar"
 	        android:layout_alignParentTop="true"
-	        android:orientation="horizontal">	
-	        
-	        <LinearLayout
-	            android:layout_width="match_parent"
+        	android:layout_above="@+id/buttonBar">	
+        	<ImageView
+	        	android:id="@+id/imageViewInside"
+	        	android:layout_gravity="center"
+	        	android:layout_width="wrap_content"
+	        	android:layout_height="wrap_content"
+	        	android:contentDescription="@string/blank_string" />	
+
+	        <GridView
+	            android:id="@+id/gridView"
+	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:layout_weight="1"
-	            android:orientation="vertical" >
-			    <Button
-			        android:id="@+id/buttonDeposit"
-			        style="?android:attr/buttonStyleSmall"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:text="@string/deposit" />
-			    <Button
-			        android:id="@+id/buttonWithdraw"
-			        style="?android:attr/buttonStyleSmall"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:text="@string/withdraw" />
-	            <ListView
-			        android:id="@+id/listViewLoans"
-			        android:layout_width="wrap_content"
-			        android:layout_height="match_parent" >
-			    </ListView>
-			</LinearLayout>
-	        
-	        <LinearLayout
-	            android:layout_width="match_parent"
-	            android:layout_height="wrap_content"
-	            android:layout_weight="1"
-	            android:orientation="vertical" >
-			    <TextView
-			        android:id="@+id/textView1"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:text="@string/buy"
-			        android:textAppearance="?android:attr/textAppearanceSmall" />
-	            <ListView
-			        android:id="@+id/listViewBuyable"
-			        android:layout_width="wrap_content"
-			        android:layout_height="match_parent" >
-			    </ListView>
-			</LinearLayout>
-	        
-	        <LinearLayout
-	            android:layout_width="match_parent"
-	            android:layout_height="wrap_content"
-	            android:layout_weight="1"
-	            android:orientation="vertical" >
-			    <TextView
-			        android:id="@+id/textView2"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:text="@string/sell"
-			        android:textAppearance="?android:attr/textAppearanceSmall" />
-			        
-			    <ListView
-			        android:id="@+id/listViewSellable"
-			        android:layout_width="wrap_content"
-			        android:layout_height="match_parent" >		
-			    </ListView>
-			</LinearLayout>
+	            android:numColumns="2" />
+
 		</LinearLayout>
 
-	    <LinearLayout
-	         android:id="@+id/buttonBar"
-	         style="?android:attr/buttonBarStyle"
-	         android:divider="?android:attr/dividerVertical"
-	         android:showDividers="middle"
-	         android:background="@drawable/bg_babyblue"
-	         android:layout_alignParentBottom="true"
-	         android:layout_marginTop="5dp"
-	         android:layout_width="match_parent"
-	         android:layout_height="40dp" >	
-	         <Button
-	             android:id="@+id/buttonApply"
-	             style="?android:attr/buttonBarButtonStyle"
-	             android:layout_width="wrap_content"
-	             android:layout_height="wrap_content"
-	             android:layout_weight="1"
-	             android:text="@string/apply_job"
-	             android:textSize="13sp" />	
-	         <Button
-	              style="?android:attr/buttonBarButtonStyle"
-	              android:id="@+id/buttonWork"
-	              android:layout_width="wrap_content"
-	              android:layout_height="wrap_content"
-	              android:layout_weight="1"
-	              android:text="@string/work"
-	              android:textSize="13sp" />
-	         <Button
-	              style="?android:attr/buttonBarButtonStyle"
-	              android:id="@+id/buttonClose"
-	              android:layout_width="wrap_content"
-	              android:layout_height="wrap_content"
-	              android:layout_weight="1"
-	              android:text="@string/close"
-	              android:textSize="13sp" />
-	     </LinearLayout>
+        <LinearLayout
+            android:id="@+id/buttonBar"
+            style="?android:attr/buttonBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/bg_babyblue"
+            android:divider="?android:attr/dividerVertical"
+            android:showDividers="middle" >
+
+            <Button
+                android:id="@+id/buttonApply"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/apply_job"
+                android:textSize="13sp" />
+
+            <Button
+                android:id="@+id/buttonWork"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/work"
+                android:textSize="13sp" />
+
+            <Button
+                android:id="@+id/buttonClose"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/close"
+                android:textSize="13sp" />
+        </LinearLayout>
 
     </RelativeLayout>
-    
+
 </RelativeLayout>

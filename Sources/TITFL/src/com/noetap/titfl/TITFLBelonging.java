@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlSerializer;
 
-public class TITFLBelonging 
+import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
+public class TITFLBelonging implements TITFLItem
 {
     private ArrayList<TITFLBelongingEvent> m_events;
     private TITFLGoods m_goodsRef;
@@ -37,7 +41,7 @@ public class TITFLBelonging
         m_unit = unit;
         
         for (TITFLGoodsEvent event : m_goodsRef.events())
-            m_events.add(new TITFLBelongingEvent(event));
+            m_events.add(new TITFLBelongingEvent(event, this));
     }
     
     @Override
@@ -47,7 +51,7 @@ public class TITFLBelonging
         if (goodsRef().isDegree())
             ret = ret + " - " + Integer.toString(m_completedCredit) + "/" + Integer.toString(goodsRef().classCredit());
         else if (goodsRef().isLoan())
-            ret = ret + " - $" + Integer.toString(m_loanAmount);
+            ; // ret = ret + " - $" + Integer.toString(m_loanAmount);
         else
             ret = ret + " - " + Integer.toString(m_unit);
         return ret;
@@ -176,7 +180,7 @@ public class TITFLBelonging
                 
             for (int i = 0; i < count; i++)
             {
-                TITFLBelongingEvent event = TITFLBelongingEvent.deserialize(parser, ret.m_goodsRef);
+                TITFLBelongingEvent event = TITFLBelongingEvent.deserialize(parser, ret);
                  if (event != null)
                        ret.m_events.add(event);
             }
@@ -225,5 +229,43 @@ public class TITFLBelonging
         m_completedPayment += payment;
         if (m_completedPayment > m_loanAmount)
             m_completedPayment = m_loanAmount;
+    }
+
+    @Override
+    public Bitmap getBitmap() 
+    {
+        if (m_goodsRef == null)
+            return null;
+        if (m_goodsRef.isDegree())
+        {
+            Bitmap bm;
+            Activity activity = m_goodsRef.townelement().town().activity();
+            if (completedCredit() >= goodsRef().classCredit())
+            {
+                bm = BitmapFactory.decodeResource(activity.getResources(), R.drawable.icon_award);
+            }
+            else
+            {
+                bm = BitmapFactory.decodeResource(activity.getResources(), R.drawable.icon_study);
+            }
+            return bm;
+        }
+        return m_goodsRef.getBitmap();
+    }
+
+    @Override
+    public String name() 
+    {
+        if (m_goodsRef == null)
+            return null;
+        return m_goodsRef.name();
+    }
+
+    @Override
+    public int getPrice() 
+    {
+        if (m_goodsRef == null)
+            return 0;
+        return m_goodsRef.getPrice();
     }
 }

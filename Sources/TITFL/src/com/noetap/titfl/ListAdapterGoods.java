@@ -15,11 +15,11 @@ import android.widget.TextView;
 public class ListAdapterGoods  extends BaseAdapter
 {
     private Activity m_activity;
-    private ArrayList<TITFLGoods> m_items;
+    private ArrayList<TITFLItem> m_items;
          
     public ListAdapterGoods(
         Activity activity, 
-        ArrayList<TITFLGoods> items) 
+        ArrayList<TITFLItem> items) 
     {
         m_activity = activity;
         m_items = items;
@@ -32,14 +32,14 @@ public class ListAdapterGoods  extends BaseAdapter
         {    
             LayoutInflater inflater = (LayoutInflater) m_activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             gridView = new View(m_activity);    
-            gridView = inflater.inflate(R.layout.goods_adapter, null);
+            gridView = inflater.inflate(R.layout.adapter_goods, null);
         }
         else 
         {
             gridView = convertView;
         }
 
-        TITFLGoods item = m_items.get(position);
+        TITFLItem item = m_items.get(position);
             
         //String iconPath = TITFLActivity.pathGoods + item.id() + ".png";
         //Bitmap bm = NoEtapUtility.getBitmap(m_activity, iconPath);

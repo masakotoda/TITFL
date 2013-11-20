@@ -29,7 +29,6 @@ public class DialogApplyJob extends Dialog
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_apply_job);
-        setTitle("Select a job to apply");
 
         Button cancelButton = (Button) findViewById(R.id.buttonCancel);
         setButtonActionCancel(cancelButton);
@@ -117,7 +116,7 @@ public class DialogApplyJob extends Dialog
 
         if (position < 0)
         {
-            textWage.setText("");
+            textWage.setText("Please select a job to apply");
             textDressCode.setText("");
             textQualification.setText("");
             return;
