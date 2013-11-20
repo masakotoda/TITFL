@@ -52,6 +52,19 @@ public class DialogInvestBuySell extends Dialog
         m_quantity = (EditText) findViewById(R.id.editTextQuantity);
         m_quantity.setVisibility(View.GONE);
 
+        //int maxUnits = 500;
+        Button resetButton = (Button) findViewById(R.id.buttonReset);
+        setButtonActionReset(resetButton);
+        
+        Button add1Button = (Button) findViewById(R.id.buttonAdd1);
+        setButtonActionAdd(add1Button, 1);
+        
+        Button add10Button = (Button) findViewById(R.id.buttonAdd10);
+        setButtonActionAdd(add10Button, 10);
+      
+        Button add100Button = (Button) findViewById(R.id.buttonAdd100);
+        setButtonActionAdd(add100Button, 100);
+                
         LinearLayout buttonBar = (LinearLayout) findViewById(R.id.buttonBarQuantity);
         buttonBar.setVisibility(View.GONE); 
 
@@ -62,6 +75,33 @@ public class DialogInvestBuySell extends Dialog
         setButtonActionOk(okButton);
     }
 
+    private void setButtonActionReset(Button clicked)
+    {
+        clicked.setOnClickListener(new View.OnClickListener() 
+        {
+            @Override
+            public void onClick(View v) 
+            {
+            	m_quantity.setText("1");
+            }
+        });
+    }
+    
+    private void setButtonActionAdd(Button clicked, final int addition)
+    {
+        clicked.setOnClickListener(new View.OnClickListener() 
+        {
+            @Override
+            public void onClick(View v) 
+            {
+                String countStr = m_quantity.getText().toString();
+                int count = NoEtapUtility.parseInt(countStr);
+                countStr = Integer.toString(count + addition);
+                m_quantity.setText(countStr);
+                
+            }
+        });
+    }
     private void setButtonActionCancel(Button clicked)
     {
         clicked.setOnClickListener(new View.OnClickListener() 
