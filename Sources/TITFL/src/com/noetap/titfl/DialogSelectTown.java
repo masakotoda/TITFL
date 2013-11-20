@@ -27,7 +27,7 @@ public class DialogSelectTown extends Dialog {
         ImageButton townTwo = (ImageButton) findViewById(R.id.buttonTownTwo);
         Bitmap townTwoBg = NoEtapUtility.getBitmap(m_activity, "townmap/2.png");
         townTwo.setImageBitmap(townTwoBg);
-        setButtonListener(townTwo, 12);
+        setButtonListener(townTwo, 2);
         
         ImageButton townThree = (ImageButton) findViewById(R.id.buttonTownThree);
         Bitmap townThreeBg = NoEtapUtility.getBitmap(m_activity, "townmap/3.png");
