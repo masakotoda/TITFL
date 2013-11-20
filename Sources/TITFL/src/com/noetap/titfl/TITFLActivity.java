@@ -1,9 +1,11 @@
 package com.noetap.titfl;
 
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.app.Activity;
+import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.Configuration;
@@ -227,7 +229,12 @@ public class TITFLActivity extends Activity
 
     public void updateVolume()
     {
-        m_mediaPlayer.m_mediaPlayer.setVolume(settings().m_bgmVolume, settings().m_bgmVolume);
+        //m_mediaPlayer.m_mediaPlayer.setVolume(settings().m_bgmVolume, settings().m_bgmVolume);
+        m_mediaPlayer.m_mediaPlayer.setVolume(1.0f, 1.0f);
+                
+        AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        int amStreamMusicMaxVol = am.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        am.setStreamVolume(AudioManager.STREAM_MUSIC, (int)(amStreamMusicMaxVol * settings().m_bgmVolume), 0);
     }
 
     public void playMusic(String music)
@@ -273,9 +280,9 @@ public class TITFLActivity extends Activity
         }
     }
     
-    public void speakOut(String text)
+    public void speakOut(String text, float pitch, float speechRate)
     {
-        m_tts.speakOut(text);
+        m_tts.speakOut(text, pitch, speechRate);
     }
 
     public final TITFLSettings settings()

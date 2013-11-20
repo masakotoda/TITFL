@@ -20,6 +20,8 @@ public class TITFLTownElement
     private String m_id;
     private int m_slot;    
     private String m_greeting;
+    private float m_speechRate;
+    private float m_speechPitch;
     private boolean m_canBeg;
     private boolean m_canRelax;
     private boolean m_canExercise;
@@ -35,6 +37,8 @@ public class TITFLTownElement
     private static String atr_name = "name";
     private static String atr_slot = "slot";
     private static String atr_greeting = "greeting";
+    private static String atr_speechPitch = "speech_pitch";
+    private static String atr_speechRate = "speech_rate";
     private static String atr_can_beg = "can_beg";
     private static String atr_can_relax = "can_relax";
     private static String atr_can_exercise = "can_exercise";
@@ -106,7 +110,17 @@ public class TITFLTownElement
         return m_greeting;
     }
     
-    public TITFLPlayer visitor()
+    public float speechRate()
+    {
+        return m_speechRate;
+    }
+
+    public float speechPitch()
+    {
+        return m_speechPitch;
+    }
+   
+    public TITFLPlayer visitor()   
     {
         return m_visitor;
     }
@@ -201,6 +215,10 @@ public class TITFLTownElement
                         element.m_slot = Integer.parseInt(attribValue);
                     else if (attribName.equals(atr_greeting))
                         element.m_greeting = attribValue;
+                    else if (attribName.equals(atr_speechRate))
+                        element.m_speechRate = Float.parseFloat(attribValue);
+                    else if (attribName.equals(atr_speechPitch))
+                        element.m_speechPitch = Float.parseFloat(attribValue);
                     else if (attribName.equals(atr_can_beg))
                         element.m_canBeg = Boolean.parseBoolean(attribValue);
                     else if (attribName.equals(atr_can_relax))
