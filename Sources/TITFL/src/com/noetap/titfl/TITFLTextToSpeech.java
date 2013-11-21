@@ -43,8 +43,10 @@ public class TITFLTextToSpeech implements TextToSpeech.OnInitListener
         }
     }
 
-    public void speakOut(String text) 
+    public void speakOut(String text, float pitch, float speechRate) 
     {
+        m_tts.setPitch(pitch);
+        m_tts.setSpeechRate(speechRate);
         m_tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
     }
 }

@@ -160,7 +160,7 @@ public class TITFLTownElementLayout implements TITFLLayout
 
         setElementInsideImage();
 
-        m_activity.speakOut(m_element.greeting());
+        m_activity.speakOut(m_element.greeting(), m_element.speechPitch(), m_element.speechRate());
     }
     
     @Override
