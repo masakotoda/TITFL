@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TITFL>
+    <!-- Things you cannot buy at store -->
     <goods
         goods_id="goods_date"
         group=""
@@ -18,6 +19,15 @@
         losing="You got divorced."
     	/>
     
+    <goods
+        goods_id="goods_bicycle"
+        name="Bicycle"
+        townelement_id=""
+        price="0"
+        speed="5"
+    	/>
+    
+    <!-- Mall -->
     <goods
         goods_id="goods_pet_dog"
         name="Pet Dog"
@@ -42,50 +52,7 @@
         happiness_per_physical_factor="1"
         happiness_per_lucky_factor="5" 
         losing="Your rabbit ran away."
-    	/>
-    
-    <goods
-        goods_id="goods_bicycle"
-        name="Bicycle"
-        townelement_id="townelement_mall"
-        price="100"
-        speed="5"
-    	/>
-    
-    <goods
-        goods_id="goods_bus"
-        name="Bus ticket for 4 weeks"
-        townelement_id="townelement_grocery"
-        price="50"
-        expire="4"
-        speed="20"
-    	/>
-
-    <goods
-        goods_id="goods_mopet"
-        name="Mopet"
-        townelement_id="townelement_cardealer"
-        price="500"
-        speed="30"
-    	/>
-
-    <goods
-        goods_id="goods_crappy_car"
-        name="Crappy Car"
-        townelement_id="townelement_cardealer"
-        price="2000"
-        speed="40"
-        greeting="I guarantee this car runs fine for 4 weeks."
-    	/>
-
-    <goods
-        goods_id="goods_fancy_car"
-        name="Fancy Car"
-        townelement_id="townelement_cardealer"
-        price="50000"
-        speed="50"
-        greeting="You got a fastest car in this town!"
-    	/>
+    	/>    
     
     <goods
         goods_id="goods_casual_outfit"
@@ -129,66 +96,38 @@
     	/>
     
     <goods
-        townelement_id="townelement_realtor"
-        goods_id="goods_cheap_apartment"
-        name="Cheap Apartment"
+        townelement_id="townelement_mall"
+        goods_id="goods_dress_shoes"
+        name="Dress Shoes"
         price="200"
-	    />
+        />
         
     <goods
-        townelement_id="townelement_realtor"
-        goods_id="goods_house"
-        name="House"
-        price="300000"
-	    />
+        townelement_id="townelement_mall"
+        goods_id="goods_movie_ticket"
+        name="Movie Ticket for two"
+        price="20"
+        />
     
+    <!-- Grocery store -->
     <goods
-        townelement_id="townelement_insurance"
-        goods_id="goods_car_insurance"
-        name="Car Insurance"
-        price="200"
-	    />
+        goods_id="goods_bus"
+        name="Bus ticket for 4 weeks"
+        townelement_id="townelement_grocery"
+        price="50"
+        expire="4"
+        speed="20"
+    	/>
 
-    <goods
-        townelement_id="townelement_insurance"
-        goods_id="goods_health_insurance"
-        name="Health Insurance"
-        price="200"
-	    />
-    
-    <goods
-        townelement_id="townelement_hospital"
-        goods_id="goods_dayquil"
-        name="Day Quil"
-        price="10"
-        max_units="5"
-        />
-
-	<goods
-        townelement_id="townelement_hospital"
-        goods_id="goods_doctorvisit"
-        name="Doctor Visit"
-        price="175"
-        />
-    <goods
-        townelement_id="townelement_hospital"
-        goods_id="goods_depressiontreatment"
-        name="Depression Treatment"
-        price="1000"
-        />
-    <goods
-        townelement_id="townelement_hospital"
-        goods_id="goods_viagrapills"
-        name="Viagra Pills"
-        price="200"
-        />
-    <goods
-        townelement_id="townelement_hospital"
-        goods_id="goods_breastaugmentation"
-        name="Breast Augmentation"
-        price="3500"
-        />
    <goods
+        townelement_id="townelement_grocery"
+        goods_id="goods_beer"
+        name="Beer, six pack"
+        price="50"
+        food_value="1"
+        />
+    
+    <goods
         townelement_id="townelement_grocery"
         goods_id="goods_food_for_1week"
         name="Food for a week"
@@ -227,6 +166,182 @@
         />
     
     <goods
+        townelement_id="townelement_grocery"
+        goods_id="goods_chocolate_cookies"
+        name="Super Crunchy Chunky Chocolate Cookies"
+        price="10"
+        />
+    
+    <goods
+        townelement_id="townelement_grocery"
+        goods_id="goods_tvdinner_for_1week"
+        name="TV dinner for a week"
+        price="30"
+        food_value="1"
+        />
+    
+    <!-- Auto Center -->
+    <goods
+        goods_id="goods_mopet"
+        name="Mopet"
+        townelement_id="townelement_cardealer"
+        price="500"
+        speed="30"
+    	/>
+
+    <goods
+        goods_id="goods_crappy_car"
+        name="Crappy Car"
+        townelement_id="townelement_cardealer"
+        price="2000"
+        speed="40"
+        greeting="I guarantee this car runs fine for 4 weeks."
+    	/>
+
+    <goods
+        goods_id="goods_fancy_car"
+        name="Fancy Car"
+        townelement_id="townelement_cardealer"
+        price="50000"
+        speed="50"
+        greeting="You got a fastest car in this town!"
+    	/>
+    
+    <goods
+        goods_id="goods_truck"
+        name="Truck"
+        townelement_id="townelement_cardealer"
+        price="2000"
+        speed="40"
+    	/>
+
+    <goods
+        goods_id="goods_fancy_rims"
+        name="Fancy Chrome Rims"
+        townelement_id="townelement_cardealer"
+        price="1000"
+    	/>
+
+    <!-- Realtor -->
+    <goods
+        townelement_id="townelement_realtor"
+        goods_id="goods_cheap_apartment"
+        name="Cheap Apartment Unit A"
+        price="200"
+	    />
+        
+    <goods
+        townelement_id="townelement_realtor"
+        goods_id="goods_cheap_apartment_b"
+        name="Cheap Apartment Unit B"
+        price="250"
+	    />
+        
+    <goods
+        townelement_id="townelement_realtor"
+        goods_id="goods_cheap_apartment_c"
+        name="Cheap Apartment Unit C"
+        price="200"
+	    />
+        
+    <goods
+        townelement_id="townelement_realtor"
+        goods_id="goods_cheap_apartment_d"
+        name="Cheap Apartment Unit D"
+        price="250"
+	    />
+        
+    <goods
+        townelement_id="townelement_realtor"
+        goods_id="goods_house"
+        name="House"
+        price="300000"
+	    />
+    
+    <!-- Insurance Agent -->
+    <goods
+        townelement_id="townelement_insurance"
+        goods_id="goods_car_insurance"
+        name="Auto Insurance for Crappy Car"
+        price="200"
+	    />
+
+    <goods
+        townelement_id="townelement_insurance"
+        goods_id="goods_car_insurance_truck"
+        name="Auto Insurance for Truck"
+        price="200"
+	    />
+    
+    <goods
+        townelement_id="townelement_insurance"
+        goods_id="goods_car_insurance_fancy"
+        name="Auto Insurance for Fancy Car"
+        price="200"
+	    />
+    
+    <goods
+        townelement_id="townelement_insurance"
+        goods_id="goods_health_insurance"
+        name="Health Insurance"
+        price="200"
+	    />
+        
+    <!-- Hospital -->
+    <goods
+        townelement_id="townelement_hospital"
+        goods_id="goods_dayquil"
+        name="Day Quil"
+        price="10"
+        max_units="5"
+        />
+    
+    <goods
+        townelement_id="townelement_hospital"
+        goods_id="goods_checkup"
+        name="Check Up"
+        price="10"
+        max_units="5"
+        />
+    
+    <goods
+        townelement_id="townelement_hospital"
+        goods_id="goods_flu_shot"
+        name="Flu Shot"
+        price="10"
+        max_units="5"
+        />
+    
+	<goods
+        townelement_id="townelement_hospital"
+        goods_id="goods_doctorvisit"
+        name="Doctor Visit"
+        price="175"
+        />
+	
+    <goods
+        townelement_id="townelement_hospital"
+        goods_id="goods_depressiontreatment"
+        name="Depression Treatment"
+        price="1000"
+        />
+    
+    <goods
+        townelement_id="townelement_hospital"
+        goods_id="goods_viagrapills"
+        name="Viagra Pills"
+        price="200"
+        />
+    
+    <goods
+        townelement_id="townelement_hospital"
+        goods_id="goods_breastaugmentation"
+        name="Breast Augmentation"
+        price="3500"
+        />
+    
+    <!-- Fast Food -->
+    <goods
         townelement_id="townelement_fastfood"
         goods_id="goods_cheese_burger"
         name="Cheese Burger"
@@ -235,23 +350,66 @@
         />
 
     <goods
+        townelement_id="townelement_fastfood"
+        goods_id="goods_chicken_sandwich"
+        name="Chicken Sandwich"
+        price="50"
+        food_value="1"
+        />
+
+    <goods
+        townelement_id="townelement_fastfood"
+        goods_id="goods_french_fries"
+        name="French Fries"
+        price="50"
+        food_value="1"
+        />
+
+    <goods
+        townelement_id="townelement_fastfood"
+        goods_id="goods_coke"
+        name="Coke"
+        price="50"
+        food_value="1"
+        />
+
+    <goods
+        townelement_id="townelement_fastfood"
+        goods_id="goods_lemonade"
+        name="Lemonade"
+        price="50"
+        food_value="1"
+        />
+
+    <goods
+        townelement_id="townelement_fastfood"
+        goods_id="goods_strawberry_shake"
+        name="Strawberry Shake"
+        price="50"
+        food_value="1"
+        />
+
+    <!-- Restaurant -->
+    <goods
         townelement_id="townelement_restaurant"
         goods_id="goods_nice_dinner"
-        name="Nice Dinner"
+        name="Chicken Alfredo"
         price="200"
         food_value="1"
         />
+    
     <goods
         townelement_id="townelement_restaurant"
         goods_id="goods_seafood"
-        name="Seafood Dinner"
+        name="Grilled Salmon"
         price="300"
         food_value="1"
         />
-     <goods
+
+    <goods
         townelement_id="townelement_restaurant"
         goods_id="goods_steak"
-        name="Steak Dinner"
+        name="Rib Eye Streak"
         price="100"
         food_value="1"
         />
@@ -259,19 +417,28 @@
      <goods
         townelement_id="townelement_restaurant"
         goods_id="goods_lobsters"
-        name="Lobster Dinner"
+        name="Steamed Lobster"
         price="300"
         food_value="1"
         />   
         
      <goods
         townelement_id="townelement_restaurant"
-        goods_id="goods_Pho"
+        goods_id="goods_pho"
         name="Pho Delicious"
         price="50"
         food_value="1"
         />     
                  
+    <goods
+        townelement_id="townelement_restaurant"
+        goods_id="goods_wine"
+        name="A Glass of Wine"
+        price="10"
+        food_value="1"
+        />
+    
+     <!-- Churce -->
     <goods
         townelement_id="townelement_church"
         goods_id="goods_donation"
@@ -280,12 +447,77 @@
         />
         
     <goods
+        townelement_id="townelement_church"
+        goods_id="goods_baptism"
+        name="Baptism"
+        price="200"
+        />
+    
+    <goods
+        townelement_id="townelement_church"
+        goods_id="goods_bible"
+        name="Bible"
+        price="200"
+        />
+        
+    <goods
+        townelement_id="townelement_church"
+        goods_id="goods_church_music"
+        name="Christian Music CD"
+        price="200"
+        />
+        
+    <!-- Pawn shop -->
+    <goods
         townelement_id="townelement_pawnshop"
         goods_id="goods_antique_sword"
         name="Antique Sword"
         price="200"
         />
         
+    <goods
+        townelement_id="townelement_pawnshop"
+        goods_id="goods_antique_jewelry"
+        name="Antique Jewelry"
+        price="200"
+        />
+    
+    <goods
+        townelement_id="townelement_pawnshop"
+        goods_id="goods_collectable_coin"
+        name="Collectable Coin"
+        price="200"
+        />
+    
+    <goods
+        townelement_id="townelement_pawnshop"
+        goods_id="goods_rolex"
+        name="Rolex"
+        price="200"
+        />
+    
+    <goods
+        townelement_id="townelement_pawnshop"
+        goods_id="goods_artwork"
+        name="Art Work"
+        price="200"
+        />
+
+    <!-- Electric store -->
+    <goods
+        townelement_id="townelement_electric"
+        goods_id="goods_cellphone"
+        name="Cellphone"
+        price="200"
+        />
+        
+    <goods
+        townelement_id="townelement_electric"
+        goods_id="goods_tv"
+        name="TV"
+        price="500"
+        />
+    
     <goods
         townelement_id="townelement_electric"
         goods_id="goods_computer"
@@ -303,17 +535,11 @@
     <goods
         townelement_id="townelement_electric"
         goods_id="goods_freezer"
-        name="Freezer"
+        name="Refrigerator with Freezer"
         price="1000"
         />
     
-    <goods
-        townelement_id="townelement_mall"
-        goods_id="goods_dress_shoes"
-        name="Dress Shoes"
-        price="200"
-        />
-        
+    <!-- Tatoo shop -->
     <goods
         townelement_id="townelement_tattoo"
         goods_id="goods_tirbal_tattoo"
@@ -322,6 +548,28 @@
     	/>
 
     <goods
+        townelement_id="townelement_tattoo"
+        goods_id="goods_rose_tattoo"
+        name="Rose Tatto"
+        price="200"
+    	/>
+    
+    <goods
+        townelement_id="townelement_tattoo"
+        goods_id="goods_dragon_tattoo"
+        name="Dragon Tatto"
+        price="200"
+    	/>
+    
+    <goods
+        townelement_id="townelement_tattoo"
+        goods_id="goods_name_tattoo"
+        name="Name of Girl friend or Boy friend"
+        price="200"
+    	/>
+    
+    <!-- Flower shop -->
+    <goods
         townelement_id="townelement_flower"
         goods_id="goods_dozen_roses"
         name="A dozen of Roses"
@@ -329,17 +577,88 @@
     	/>
     
     <goods
+        townelement_id="townelement_flower"
+        goods_id="goods_dozen_lilies"
+        name="A dozen of Lilies"
+        price="50"
+    	/>
+    
+    <goods
+        townelement_id="townelement_flower"
+        goods_id="goods_bonsai_tree"
+        name="Bonsai tree"
+        price="50"
+    	/>
+    
+    <goods
+        townelement_id="townelement_flower"
+        goods_id="goods_guava_tree"
+        name="Guava Tree"
+        price="50"
+    	/>
+    
+    <!-- Whore house -->
+    <goods
         townelement_id="townelement_whorehouse"
-        goods_id="goods_whore"
-        name="Whore"
+        goods_id="goods_whore_asain"
+        name="Asian Whore"
         price="200"
         max_units="3"
     	/>
 
     <goods
+        townelement_id="townelement_whorehouse"
+        goods_id="goods_whore_white"
+        name="White Whore"
+        price="200"
+        max_units="3"
+    	/>
+    
+    <goods
+        townelement_id="townelement_whorehouse"
+        goods_id="goods_whore_latina"
+        name="Latina Whore"
+        price="200"
+        max_units="3"
+    	/>
+    
+    <goods
+        townelement_id="townelement_whorehouse"
+        goods_id="goods_whore_black"
+        name="Black Whore"
+        price="200"
+        max_units="3"
+    	/>
+    
+    <!-- Dollar Store -->
+    <goods
         townelement_id="townelement_dollarstore"
         goods_id="goods_dollar_pencil"
         name="Pencil"
+        price="1"
+        max_units="100"
+    	/>
+    
+    <goods
+        townelement_id="townelement_dollarstore"
+        goods_id="goods_dollar_toothbrush"
+        name="Tooth Brush"
+        price="1"
+        max_units="100"
+    	/>
+    
+    <goods
+        townelement_id="townelement_dollarstore"
+        goods_id="goods_dollar_soap"
+        name="Bar Soap"
+        price="1"
+        max_units="100"
+    	/>
+    
+    <goods
+        townelement_id="townelement_dollarstore"
+        goods_id="goods_dollar_coffee_cup"
+        name="Coffee Cup"
         price="1"
         max_units="100"
     	/>

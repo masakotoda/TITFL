@@ -457,6 +457,9 @@ public class TITFLGoods implements TITFLItem
 
     public int getPrice()
     {
+        if (m_price == 0)
+            return 0;
+        
         return (int)(m_price * m_townelement.town().economyFactor());        
     }
     

@@ -403,9 +403,10 @@ public class TITFLTown
     
     public TITFLGoods getDefaultTransportation()
     {
-        for (TITFLTownElement e : m_elements)
+        //for (TITFLTownElement e : m_elements)
         {
-            for (TITFLGoods g : e.merchandise())
+            //for (TITFLGoods g : e.merchandise())
+            for (TITFLGoods g : goods())
                 if (g.isBicycle())
                     return g;            
         }
