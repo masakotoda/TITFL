@@ -194,8 +194,8 @@
     	/>
     
     <townelement
-        townelement_id="townelement_whorehouse"
-        name="Whore House"
+        townelement_id="townelement_massagehouse"
+        name="Happy Ending Massage"
         slot="-1"
         greeting="How may I help you?"
         speech_rate="1.1"
