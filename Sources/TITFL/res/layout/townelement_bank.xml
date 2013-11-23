@@ -43,7 +43,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/townView"
-        android:layout_below="@+id/textViewName"
         android:contentDescription="@string/blank_string"
         android:src="@drawable/marble" />
 
@@ -70,6 +69,7 @@
 
         <TextView
             android:id="@+id/textViewGreeting"
+	        android:layout_marginRight="128dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/dummy_string"
