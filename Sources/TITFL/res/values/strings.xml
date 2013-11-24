@@ -10,7 +10,7 @@
     <string name="dummy_string">dummy</string>
     <string name="change_my_mind">Change My Mind</string>
     <string name="purchase">Purchase</string>
-    <string name="quantity">Quanlity</string>
+    <string name="quantity">Quantity</string>
     <string name="buttonReset">Reset</string>
     <string name="add_1">+1</string>
     <string name="add_10">+10</string>
@@ -42,4 +42,6 @@
 	<string name="payment">Payment $</string>
 	<string name="pay">Pay</string>
 	<string name="qualification">Qualification:</string>		
+	<string name="garage">Garage</string>
+	<string name="closet">Closet</string>
 </resources>

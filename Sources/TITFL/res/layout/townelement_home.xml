@@ -26,24 +26,74 @@
         android:layout_centerVertical="true"
         android:contentDescription="@string/blank_string"
         android:src="@drawable/player_a_frm0" />
-    
-    <Button
-        android:id="@+id/buttonClose"
-        style="?android:attr/buttonStyleSmall"
+
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/townView"
+        android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/townView"
-        android:text="@string/close" />
+        android:baselineAligned="false"
+        android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/buttonRelax"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/buttonClose"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/buttonClose"
-        android:text="@string/relax" />
+        <LinearLayout
+	        android:orientation="horizontal"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentTop="true"
+        	android:layout_above="@+id/buttonBar">	
+        	<ImageView
+	        	android:id="@+id/imageViewInside"
+	        	android:layout_gravity="center"
+	        	android:layout_width="wrap_content"
+	        	android:layout_height="wrap_content"
+	        	android:contentDescription="@string/blank_string" />	
+		</LinearLayout>
 
+        <LinearLayout
+	         android:id="@+id/buttonBar"
+	         style="?android:attr/buttonBarStyle"
+	         android:divider="?android:attr/dividerVertical"
+	         android:showDividers="middle"
+	         android:background="@drawable/bg_babyblue"
+	         android:layout_alignParentBottom="true"
+	         android:layout_width="match_parent"
+	         android:layout_marginTop="5dp"
+	         android:layout_height="40dp" >	
+	         <Button
+	              style="?android:attr/buttonBarButtonStyle"
+	              android:id="@+id/buttonChangeOutfit"
+	              android:layout_width="wrap_content"
+	              android:layout_height="wrap_content"
+	              android:layout_weight="1"
+	              android:text="@string/closet"
+	              android:textSize="13sp" />
+	         <Button
+	              style="?android:attr/buttonBarButtonStyle"
+	              android:id="@+id/buttonChangeTransportation"
+	              android:layout_width="wrap_content"
+	              android:layout_height="wrap_content"
+	              android:layout_weight="1"
+	              android:text="@string/garage"
+	              android:textSize="13sp" />
+	         <Button
+	              style="?android:attr/buttonBarButtonStyle"
+	              android:id="@+id/buttonRelax"
+	              android:layout_width="wrap_content"
+	              android:layout_height="wrap_content"
+	              android:layout_weight="1"
+	              android:text="@string/relax"
+	              android:textSize="13sp" />
+	         <Button
+	              style="?android:attr/buttonBarButtonStyle"
+	              android:id="@+id/buttonClose"
+	              android:layout_width="wrap_content"
+	              android:layout_height="wrap_content"
+	              android:layout_weight="1"
+	              android:text="@string/close"
+	              android:textSize="13sp" />
+	     </LinearLayout>
+	     
+    </RelativeLayout>
+    
 </RelativeLayout>

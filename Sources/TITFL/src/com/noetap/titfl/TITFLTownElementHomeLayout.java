@@ -1,10 +1,12 @@
 package com.noetap.titfl;
 
 import android.app.Activity;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 public class TITFLTownElementHomeLayout implements TITFLLayout
 {
@@ -70,8 +72,18 @@ public class TITFLTownElementHomeLayout implements TITFLLayout
         Button buttonRelax = (Button) m_activity.findViewById(R.id.buttonRelax);
         setButtonActionRelax(buttonRelax);
 
+        Button buttonGarage = (Button) m_activity.findViewById(R.id.buttonChangeTransportation);
+        
+        Button buttonCloset = (Button) m_activity.findViewById(R.id.buttonChangeOutfit);
+        
         if (m_element.visitor().home() != m_element)
+        {
             buttonRelax.setVisibility(View.GONE);
+            buttonGarage.setVisibility(View.GONE);
+            buttonCloset.setVisibility(View.GONE);
+        }
+        
+        setElementInsideImage();
     }
     
     @Override
@@ -103,5 +115,23 @@ public class TITFLTownElementHomeLayout implements TITFLLayout
                 m_playerView.invalidate();
             }
         });
+    }
+
+    private void setElementInsideImage()
+    {
+        LinearLayout bb1 = (LinearLayout) m_activity.findViewById(R.id.buttonBar);
+        {
+            if (bb1 != null)
+                bb1.setBackgroundColor(m_element.visitor().themeColorLight());            
+        }
+
+        int bgH = NoEtapUtility.getScreenWidth(m_activity) - bb1.getHeight();
+        int bgW = NoEtapUtility.getScreenHeight(m_activity) - m_playerView.getWidth();
+        Drawable backGround = NoEtapUtility.createDrawableFromAsset(m_activity, m_element.getInsideImageName(), bgW, bgH);
+        if (backGround != null)
+        {
+            ImageView noGoods = (ImageView) m_activity.findViewById(R.id.imageViewInside);
+            noGoods.setImageDrawable(backGround);
+        }
     }
 }
