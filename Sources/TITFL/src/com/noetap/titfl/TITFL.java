@@ -121,6 +121,21 @@ public class TITFL
         return true;
     }
     
+    public void clear()
+    {
+        SQLiteOpenHelper helper = new TITFLSQLiteOpenHelper(m_activity);
+        SQLiteDatabase db = helper.getWritableDatabase();
+        try
+        {
+            TITFL.save("TITFL.num_players", 0, db);
+            m_dirty = false;
+        }
+        catch (Exception e)
+        {
+        }
+        db.close();
+    }
+
     private boolean save(String key, SQLiteDatabase db)
     {        
         m_town.save(key + ".town", db);
@@ -141,6 +156,9 @@ public class TITFL
         m_goal = TITFL.Satisfaction.load(key + ".goal", db);
 
         int numPlayers = TITFL.loadInteger(key + ".num_players", db);
+        if (numPlayers <= 0)
+            return false;
+
         m_players = new ArrayList<TITFLPlayer>();
         for (int i = 0; i < numPlayers; i++)
         {

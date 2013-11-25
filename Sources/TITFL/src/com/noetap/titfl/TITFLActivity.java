@@ -31,7 +31,7 @@ public class TITFLActivity extends Activity
     
     private TITFL m_game;
     private TITFLLayout m_layout;
-    private TITFLSettings m_settings = new TITFLSettings();
+    private TITFLSettings m_settings;
     private MediaPlayerHolder m_mediaPlayer;
     private TITFLMainMenu m_mainMenu;
     private TITFLTextToSpeech m_tts;
@@ -50,7 +50,8 @@ public class TITFLActivity extends Activity
         //Remove notification bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        m_settings.load(this);
+        m_settings = new TITFLSettings(this);
+        m_settings.load();
         startMusic();
         m_tts = new TITFLTextToSpeech(this);
 
@@ -63,7 +64,7 @@ public class TITFLActivity extends Activity
     {
         m_tts.destroy();
         destroyMusic();
-        m_settings.save(this);
+        m_settings.save();
 
         if (m_game != null)
         {
@@ -130,6 +131,8 @@ public class TITFLActivity extends Activity
     
     public void runGame()
     {
+        m_settings.notifyNewGame(); // save history
+
         m_game = new TITFL(this, m_mainMenu);
         
         m_game.run();
@@ -146,6 +149,8 @@ public class TITFLActivity extends Activity
         if (!m_game.resume())
             return false;
 
+        m_settings.notifyResumeGame(m_game); // save history
+
         setContentView(R.layout.activity_titfl);	//init townview layout first
         m_layout = new TITFLTownLayout(this);
         m_layout.initialize();
@@ -154,6 +159,9 @@ public class TITFLActivity extends Activity
 
     public void reloadTownView()
     {
+        if (m_layout != null && m_layout.getClass() != TITFLTownLayout.class)
+            return; // It's not in townview right now.
+
         setContentView(R.layout.activity_titfl);    //init townview layout first
         m_layout = new TITFLTownLayout(this);
         m_layout.initialize();        
@@ -162,12 +170,16 @@ public class TITFLActivity extends Activity
     public void saveGame()
     {        
         if (m_game.dirty())
+        {
+            m_settings.notifySaveGame(m_game); // save history
             m_game.save();
+        }
     }
 
     public void endGame(TITFLPlayer winner)
     {
-        // TODO
+        m_settings.notifyFinishGame(m_game, winner); // save history
+        m_game.clear();
     }
     
     public void openTownElement(TITFLTownElement element)
@@ -207,7 +219,8 @@ public class TITFLActivity extends Activity
     
     public void showSettings()
     {
-        NoEtapUtility.showAlert(this, "Settings", "Under construction...");
+        DialogHistory dialog = new DialogHistory(this);
+        dialog.show();
     }    
 
     private void startMusic()
@@ -239,10 +252,10 @@ public class TITFLActivity extends Activity
 
     public void playMusic(String music)
     {
-        if (settings().m_bgmVolume == 0)
-        {
-            return;
-        }
+        //if (settings().m_bgmVolume == 0)
+        //{
+        //    return;
+        //}
 
         if (m_mediaPlayer.m_mediaPlayer.isPlaying())
         {

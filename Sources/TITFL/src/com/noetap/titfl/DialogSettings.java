@@ -10,15 +10,20 @@ import android.widget.SeekBar;
 
 public class DialogSettings extends Dialog
 {    
-    private TITFLActivity m_activity;
-    private RadioGroup m_radioLayout;
+    protected TITFLActivity m_activity;
+    protected RadioGroup m_radioLayout;
+
+    void setContentView()
+    {
+        setContentView(R.layout.dialog_settings);
+    }
     
     public DialogSettings(TITFLActivity activity)
     {
         super(activity);
         m_activity = activity;
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.dialog_settings);
+        setContentView();
 
         setRadioButtonLayout();
 
@@ -53,6 +58,9 @@ public class DialogSettings extends Dialog
     
     private void setSeekBarAction(SeekBar seekBar)
     {
+        // In case user changes the volume by physical key, refresh the volume setting
+        m_activity.settings().refreshSetting();
+
         seekBar.setMax(100);
         seekBar.setProgress((int)(m_activity.settings().m_bgmVolume * 100));
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() 
@@ -119,6 +127,8 @@ public class DialogSettings extends Dialog
     
     private void setButtonActionExit(Button clicked)
     {
+        if (clicked == null)
+            return;
         clicked.setOnClickListener(new View.OnClickListener() 
         {
             @Override
@@ -132,6 +142,8 @@ public class DialogSettings extends Dialog
     
     private void setButtonActionMainMenu(Button clicked)
     {
+        if (clicked == null)
+            return;
         clicked.setOnClickListener(new View.OnClickListener() 
         {
             @Override
