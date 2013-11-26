@@ -1,10 +1,13 @@
 package com.noetap.titfl;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -76,11 +79,32 @@ public class TITFLTownElementHomeLayout implements TITFLLayout
         
         Button buttonCloset = (Button) m_activity.findViewById(R.id.buttonChangeOutfit);
         
+        Gallery gallery = (Gallery) m_activity.findViewById(R.id.galleryGoods);
+
         if (m_element.visitor().home() != m_element)
         {
             buttonRelax.setVisibility(View.GONE);
             buttonGarage.setVisibility(View.GONE);
             buttonCloset.setVisibility(View.GONE);
+            gallery.setVisibility(View.GONE);
+        }
+        else
+        {
+            ArrayList<ListAdapterPicture.PictureItem> actions = new ArrayList<ListAdapterPicture.PictureItem>();
+            for (TITFLBelonging b : m_element.visitor().belongings())
+            {
+                if (null != b.goodsRef())
+                {
+                    ListAdapterPicture.PictureItem item;
+                    item = new ListAdapterPicture.PictureItem();
+                    item.m_label = "";
+                    item.m_picture = b.getBitmap();
+                    actions.add(item);
+                }
+            }
+            ListAdapterPicture adapter = new ListAdapterPicture(m_activity, actions);
+            gallery.setAdapter(adapter);
+            gallery.setSelection(actions.size() / 2);
         }
         
         setElementInsideImage();

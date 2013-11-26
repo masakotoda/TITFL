@@ -102,6 +102,9 @@ public class TITFLGoods implements TITFLItem
         if (m_bitmap != null)
             return m_bitmap;
 
+        if (m_townelement == null)
+            return null;
+
         Activity activity = m_townelement.town().activity();
         m_bitmap = NoEtapUtility.getBitmap(activity, getImageName());
         if (m_bitmap == null)

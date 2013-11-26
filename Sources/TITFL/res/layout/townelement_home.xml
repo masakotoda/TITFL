@@ -35,20 +35,16 @@
         android:layout_alignRight="@+id/townView"
         android:baselineAligned="false"
         android:orientation="vertical" >
-
-        <LinearLayout
-	        android:orientation="horizontal"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_alignParentTop="true"
-        	android:layout_above="@+id/buttonBar">	
-        	<ImageView
-	        	android:id="@+id/imageViewInside"
-	        	android:layout_gravity="center"
-	        	android:layout_width="wrap_content"
-	        	android:layout_height="wrap_content"
-	        	android:contentDescription="@string/blank_string" />	
-		</LinearLayout>
+       	<Gallery
+        	android:id="@+id/galleryGoods"
+        	android:layout_width="match_parent"
+        	android:layout_height="48dp"
+        	android:background="@drawable/bg_babyblue"/>	
+       	<ImageView
+        	android:id="@+id/imageViewInside"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:contentDescription="@string/blank_string" />
 
         <LinearLayout
 	         android:id="@+id/buttonBar"
