@@ -260,6 +260,12 @@ public class TITFLPlayer
         return m_hour;
     }
     
+    public int hourByAngle()
+    {
+        int ret = (int)((360 * hour()) / m_maxHour);
+        return ret;
+    }
+
     public boolean isWeekOver()    
     {
         if (m_hour >= m_maxHour)

@@ -20,10 +20,10 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@+id/ButtonTonyTest1"
+        android:layout_alignLeft="@+id/townView"
         android:contentDescription="@string/blank_string"
         android:src="@drawable/marble" />
-
+    
     <com.noetap.titfl.TITFLPlayerView
         android:id="@+id/playerView"
         android:layout_width="200dp"
@@ -86,14 +86,5 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:text="menu" />
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/playerView"
-        android:layout_centerVertical="true"
-        android:contentDescription="@string/blank_string"
-        android:src="@drawable/player_a_frm0" />
 
 </RelativeLayout>

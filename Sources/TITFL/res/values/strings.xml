@@ -46,4 +46,11 @@
 	<string name="closet">Closet</string>
 	<string name="clear">Clear</string>
 	<string name="history">History</string>
+	<string name="wealth">Wealth</string>
+	<string name="career">Career</string>
+	<string name="education">Education</string>
+	<string name="leisure">Leisure</string>
+	<string name="health">Health</string>
+	<string name="happiness">Happiness</string>
+	<string name="cash">Cash</string>
 </resources>

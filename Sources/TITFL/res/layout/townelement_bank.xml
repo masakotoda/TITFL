@@ -19,15 +19,6 @@
         android:layout_alignParentTop="true" />
 
     <ImageView
-        android:id="@+id/imageViewAvatar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/playerView"
-        android:layout_centerVertical="true"
-        android:contentDescription="@string/blank_string"
-        android:src="@drawable/player_a_frm0" />
-
-    <ImageView
         android:id="@+id/imageViewBackground"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -111,7 +102,7 @@
             android:id="@+id/buttonBar"
             style="?android:attr/buttonBarStyle"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="48dp"
             android:layout_alignParentBottom="true"
             android:layout_marginTop="5dp"
             android:background="@drawable/bg_babyblue"

@@ -54,7 +54,7 @@ public class TITFLTownLayout implements TITFLLayout
         m_playerView.initialize();
         m_playerView.invalidate();
 
-        m_avatarImg = (ImageView) m_activity.findViewById(R.id.imageView2);
+        m_avatarImg = (ImageView) m_activity.findViewById(R.id.imageViewAvatar);
         m_avatarImg.setImageBitmap(null);
         //avatarImg.setBackgroundResource(R.drawable.frame_anim_test);
 

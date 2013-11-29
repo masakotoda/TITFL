@@ -3,7 +3,7 @@
 
     <player
 	    name="The Suit"
-	    alias="Hillary Clinton"
+	    alias="Hillary"
 	    factor_intelligent="7"
 	    factor_hardworking="10"
 	    factor_goodlooking="1"
@@ -21,7 +21,7 @@
     
 	<player
 	    name="The Nerd"
-	    alias="Bill Gates"
+	    alias="Bill"
 	    factor_intelligent="10"
 	    factor_hardworking="7"
 	    factor_goodlooking="1"
@@ -39,7 +39,7 @@
 	
 	<player
 	    name="Socialite"
-	    alias="Paris Hilton"
+	    alias="Paris"
 	    factor_intelligent="1"
 	    factor_hardworking="1"
 	    factor_goodlooking="10"
@@ -57,7 +57,7 @@
 	
 	<player
 	    name="Redneck"
-	    alias="John Wayne"
+	    alias="John"
 	    factor_intelligent="2"
 	    factor_hardworking="5"
 	    factor_goodlooking="3"
@@ -75,7 +75,7 @@
 	
 	<player
 	    name="Addict"
-	    alias="Lindsay Lohan"
+	    alias="Tony"
 	    factor_intelligent="3"
 	    factor_hardworking="1"
 	    factor_goodlooking="4"

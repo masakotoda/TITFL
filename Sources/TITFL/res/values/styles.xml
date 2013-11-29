@@ -44,4 +44,10 @@
 	    <item name="android:background">@drawable/blue_button</item>
   	</style>
 
+	<style name="progressStyleSatisfaction" 
+	    parent="android:Widget.ProgressBar.Horizontal">
+		<item name="android:indeterminateOnly">false</item>
+		<item name="android:minHeight">10dip</item>
+		<item name="android:maxHeight">10dip</item>
+	</style>
 </resources>
