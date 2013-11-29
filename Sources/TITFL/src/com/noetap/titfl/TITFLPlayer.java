@@ -719,7 +719,7 @@ public class TITFLPlayer
     public int getAvatarWidth(Activity activity)
     {
         float factor = NoEtapUtility.getFactor(activity);
-        int w = (int)(360 * factor);
+        int w = (int)(340 * factor);
         return w;
     }
 

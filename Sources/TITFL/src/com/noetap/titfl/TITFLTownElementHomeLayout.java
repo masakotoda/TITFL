@@ -105,6 +105,7 @@ public class TITFLTownElementHomeLayout implements TITFLLayout
             ListAdapterPicture adapter = new ListAdapterPicture(m_activity, actions);
             gallery.setAdapter(adapter);
             gallery.setSelection(actions.size() / 2);
+            gallery.setBackgroundColor(m_element.visitor().themeColorLight());
         }
         
         setElementInsideImage();

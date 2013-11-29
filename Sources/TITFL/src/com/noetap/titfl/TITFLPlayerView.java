@@ -236,6 +236,9 @@ public class TITFLPlayerView  extends RelativeLayout
     @Override
     protected void onLayout(boolean arg0, int arg1, int arg2, int arg3, int arg4) 
     {
+        if (isInEditMode())
+            return;
+
         if (arg0 == true)
         {
             int w = arg3 - arg1;
@@ -245,7 +248,7 @@ public class TITFLPlayerView  extends RelativeLayout
                 ViewGroup c = (ViewGroup)getChildAt(i);
                 c.layout(0, 0, w, h);
                 c.setBackgroundColor(m_player.themeColor());
-            }            
+            }
             m_clock.setIndeterminateDrawable(getBackground());
             m_clock.setIndeterminate(false);
         }
@@ -255,6 +258,9 @@ public class TITFLPlayerView  extends RelativeLayout
     public void invalidate()
     {
         super.invalidate();
+        if (isInEditMode())
+            return;
+
         updateBackground();
         updateClock();
         updateSatisfaction();
