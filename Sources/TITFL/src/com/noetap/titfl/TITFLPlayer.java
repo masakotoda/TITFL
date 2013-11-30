@@ -1090,7 +1090,7 @@ public class TITFLPlayer
         m_lastWorkedWeek = m_currentLocation.town().currentWeek();
         int wage = (int)(added * m_job.getWage());
         int care = (int)(added * m_incre);
-        int happ = (int)(added * m_incre * m_character.hardworking());
+        int happ = 0; // "work" doesn't make anybody happy in this town... (int)(added * m_incre * m_character.hardworking());
         float educFactor = added * 1;
         float expeFactor = added * 0.01f;
 

@@ -66,8 +66,8 @@ public class TITFL
         m_goal.m_career = 1000;     // <- This should be done in the steps above
         m_goal.m_life = 1000;       // <- This should be done in the steps above
         m_goal.m_education = 200;   // <- This should be done in the steps above
-        m_goal.m_health = 200;      // <- This should be done in the steps above
-        m_goal.m_happiness = 200;   // <- This should be done in the steps above
+        m_goal.m_health = 1000;     // <- This should be done in the steps above
+        m_goal.m_happiness = 1000;  // <- This should be done in the steps above
 
         for (int i = 0; i < m_mainMenu.getNumOfPlayer(); i++)
         {
@@ -197,7 +197,7 @@ public class TITFL
             player.buy(outfit, 1, 0);
             player.buy(apartment, 1, 0);
             player.buy(food, 1, 0);
-            player.satisfaction().m_health = 100;
+            player.satisfaction().m_health = 500;
         }
     }
     

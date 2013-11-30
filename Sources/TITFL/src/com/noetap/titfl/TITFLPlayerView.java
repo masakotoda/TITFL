@@ -111,8 +111,8 @@ public class TITFLPlayerView  extends RelativeLayout
         m_barHealth.setMax(100);
         m_barHappiness.setMax(100);
         m_barWealth.setProgress(m_player.getWealthPercent(goal.m_wealth));
-        m_barCareer.setProgress(m_player.getEducationPercent(goal.m_education));
-        m_barEducation.setProgress(m_player.getCareerPercent(goal.m_career));
+        m_barCareer.setProgress(m_player.getCareerPercent(goal.m_career));
+        m_barEducation.setProgress(m_player.getEducationPercent(goal.m_education));
         m_barLeisure.setProgress(m_player.getLifePercent(goal.m_life));
         m_barHealth.setProgress(m_player.getHealthPercent(goal.m_health));
         m_barHappiness.setProgress(m_player.getHappinessPercent(goal.m_happiness));
