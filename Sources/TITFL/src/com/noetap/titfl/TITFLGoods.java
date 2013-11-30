@@ -97,15 +97,8 @@ public class TITFLGoods implements TITFLItem
         return TITFLActivity.pathGoods + m_id + ".png";
     }
 
-    public Bitmap getBitmap()
+    public Bitmap getBitmap(Activity activity)
     {
-        if (m_bitmap != null)
-            return m_bitmap;
-
-        if (m_townelement == null)
-            return null;
-
-        Activity activity = m_townelement.town().activity();
         m_bitmap = NoEtapUtility.getBitmap(activity, getImageName());
         if (m_bitmap == null)
         {
@@ -115,6 +108,17 @@ public class TITFLGoods implements TITFLItem
         }
 
         return m_bitmap;
+    }
+
+    public Bitmap getBitmap()
+    {
+        if (m_bitmap != null)
+            return m_bitmap;
+
+        if (m_townelement == null)
+            return null;
+
+        return getBitmap(m_townelement.town().activity());
     }
 
     public String name()

@@ -168,7 +168,7 @@ public class TITFLPlayerView  extends RelativeLayout
         int count = 0;
         for (int i = b.size() - 1; i >= 0 && count < 5; i--)
         {
-            if (b.get(i).getBitmap() != null)
+            if (b.get(i).goodsRef().getBitmap(m_activity) != null)
             {
                 bitmaps[count] = b.get(i).getBitmap();
                 strings[count] = b.get(i).goodsRef().id();

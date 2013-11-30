@@ -146,6 +146,7 @@ public class DialogPurchaseGoods extends Dialog
                 int count = NoEtapUtility.parseInt(countStr);
                 m_parent.element().visitor().buy(m_goods, count, m_parent.element().town().currentWeek());
                 m_parent.greetingText().setText(m_goods.greeting());
+                m_parent.activity().speakOut(m_goods.greeting(), m_parent.element().speechPitch(), m_parent.element().speechRate());
                 m_parent.playerView().invalidate();
                 m_parent.updateOutfit();
                 m_parent.updateSellable();

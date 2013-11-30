@@ -64,10 +64,7 @@ public class TITFLTownElementHomeLayout implements TITFLLayout
         m_playerView.initialize();
         m_playerView.invalidate();
         
-        ImageView avatar = (ImageView) m_activity.findViewById(R.id.imageViewAvatar);
-        int w = m_element.visitor().getAvatarWidth(m_activity);
-        int h = m_element.visitor().getAvatarHeight(m_activity);
-        avatar.setImageDrawable(NoEtapUtility.createDrawableFromAsset(m_activity, m_element.visitor().outfitImage(0), w, h));
+        updateOutfit();
 
         Button buttonClose = (Button) m_activity.findViewById(R.id.buttonClose);
         setButtonActionClose(buttonClose);
@@ -76,8 +73,10 @@ public class TITFLTownElementHomeLayout implements TITFLLayout
         setButtonActionRelax(buttonRelax);
 
         Button buttonGarage = (Button) m_activity.findViewById(R.id.buttonChangeTransportation);
+        setButtonActionGarage(buttonGarage);
         
         Button buttonCloset = (Button) m_activity.findViewById(R.id.buttonChangeOutfit);
+        setButtonActionCloset(buttonCloset);
         
         Gallery gallery = (Gallery) m_activity.findViewById(R.id.galleryGoods);
 
@@ -98,7 +97,7 @@ public class TITFLTownElementHomeLayout implements TITFLLayout
                     ListAdapterPicture.PictureItem item;
                     item = new ListAdapterPicture.PictureItem();
                     item.m_label = "";
-                    item.m_picture = b.getBitmap();
+                    item.m_picture = b.goodsRef().getBitmap(m_activity);
                     actions.add(item);
                 }
             }
@@ -142,6 +141,56 @@ public class TITFLTownElementHomeLayout implements TITFLLayout
         });
     }
 
+    private void setButtonActionGarage(Button clicked)
+    {
+        final TITFLTownElementHomeLayout layout = this;
+        clicked.setOnClickListener(new OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                ArrayList<TITFLItem> items = new ArrayList<TITFLItem>();
+                for (TITFLBelonging b : m_element.visitor().belongings())
+                {
+                    if (null != b.goodsRef())
+                    {
+                        if (b.goodsRef().isTransportation())
+                        {
+                            items.add(b);
+                        }
+                    }
+                }
+                DialogChangeCurrent dialog = new DialogChangeCurrent("Drive this!", items, layout);
+                dialog.show();
+            }
+        });
+    }
+
+    protected void setButtonActionCloset(Button clicked)
+    {
+        final TITFLTownElementHomeLayout layout = this;
+        clicked.setOnClickListener(new OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                ArrayList<TITFLItem> items = new ArrayList<TITFLItem>();
+                for (TITFLBelonging b : m_element.visitor().belongings())
+                {
+                    if (null != b.goodsRef())
+                    {
+                        if (b.goodsRef().isOutfit())
+                        {
+                            items.add(b);
+                        }
+                    }
+                }
+                DialogChangeCurrent dialog = new DialogChangeCurrent("Wear this!", items, layout);
+                dialog.show();
+            }
+        });
+    }
+
     private void setElementInsideImage()
     {
         LinearLayout bb1 = (LinearLayout) m_activity.findViewById(R.id.buttonBar);
@@ -158,5 +207,13 @@ public class TITFLTownElementHomeLayout implements TITFLLayout
             ImageView noGoods = (ImageView) m_activity.findViewById(R.id.imageViewInside);
             noGoods.setImageDrawable(backGround);
         }
+    }
+
+    public void updateOutfit()
+    {
+        ImageView avatar = (ImageView) m_activity.findViewById(R.id.imageViewAvatar);
+        int w = m_element.visitor().getAvatarWidth(m_activity);
+        int h = m_element.visitor().getAvatarHeight(m_activity);
+        avatar.setImageDrawable(NoEtapUtility.createDrawableFromAsset(m_activity, m_element.visitor().outfitImage(0), w, h));
     }
 }

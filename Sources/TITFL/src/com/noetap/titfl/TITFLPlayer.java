@@ -1508,7 +1508,7 @@ public class TITFLPlayer
         return degrees;
     }
 
-    private void setTransportation(TITFLGoods goods)
+    public void setTransportation(TITFLGoods goods)
     {
         if (goods.isTransportation())
         {
@@ -1526,7 +1526,7 @@ public class TITFLPlayer
         }
     }
     
-    private void setOutfit(TITFLGoods goods)
+    public void setOutfit(TITFLGoods goods)
     {
         if (goods.isOutfit())
         {

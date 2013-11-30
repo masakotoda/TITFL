@@ -40,6 +40,7 @@ public class DialogEnrollCourse
             {
                 public void onClick(DialogInterface dialog, int id)
                 {
+                    m_parent.activity().speakOut("To earn the credits, tap the course you wish to do so.", m_parent.element().speechPitch(), m_parent.element().speechRate());
                     m_parent.element().visitor().buy(m_goods, 1, m_parent.element().town().currentWeek());
                     m_parent.greetingText().setText(m_goods.greeting());
                     m_parent.playerView().invalidate();

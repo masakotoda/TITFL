@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <ListView
+        android:id="@+id/listViewGoods"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:choiceMode="singleChoice"
+        android:listSelector="@drawable/bg_blue" >
+    </ListView>
+    <LinearLayout
+         style="?android:attr/buttonBarStyle"
+         android:divider="?android:attr/dividerVertical"
+         android:showDividers="middle"
+         android:background="@drawable/bg_babyblue"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content" >   
+         <Button
+              style="?android:attr/buttonBarButtonStyle"
+              android:id="@+id/buttonCancel"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:text="@string/change_my_mind" />
+         <Button
+              style="?android:attr/buttonBarButtonStyle"
+              android:id="@+id/buttonOK"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:text="@string/dummy_string" />
+     </LinearLayout>
+ </LinearLayout>
+ 

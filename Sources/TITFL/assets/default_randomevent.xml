@@ -558,4 +558,71 @@
         car_insurance_coverage="0.0"
         />
 
+    <randomevent
+        randomevent_id="randomevent_laundry"
+        description="You did three loads of laundry. Clean bed feels great!"
+        price="0"
+        time_to_pay="0"
+        health="0"
+        required_goods=""
+        losing_goods=""
+        acquiring_goods=""
+        happiness_per_intelligent_factor="10"
+        happiness_per_hardworking_factor="10"
+        happiness_per_goodlooking_factor="10"
+        happiness_per_physical_factor="10"
+        happiness_per_lucky_factor="10"
+        health_insurance_coverage="0.0"
+        car_insurance_coverage="0.0"
+        />
+
+    <randomevent
+        randomevent_id="randomevent_tips01"
+        description="You should eat every week to keep yourself healthy."
+        />
+
+    <randomevent
+        randomevent_id="randomevent_tips02"
+        description="If you want to buy a house. You should go to bank and apply mortgage first."
+        />
+
+    <randomevent
+        randomevent_id="randomevent_tips03"
+        description="You should go home every weekend. There are a lot of thieves on the street."
+        />
+
+    <randomevent
+        randomevent_id="randomevent_tips04"
+        description="Exercise is the best way to boost your health!"
+        />
+
+    <randomevent
+        randomevent_id="randomevent_tips05"
+        description="If you run out the money, begging in the park or church is your last resort."
+        />
+
+    <randomevent
+        randomevent_id="randomevent_tips06"
+        description="Insurance may help you in case of unexpected illness or car accident."
+        />
+
+    <randomevent
+        randomevent_id="randomevent_tips07"
+        description="To buy a nice car, you can use general loan. Go to bank and apply today!"
+        />
+
+    <randomevent
+        randomevent_id="randomevent_tips08"
+        description="If you have a refrigerator, your food won't go bad for 2 weeks."
+        />
+
+    <randomevent
+        randomevent_id="randomevent_tips09"
+        description="If you have a freezer, your food won't go bad for 4 weeks."
+        />
+
+    <randomevent
+        randomevent_id="randomevent_tips10"
+        description="If you don't go to work regularly, you may be fired. Careful!"
+        />
 </TITFL>
