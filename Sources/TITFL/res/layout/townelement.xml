@@ -56,7 +56,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:text="@string/dummy_string"
-	        android:textAppearance="?android:attr/textAppearanceLarge" />	
+	        android:textAppearance="?android:attr/textAppearanceMedium" />	
 	    <TextView
 	        android:id="@+id/textViewGreeting"
 	        android:layout_width="wrap_content"

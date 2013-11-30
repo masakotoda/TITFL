@@ -174,7 +174,7 @@
         name="Beer, six pack"
         price="8"
         affect_on_health="-2"
-        greeting="I don't always drink beer but when I do, I prefer 6 pack."
+        greeting="I don't always drink beer, but when I do, I prefer 6 pack."
         />
     
     <goods
