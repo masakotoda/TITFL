@@ -963,6 +963,7 @@ public class TITFLPlayer
         {
             TITFLBelonging belonging = new TITFLBelonging(goods, unit, acquiredWeek);
             m_belongings.add(belonging);
+            addBenefit(goods, unit);
             setTransportation(goods);
             setHome(goods);
             setOutfit(goods);
@@ -976,6 +977,20 @@ public class TITFLPlayer
         }
     }
 
+    private void addBenefit(TITFLGoods goods, int unit)
+    {
+        float happiness = 0;
+        int health = goods.affectOnHealth() * m_incre;
+        happiness += goods.affectOnHappiness().goodlooking() * this.character().goodlooking();
+        happiness += goods.affectOnHappiness().hardworking() * this.character().hardworking();
+        happiness += goods.affectOnHappiness().intelligent() * this.character().intelligent();
+        happiness += goods.affectOnHappiness().lucky() * this.character().lucky();
+        happiness += goods.affectOnHappiness().physical() * this.character().physical();
+
+        m_satisfaction.m_happiness += happiness;
+        m_satisfaction.m_health += health;
+    }
+    
     public void pay(int amount)
     {
         m_cash -= amount;
@@ -1272,6 +1287,8 @@ public class TITFLPlayer
                 wealth+= x.goodsRef().getPrice();
             else if (x.goodsRef().isHouse())
                 wealth += x.goodsRef().getPrice();
+            else if (x.goodsRef().isTransportation())
+                wealth += (x.goodsRef().getPrice() / 2); // Car's cash value is only 50%.
         }
         return wealth;
     }
@@ -1522,6 +1539,19 @@ public class TITFLPlayer
         TITFLTownElement element = goods.convertToTownElement();
         if (element != null)
         {
+            // Remove old apartment
+            if (m_home.isApartment())
+            {
+                for (TITFLBelonging b : m_belongings)
+                {
+                    if (b.goodsRef().isApartment() && goods != b.goodsRef())
+                    {
+                        m_belongings.remove(b);
+                        break;
+                    }
+                }
+            }
+
             m_home = element;
         }
     }

@@ -200,7 +200,7 @@
     
     <randomevent
         randomevent_id="randomevent_gift01"
-        description="Your friend Tony took you nice dinner. You don't have to eat this week!"
+        description="Your friend Tony took you dinner and you ate Chicken Alfredo. You don't have to eat this week!"
         cash="0"
         time_to_pay="0"
         health="0"

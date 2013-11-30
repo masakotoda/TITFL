@@ -7,7 +7,13 @@
         name="Date (Girlfriend/Boyfriend)"
         townelement_id=""
         price="0"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="2"
+        happiness_per_physical_factor="2"
+        happiness_per_lucky_factor="3" 
         losing="You broke up with your date."
+        greeting="Woo hoo! You got a new date!"
     	/>
     
     <goods
@@ -16,7 +22,13 @@
         name="Spouse (Wife/Husband)"
         townelement_id=""
         price="0"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="2"
+        happiness_per_physical_factor="2"
+        happiness_per_lucky_factor="3" 
         losing="You got divorced."
+        greeting="Congratulation! You got married."
     	/>
     
     <goods
@@ -39,6 +51,7 @@
         happiness_per_physical_factor="1"
         happiness_per_lucky_factor="1" 
         losing="Your dog died."
+        greeting="Take good care of your new friend."
     	/>
     
     <goods
@@ -52,6 +65,7 @@
         happiness_per_physical_factor="1"
         happiness_per_lucky_factor="5" 
         losing="Your rabbit ran away."
+        greeting="It's not very hard to potty train a rabbit."
     	/>    
     
     <goods
@@ -66,12 +80,6 @@
         class_credit="0"
         x_to_display="0"
         y_to_display="0"
-        happiness_per_intelligent_factor="1"
-        happiness_per_hardworking_factor="1"
-        happiness_per_goodlooking_factor="2"
-        happiness_per_physical_factor="1"
-        happiness_per_lucky_factor="1" 
-        affect_on_health="0"
         greeting="It looks nice on you!"
     	/>
         
@@ -82,17 +90,17 @@
         price="40"
         expire="8"
         group="outfit"
-        greeting="You will be promoted!"
+        greeting="You look very professional!"
     	/>
     
     <goods
         goods_id="goods_dress_outfit"
         name="Dress Outfit"
         townelement_id="townelement_mall"
-        price="40"
+        price="60"
         expire="8"
         group="outfit"
-        greeting="Are you going to go out tonight?"
+        greeting="You look fabulous!"
     	/>
     
     <goods
@@ -100,27 +108,53 @@
         goods_id="goods_glasses"
         name="Sun Glasses"
         price="200"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
+        greeting="You look like a celebrity!"
         />
         
     <goods
         townelement_id="townelement_mall"
         goods_id="goods_movie_ticket"
         name="Movie Ticket for two"
+        expire="1"
         price="20"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
+        losing="You watched Rambo 6 at the movie theater."
+        greeting="Have fun!"
         />
     
     <goods
         townelement_id="townelement_mall"
         goods_id="goods_game"
         name="Game"
-        price="20"
+        price="40"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
+        greeting="Have fun!"
         />
     
     <goods
         townelement_id="townelement_mall"
         goods_id="goods_nail"
         name="Fancy Nail"
-        price="20"
+        price="40"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
+        greeting="Your new nail is perfect for scratching your head."
         />
     
     <!-- Grocery store -->
@@ -131,13 +165,16 @@
         price="50"
         expire="4"
         speed="20"
+        greeting="Smart choice! Bus is quicker than bicycle."
     	/>
 
    <goods
         townelement_id="townelement_grocery"
         goods_id="goods_beer"
         name="Beer, six pack"
-        price="50"
+        price="8"
+        affect_on_health="-2"
+        greeting="I don't always drink beer but when I do, I prefer 6 pack."
         />
     
     <goods
@@ -146,6 +183,8 @@
         name="Food for a week"
         price="50"
         food_value="1"
+        affect_on_health="1"
+        greeting="Have you tried Super Crunchy Chunky Chocolate Cookies?"
         />
         
     <goods
@@ -154,6 +193,8 @@
         name="Food for 2 weeks"
         price="80"
         food_value="2"
+        affect_on_health="2"
+        greeting="Please keep your food in refrigerator."
         />
     
     <goods
@@ -162,6 +203,8 @@
         name="Food for 4 weeks"
         price="150"
         food_value="4"
+        affect_on_health="4"
+        greeting="Please keep your food in freezer."
         />
     
     <goods
@@ -169,6 +212,12 @@
         goods_id="goods_lottery_ticket"
         name="Lottery Ticket"
         price="5"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
+        greeting="Good luck!"
         />
     
     <goods
@@ -176,6 +225,12 @@
         goods_id="goods_magazine"
         name="Magazine"
         price="10"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
+        greeting="This issue is all about gossips."
         />
     
     <goods
@@ -183,13 +238,26 @@
         goods_id="goods_chocolate_cookies"
         name="Super Crunchy Chunky Chocolate Cookies"
         price="10"
+        affect_on_health="-1"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
+        greeting="Yum, yum, yum."
         />
     
     <goods
         townelement_id="townelement_grocery"
         goods_id="goods_newspaper"
-        name="News Paper"
-        price="30"
+        name="Newspaper"
+        price="2"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
+        greeting="Newspaper is very useful to wrap your mess."
         />
     
     <!-- Auto Center -->
@@ -199,11 +267,12 @@
         townelement_id="townelement_cardealer"
         price="500"
         speed="30"
+        greeting="Be sure to wear helmet when you ride it."
     	/>
 
     <goods
         goods_id="goods_crappy_car"
-        name="Crappy Car"
+        name="Economy Car"
         townelement_id="townelement_cardealer"
         price="2000"
         speed="40"
@@ -216,6 +285,11 @@
         townelement_id="townelement_cardealer"
         price="50000"
         speed="50"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
         greeting="You got a fastest car in this town!"
     	/>
     
@@ -225,6 +299,7 @@
         townelement_id="townelement_cardealer"
         price="2000"
         speed="40"
+        greeting="You will be always asked for help when your friends move."
     	/>
 
     <goods
@@ -232,13 +307,19 @@
         name="Fancy Chrome Rims"
         townelement_id="townelement_cardealer"
         price="1000"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
+        greeting="Bling, bling!"
     	/>
 
     <!-- Realtor -->
     <goods
         townelement_id="townelement_realtor"
         goods_id="goods_cheap_apartment"
-        name="Cheap Apartment"
+        name="Cheap Apartment (Deposit)"
         price="200"
 	    />
 
@@ -246,6 +327,11 @@
         townelement_id="townelement_realtor"
         goods_id="goods_house"
         name="House"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
         price="300000"
 	    />
     
@@ -268,7 +354,7 @@
         townelement_id="townelement_insurance"
         goods_id="goods_car_insurance_fancy"
         name="Auto Insurance for Fancy Car"
-        price="200"
+        price="500"
 	    />
     
     <goods
@@ -285,22 +371,25 @@
         name="Day Quil"
         price="10"
         max_units="5"
+        affect_on_health="2"
         />
     
     <goods
         townelement_id="townelement_hospital"
         goods_id="goods_checkup"
         name="Check Up"
-        price="10"
+        price="100"
         max_units="5"
+        affect_on_health="5"
         />
     
     <goods
         townelement_id="townelement_hospital"
         goods_id="goods_flu_shot"
         name="Flu Shot"
-        price="10"
+        price="20"
         max_units="5"
+        affect_on_health="2"
         />
     
 	<goods
@@ -338,46 +427,73 @@
         name="Cheese Burger"
         price="50"
         food_value="1"
+        affect_on_health="-1"
+        greeting="Our cheese burger is 90 percent natural."
         />
 
     <goods
         townelement_id="townelement_fastfood"
         goods_id="goods_hotdog"
         name="Hotdog"
-        price="50"
+        price="55"
         food_value="1"
+        affect_on_health="-1"
+        greeting="Our hotdog is always served cold."
         />
 
     <goods
         townelement_id="townelement_fastfood"
         goods_id="goods_french_fries"
         name="French Fries with drumsticks"
-        price="50"
+        price="60"
         food_value="1"
+        affect_on_health="-1"
+        greeting="Hope you don't mind those soggy french fries."
         />
 
     <goods
         townelement_id="townelement_fastfood"
         goods_id="goods_coke"
         name="Coke"
-        price="50"
+        price="3"
         food_value="1"
+        affect_on_health="-1"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
+        greeting="Don't burp in public, please."
         />
 
     <goods
         townelement_id="townelement_fastfood"
         goods_id="goods_lemonade"
         name="Lemonade"
-        price="50"
+        price="3"
         food_value="1"
+        affect_on_health="-1"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
+        greeting="Our lemonade contains 0 percent lemon juice."
         />
 
     <goods
         townelement_id="townelement_fastfood"
         goods_id="goods_strawberry_shake"
         name="Strawberry Shake"
-        price="50"
+        price="5"
         food_value="1"
+        affect_on_health="-1"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
+        greeting="Our strawberry shake doesn't taste like strawberry."
         />
 
     <!-- Restaurant -->
@@ -387,38 +503,64 @@
         name="Chicken Alfredo"
         price="200"
         food_value="1"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
         />
     
     <goods
         townelement_id="townelement_restaurant"
         goods_id="goods_bbq"
         name="BBQ"
-        price="300"
+        price="200"
         food_value="1"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
         />
 
     <goods
         townelement_id="townelement_restaurant"
         goods_id="goods_salad"
         name="Salad"
-        price="300"
+        price="100"
         food_value="1"
+        affect_on_health="2"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
         />
     
     <goods
         townelement_id="townelement_restaurant"
         goods_id="goods_steak"
         name="Rib Eye Streak"
-        price="100"
+        price="300"
         food_value="1"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
         />
     
      <goods
         townelement_id="townelement_restaurant"
         goods_id="goods_dimsum"
         name="Chinese Dim Sum"
-        price="300"
+        price="100"
         food_value="1"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
         />   
         
      <goods
@@ -434,13 +576,25 @@
         goods_id="goods_wine"
         name="A Glass of Wine"
         price="10"
+        affect_on_health="-1"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
         />
     
     <goods
         townelement_id="townelement_restaurant"
         goods_id="goods_bottle_beer"
         name="A Bottle of Beer"
-        price="10"
+        price="8"
+        affect_on_health="-1"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
         />
     
     <goods
@@ -448,6 +602,12 @@
         goods_id="goods_dessert"
         name="Dessert"
         price="10"
+        affect_on_health="-1"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
         />
     
     <goods
@@ -456,6 +616,11 @@
         name="Seafood Dinner"
         price="100"
         food_value="1"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
         />
     
      <goods
@@ -464,6 +629,11 @@
         name="Lobster Dinner"
         price="300"
         food_value="1"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
         />   
         
      <goods
@@ -480,49 +650,84 @@
         goods_id="goods_donation"
         name="Donation"
         price="200"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
         />
         
     <goods
         townelement_id="townelement_church"
         goods_id="goods_baptism"
         name="Baptism"
-        price="200"
+        price="100"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
         />
     
     <goods
         townelement_id="townelement_church"
         goods_id="goods_bible"
         name="Bible"
-        price="200"
+        price="50"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
         />
         
     <goods
         townelement_id="townelement_church"
         goods_id="goods_church_music"
         name="Christian Music CD"
-        price="200"
+        price="25"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
         />
-        
+
     <!-- Pawn shop -->
     <goods
         townelement_id="townelement_pawnshop"
         goods_id="goods_antique_musket"
         name="Antique Musket"
-        price="200"
+        price="500"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
         />
         
     <goods
         townelement_id="townelement_pawnshop"
         goods_id="goods_antique_jewelry"
         name="Antique Jewelry"
-        price="200"
+        price="400"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
         />
     
     <goods
         townelement_id="townelement_pawnshop"
         goods_id="goods_collectable_coin"
         name="Collectable Coin"
-        price="200"
+        price="300"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
         />
     
     <goods
@@ -530,13 +735,23 @@
         goods_id="goods_antique_rolex"
         name="Antique Rolex"
         price="200"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
         />
     
     <goods
         townelement_id="townelement_pawnshop"
         goods_id="goods_antique_clock"
         name="Antique Clock"
-        price="200"
+        price="100"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
         />
 
     <!-- Electric store -->
@@ -545,6 +760,11 @@
         goods_id="goods_cellphone"
         name="Cellphone"
         price="200"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
         />
         
     <goods
@@ -552,6 +772,11 @@
         goods_id="goods_tv"
         name="TV"
         price="500"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
         />
     
     <goods
@@ -559,6 +784,11 @@
         goods_id="goods_computer"
         name="Computer"
         price="600"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
         />
         
     <goods
@@ -572,7 +802,7 @@
         townelement_id="townelement_electric"
         goods_id="goods_freezer"
         name="Refrigerator with Freezer"
-        price="1000"
+        price="1200"
         />
     
     <!-- Tatoo shop -->
@@ -581,6 +811,12 @@
         goods_id="goods_tirbal_tattoo"
         name="Tribal Tatto"
         price="200"
+        affect_on_health="-2"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
     	/>
 
     <goods
@@ -588,6 +824,12 @@
         goods_id="goods_rose_tattoo"
         name="Rose Tatto"
         price="200"
+        affect_on_health="-2"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
     	/>
     
     <goods
@@ -595,6 +837,12 @@
         goods_id="goods_dragon_tattoo"
         name="Dragon Tatto"
         price="200"
+        affect_on_health="-2"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
     	/>
     
     <goods
@@ -602,6 +850,12 @@
         goods_id="goods_name_tattoo"
         name="Name of Girl friend or Boy friend"
         price="200"
+        affect_on_health="-2"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
     	/>
     
     <!-- Flower shop -->
@@ -610,6 +864,11 @@
         goods_id="goods_bouquet"
         name="Bouquet"
         price="50"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
     	/>
     
     <goods
@@ -617,6 +876,11 @@
         goods_id="goods_flowerarrangement"
         name="Flower Arrangement"
         price="50"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
     	/>
     
     <goods
@@ -624,6 +888,11 @@
         goods_id="goods_bonsai_tree"
         name="Bonsai tree"
         price="50"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
     	/>
     
     <goods
@@ -631,39 +900,68 @@
         goods_id="goods_plant"
         name="Guava Tree"
         price="50"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
     	/>
     
-    <!-- Me house -->
+    <!-- Massage house -->
     <goods
         townelement_id="townelement_massagehouse"
         goods_id="goods_massage_asain"
-        name="Asian massage"
+        name="Massage by Asian Girl"
         price="200"
         max_units="3"
+        affect_on_health="2"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
     	/>
 
     <goods
         townelement_id="townelement_massagehouse"
         goods_id="goods_massage_white"
-        name="White massage"
+        name="Massage by White Chick"
         price="200"
         max_units="3"
+        affect_on_health="2"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
     	/>
     
     <goods
         townelement_id="townelement_massagehouse"
         goods_id="goods_massage_latina"
-        name="Latina massage"
+        name="Massage by Latina Diva"
         price="200"
         max_units="3"
+        affect_on_health="2"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
     	/>
     
     <goods
         townelement_id="townelement_massagehouse"
         goods_id="goods_massage_black"
-        name="Black massage"
+        name="Massage by Chocolate Gal"
         price="200"
         max_units="3"
+        affect_on_health="2"
+        happiness_per_intelligent_factor="1"
+        happiness_per_hardworking_factor="1"
+        happiness_per_goodlooking_factor="1"
+        happiness_per_physical_factor="1"
+        happiness_per_lucky_factor="1" 
     	/>
     
     <!-- Dollar Store -->
@@ -706,7 +1004,7 @@
         price="20"
         group="degree_basic"
         class_credit="5"
-        required_degree=""
+        required_goods=""
     	/>
         
     <goods
@@ -839,6 +1137,7 @@
         name="General Loan"
         townelement_id="townelement_bank"
         price="10"
+        greeting="Approved! You can buy any 1 item with this loan."
     	/>
 
     <goods
@@ -847,6 +1146,7 @@
         name="Student Loan"
         townelement_id="townelement_bank"
         price="1"
+        greeting="Approved! You can enroll any 1 course with this loan."
     	/>
     
     <goods
@@ -855,5 +1155,6 @@
         name="Mortgage"
         townelement_id="townelement_bank"
         price="1000"
+        greeting="Approved! You can buy a house. Meet your realtor."
     	/>
 </TITFL>

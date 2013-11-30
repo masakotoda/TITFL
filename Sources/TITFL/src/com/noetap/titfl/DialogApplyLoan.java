@@ -66,7 +66,9 @@ public class DialogApplyLoan extends Dialog
             {
                 if (m_goods != null)
                 {
-                    m_parent.element().visitor().buy((TITFLGoods)m_goods, 1, m_parent.element().town().currentWeek());
+                    TITFLGoods goods = (TITFLGoods)m_goods;
+                    m_parent.element().visitor().buy(goods, 1, m_parent.element().town().currentWeek());
+                    m_parent.activity().speakOut(goods.greeting(), m_parent.element().speechPitch(), m_parent.element().speechRate());
                     m_parent.playerView().invalidate();
                     dismiss();
                 }
