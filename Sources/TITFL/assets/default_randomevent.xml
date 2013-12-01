@@ -625,4 +625,8 @@
         randomevent_id="randomevent_tips10"
         description="If you don't go to work regularly, you may be fired. Careful!"
         />
+
+    <randomevent
+        randomevent_id="randomevent_tips11"
+        description="What makes you happy is the material. Shop more, baby!"
 </TITFL>

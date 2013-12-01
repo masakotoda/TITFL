@@ -1105,7 +1105,7 @@ public class TITFLPlayer
         m_lastWorkedWeek = m_currentLocation.town().currentWeek();
         int wage = (int)(added * m_job.getWage());
         int care = (int)(added * m_incre);
-        int happ = 0; // "work" doesn't make anybody happy in this town... (int)(added * m_incre * m_character.hardworking());
+        int happ = m_character.isHardworking() ? 1 : 0;
         float educFactor = added * 1;
         float expeFactor = added * 0.01f;
 
@@ -1135,7 +1135,7 @@ public class TITFLPlayer
         }
 
         int life = (int)(added * m_incre);
-        int happ = (int)(added * m_incre * m_character.lucky());
+        int happ = m_character.isLucky() ? 1 : 0;
 
         m_satisfaction.m_life += life;
         m_satisfaction.m_happiness += happ;
@@ -1157,7 +1157,7 @@ public class TITFLPlayer
         }
         
         int educ = (int)(added * m_incre);
-        int happ = (int)(added * m_incre * m_character.intelligent());
+        int happ = m_character.isIntelligent() ? 1 : 0;
         int cred = (int)(added * 1);
 
         if (cred < 1)
@@ -1192,7 +1192,7 @@ public class TITFLPlayer
         }
 
         int heal = (int)(added * m_incre);
-        int happ = (int)(added * m_incre *  m_character.physical());
+        int happ = m_character.isPhysical() ? 1 : 0;
 
         m_satisfaction.m_health += heal;
         m_satisfaction.m_happiness += happ;
@@ -1208,7 +1208,7 @@ public class TITFLPlayer
         }
 
         int life = (int)(added * m_incre);
-        int happ = (int)(added * m_incre *  m_character.goodlooking());
+        int happ = m_character.isGoodlooking() ? 1 : 0;
 
         m_satisfaction.m_life +=life;
         m_satisfaction.m_happiness += happ;
@@ -1540,7 +1540,7 @@ public class TITFLPlayer
         if (element != null)
         {
             // Remove old apartment
-            if (m_home.isApartment())
+            if (m_home != null && m_home.isApartment())
             {
                 for (TITFLBelonging b : m_belongings)
                 {

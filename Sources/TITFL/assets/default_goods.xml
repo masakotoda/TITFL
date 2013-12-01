@@ -456,7 +456,6 @@
         goods_id="goods_coke"
         name="Coke"
         price="3"
-        food_value="1"
         affect_on_health="-1"
         happiness_per_intelligent_factor="1"
         happiness_per_hardworking_factor="1"
@@ -471,7 +470,6 @@
         goods_id="goods_lemonade"
         name="Lemonade"
         price="3"
-        food_value="1"
         affect_on_health="-1"
         happiness_per_intelligent_factor="1"
         happiness_per_hardworking_factor="1"
@@ -486,7 +484,6 @@
         goods_id="goods_strawberry_shake"
         name="Strawberry Shake"
         price="5"
-        food_value="1"
         affect_on_health="-1"
         happiness_per_intelligent_factor="1"
         happiness_per_hardworking_factor="1"
@@ -1004,7 +1001,6 @@
         price="20"
         group="degree_basic"
         class_credit="5"
-        required_goods=""
     	/>
         
     <goods

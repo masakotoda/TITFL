@@ -355,6 +355,71 @@ public class TITFL
             return sum;
         }
         
+        boolean isIntelligent()        
+        {
+            if (m_intelligent < m_goodLooking)
+                return false;
+            if (m_intelligent < m_hardWorking)
+                return false;
+            if (m_intelligent < m_physical)
+                return false;
+            if (m_intelligent < m_lucky)
+                return false;
+            return true;
+        }
+        
+        boolean isHardworking()        
+        {
+            if (m_hardWorking < m_goodLooking)
+                return false;
+            if (m_hardWorking < m_intelligent)
+                return false;
+            if (m_hardWorking < m_physical)
+                return false;
+            if (m_hardWorking < m_lucky)
+                return false;
+            return true;
+        }
+        
+        boolean isGoodlooking()        
+        {
+            if (m_goodLooking < m_hardWorking)
+                return false;
+            if (m_goodLooking < m_intelligent)
+                return false;
+            if (m_goodLooking < m_physical)
+                return false;
+            if (m_goodLooking < m_lucky)
+                return false;
+            return true;
+        }
+
+        boolean isPhysical()        
+        {
+            if (m_physical < m_hardWorking)
+                return false;
+            if (m_physical < m_intelligent)
+                return false;
+            if (m_physical < m_goodLooking)
+                return false;
+            if (m_physical < m_lucky)
+                return false;
+            return true;
+        }
+
+        boolean isLucky()        
+        {
+            if (m_lucky < m_hardWorking)
+                return false;
+            if (m_lucky < m_intelligent)
+                return false;
+            if (m_lucky < m_physical)
+                return false;
+            if (m_lucky < m_goodLooking)
+                return false;
+            return true;
+        }
+
         float intelligent()
         {
             return 1 + (float)m_intelligent / (float)sum();
