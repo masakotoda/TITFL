@@ -1047,6 +1047,10 @@ public class TITFLPlayer
         {
             return 0;
         }
+        if (m_cash >= 100)
+        {
+            return 0;
+        }
 
         Random random = new Random();
         int amount = (int)(random.nextFloat() * 100);
