@@ -1805,6 +1805,7 @@ public class TITFLPlayer
 
     private void processLottery(ArrayList<ListAdapterBeginWeek.BeginWeekItem> events)
     {
+        ArrayList<TITFLBelonging> lotteries = new ArrayList<TITFLBelonging>();
         for (TITFLBelonging x : belongings())
         {
             if (x.goodsRef().isLottery())
@@ -1823,8 +1824,9 @@ public class TITFLPlayer
                     String message = "You didnt win the lottery...";
                     events.add(new ListAdapterBeginWeek.BeginWeekItem(null, message, 0, 0, 0));
                 }
-                belongings().remove(x);
+                lotteries.add(x);
             }
         }
+        belongings().remove(lotteries);
     }
 }
