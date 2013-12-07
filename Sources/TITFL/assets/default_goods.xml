@@ -212,6 +212,7 @@
         goods_id="goods_lottery_ticket"
         name="Lottery Ticket"
         price="5"
+        max_units="1000"
         happiness_per_intelligent_factor="1"
         happiness_per_hardworking_factor="1"
         happiness_per_goodlooking_factor="1"

@@ -111,7 +111,7 @@
 
     <townelement
         townelement_id="townelement_restaurant"
-        name="Olive Yard Restaurant"
+        name="Olive Yard Diner"
         slot="12"
         greeting="Welcome to Olive Yard. Would you like to make a reservation?"
         can_socialize="true"

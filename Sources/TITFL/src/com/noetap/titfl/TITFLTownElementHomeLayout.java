@@ -98,6 +98,7 @@ public class TITFLTownElementHomeLayout implements TITFLLayout
                     item = new ListAdapterPicture.PictureItem();
                     item.m_label = "";
                     item.m_picture = b.goodsRef().getBitmap(m_activity);
+                    //item.m_picture = b.getBitmap();
                     actions.add(item);
                 }
             }

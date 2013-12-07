@@ -1776,8 +1776,8 @@ public class TITFLPlayer
         if (!hasFood())
         {
             m_hour += 4;
-            m_satisfaction.m_health -= 4;
-            events.add(new ListAdapterBeginWeek.BeginWeekItem(null, "No Food, less hour, less health :-(", 0, 4, -4));
+            m_satisfaction.m_health -= 40;
+            events.add(new ListAdapterBeginWeek.BeginWeekItem(null, "No Food, less hour, less health :-(", 0, 4, -40));
         }
         else
         {

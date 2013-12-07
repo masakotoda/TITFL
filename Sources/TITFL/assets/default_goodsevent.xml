@@ -2,7 +2,7 @@
 <TITFL>
     <goodsevent
         goodsevent_id="goodsevent1"
-        description="Oil Change"
+        description="Mopet Oil Change"
         goods_id="goods_mopet"
         cycle="4"
         can_reject="true"

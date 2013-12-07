@@ -129,8 +129,9 @@ public class TITFLBelongingEvent
         }
 
         
-        String message = event.m_description;
-        message += ": ";
+        //String message = event.m_description;
+        //message += ": ";
+        String message = "";
         message += eventRef().description();
 
         int week = owner.currentLocation().town().currentWeek();

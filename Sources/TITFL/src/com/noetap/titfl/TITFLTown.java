@@ -80,6 +80,11 @@ public class TITFLTown
         return m_elements;
     }
     
+    public ArrayList<TITFLTownElement> randomElements()
+    {
+        return m_randomElements;
+    }
+
     public ArrayList<TITFLGoods> goods()
     {
         return m_goods;

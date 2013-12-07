@@ -33,6 +33,15 @@ public class DialogPurchaseGoods extends Dialog
         TextView priceText = (TextView) findViewById(R.id.textViewPrice);
         priceText.setText("$" + m_goods.getPrice());
 
+        // If maxUnits is 1, no need to show quantity. (Masako)
+        if (goods.maxUnits() == 1)
+        {
+            View buttonBar = findViewById(R.id.buttonBarQuantity);
+            buttonBar.setVisibility(View.INVISIBLE);
+            m_quantity.setVisibility(View.INVISIBLE);
+            findViewById(R.id.textViewQuantity).setVisibility(View.INVISIBLE);
+        }
+
         Button resetButton = (Button) findViewById(R.id.buttonReset);
         setButtonActionReset(resetButton);
         

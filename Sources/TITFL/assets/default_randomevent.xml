@@ -577,6 +577,42 @@
         />
 
     <randomevent
+        randomevent_id="randomevent_youtube"
+        description="You watched YouTube all weekend long. Awesome!"
+        price="0"
+        time_to_pay="0"
+        health="0"
+        required_goods="goods_computer"
+        losing_goods=""
+        acquiring_goods=""
+        happiness_per_intelligent_factor="10"
+        happiness_per_hardworking_factor="10"
+        happiness_per_goodlooking_factor="10"
+        happiness_per_physical_factor="10"
+        happiness_per_lucky_factor="10"
+        health_insurance_coverage="0.0"
+        car_insurance_coverage="0.0"
+        />
+    
+    <randomevent
+        randomevent_id="randomevent_youporn"
+        description="You watched YouPorn all weekend long. Super awesome!!"
+        price="0"
+        time_to_pay="0"
+        health="0"
+        required_goods="goods_computer"
+        losing_goods=""
+        acquiring_goods=""
+        happiness_per_intelligent_factor="20"
+        happiness_per_hardworking_factor="20"
+        happiness_per_goodlooking_factor="20"
+        happiness_per_physical_factor="20"
+        happiness_per_lucky_factor="20"
+        health_insurance_coverage="0.0"
+        car_insurance_coverage="0.0"
+        />
+    
+    <randomevent
         randomevent_id="randomevent_tips01"
         description="You should eat every week to keep yourself healthy."
         />

@@ -207,6 +207,18 @@ public class TITFLBelonging implements TITFLItem
                 }
             }
         }
+
+        for (TITFLTownElement element : town.randomElements())
+        {
+            for (TITFLGoods goods : element.merchandise())
+            {
+                if (goods.id().equals(goodsId))
+                {
+                    return goods;
+                }
+            }
+        }
+
         for (TITFLGoods goods : town.goods())
         {
             if (goods.id().equals(goodsId))
