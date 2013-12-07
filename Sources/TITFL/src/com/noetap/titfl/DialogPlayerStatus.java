@@ -48,7 +48,7 @@ public class DialogPlayerStatus extends Dialog
             ary.add("Wealth: " + Integer.toString(player.satisfaction().m_wealth));
             ary.add("Education: " + Integer.toString(player.satisfaction().m_education));
             ary.add("Career: " + Integer.toString(player.satisfaction().m_career));
-            ary.add("Life: " + Integer.toString(player.satisfaction().m_life));
+            ary.add("Leisure: " + Integer.toString(player.satisfaction().m_life));
             ary.add("Health: " + Integer.toString(player.satisfaction().m_health));
             ary.add("Happiness: " + Integer.toString(player.satisfaction().m_happiness));
             ListView list = (ListView) findViewById(R.id.ListViewSatisfaction);
