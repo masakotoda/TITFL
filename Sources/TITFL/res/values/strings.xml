@@ -54,4 +54,9 @@
 	<string name="happiness">Happiness</string>
 	<string name="cash">Cash</string>
 	<string name="home">Home</string>
+	<string name="balance">Current Balance $.</string>
+	<string name="add_20usd">+$20</string>
+	<string name="add_100usd">+$100</string>
+	<string name="add_1000usd">+$1,000</string>
+	<string name="amount_deposit">Amount to Deposit $.</string>    
 </resources>
