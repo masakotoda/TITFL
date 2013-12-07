@@ -84,7 +84,7 @@
         android:layout_marginTop="8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imageViewHeader"
+        android:layout_alignTop="@+id/imageViewAvatar"
         android:layout_toRightOf="@+id/imageViewAvatar"
         android:text="@string/wealth"
         android:textAppearance="?android:attr/textAppearanceSmall" />
