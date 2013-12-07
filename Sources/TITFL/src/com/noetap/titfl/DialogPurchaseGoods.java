@@ -20,7 +20,7 @@ public class DialogPurchaseGoods extends Dialog
         m_parent = parent;
         m_goods = goods;
 
-        setContentView(R.layout.purchase_goods);
+        setContentView(R.layout.dialog_purchase_goods);
         setTitle("Would you like to buy?");
 
         int maxUnits = defaultPurchaseUnits(goods.maxUnits());
