@@ -1,6 +1,8 @@
 package com.noetap.titfl;
 
+import android.util.TypedValue;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -51,6 +53,9 @@ public class TITFLMainMenuLayout implements TITFLLayout {
             {
             	DialogSelectPlayer selectDialog = new DialogSelectPlayer(m_activity); 
                 selectDialog.show();
+                int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 350, m_activity.getResources().getDisplayMetrics());
+                int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 500, m_activity.getResources().getDisplayMetrics());
+                selectDialog.getWindow().setLayout(width, height);
             }
         });
 	}

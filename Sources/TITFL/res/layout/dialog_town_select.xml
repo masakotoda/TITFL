@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="fill_parent"
     android:orientation="vertical"
     android:gravity="center" >
     
@@ -14,8 +14,9 @@
         <ImageButton
             android:id="@+id/buttonTownOne"
             style="@style/button_style_shadow"
-            android:layout_width="125dp"
-            android:layout_height="125dp"
+            android:background="@drawable/green_button"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_margin="5dp"
             android:gravity="center"
             android:scaleType="fitXY" />
@@ -23,8 +24,9 @@
         <ImageButton
             android:id="@+id/buttonTownTwo"
             style="@style/button_style_shadow"
-            android:layout_width="125dp"
-            android:layout_height="125dp"
+            android:background="@drawable/green_button"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_margin="5dp"
             android:gravity="center"
             android:scaleType="fitXY" />
@@ -32,8 +34,9 @@
         <ImageButton
             android:id="@+id/buttonTownThree"
             style="@style/button_style_shadow"
-            android:layout_width="125dp"
-            android:layout_height="125dp"
+            android:background="@drawable/green_button"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_margin="5dp"
             android:gravity="center"
             android:scaleType="fitXY" />
@@ -48,8 +51,9 @@
         <ImageButton
             android:id="@+id/buttonTownFour"
             style="@style/button_style_shadow"
-            android:layout_width="125dp"
-            android:layout_height="125dp"
+            android:background="@drawable/green_button"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_margin="5dp"
             android:gravity="center"
             android:scaleType="fitXY" />
@@ -57,8 +61,9 @@
         <ImageButton
             android:id="@+id/buttonTownFive"
             style="@style/button_style_shadow"
-            android:layout_width="125dp"
-            android:layout_height="125dp"
+            android:background="@drawable/green_button"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_margin="5dp"
             android:gravity="center"
             android:scaleType="fitXY" />

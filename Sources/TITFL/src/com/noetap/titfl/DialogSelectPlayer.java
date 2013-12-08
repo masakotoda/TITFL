@@ -1,6 +1,7 @@
 package com.noetap.titfl;
 
 import android.app.Dialog;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -23,8 +24,6 @@ public class DialogSelectPlayer extends Dialog {
         setButtonListener(twoPlayer, 2);
         Button threePlayer = (Button) findViewById(R.id.buttonThree);
         setButtonListener(threePlayer, 3);
-        Button fourPlayer = (Button) findViewById(R.id.buttonFour);
-        setButtonListener(fourPlayer, 4);
 	}
 
 	public void setButtonListener(Button button, int numOfPlayer)
@@ -36,10 +35,13 @@ public class DialogSelectPlayer extends Dialog {
             public void onClick(View v) 
             {
             	m_activity.mainMenu().setNumOfPlayer((Integer)v.getTag());            	
-                //m_activity.runGame();
+                m_activity.runGame();
                 
-            	DialogSelectTown townSelect = new DialogSelectTown(m_activity);
+            	/*DialogSelectTown townSelect = new DialogSelectTown(m_activity);
             	townSelect.show();
+            	int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 350, m_activity.getResources().getDisplayMetrics());
+                int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 500, m_activity.getResources().getDisplayMetrics());
+                townSelect.getWindow().setLayout(width, height);*/
             	
                 dismiss();
             }
