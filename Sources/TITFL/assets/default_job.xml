@@ -9,8 +9,8 @@
         dress_code="1"
         />    
     <job
-        job_id="job_fastfood_casher"
-        name="Casher"
+        job_id="job_fastfood_cashier"
+        name="Cashier"
         townelement_id="townelement_fastfood"
         wage_base="50"
         job_opening_base="3"
@@ -21,7 +21,7 @@
         job_id="job_fastfood_storemanager"
         name="Store Manager"
         townelement_id="townelement_fastfood"
-        wage_base="40"
+        wage_base="60"
         job_opening_base="1"
         dress_code="2"
         required_factor_intelligent="1"
@@ -37,8 +37,8 @@
         dress_code="1"
         />    
     <job
-        job_id="job_grocery_casher"
-        name="Casher"
+        job_id="job_grocery_cashier"
+        name="Cashier"
         townelement_id="townelement_grocery"
         wage_base="30"
         job_opening_base="3"
