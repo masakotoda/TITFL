@@ -35,13 +35,13 @@ public class DialogSelectPlayer extends Dialog {
             public void onClick(View v) 
             {
             	m_activity.mainMenu().setNumOfPlayer((Integer)v.getTag());            	
-                m_activity.runGame();
+                //m_activity.runGame();
                 
-            	/*DialogSelectTown townSelect = new DialogSelectTown(m_activity);
+            	DialogSelectTown townSelect = new DialogSelectTown(m_activity);
             	townSelect.show();
             	int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 350, m_activity.getResources().getDisplayMetrics());
                 int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 500, m_activity.getResources().getDisplayMetrics());
-                townSelect.getWindow().setLayout(width, height);*/
+                townSelect.getWindow().setLayout(width, height);
             	
                 dismiss();
             }

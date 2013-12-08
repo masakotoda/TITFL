@@ -3,6 +3,7 @@ package com.noetap.titfl;
 import android.app.Dialog;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.ImageButton;
@@ -16,6 +17,7 @@ public class DialogSelectTown extends Dialog {
 	{
 		super(parent);
 		setContentView(R.layout.dialog_town_select);
+		//requestWindowFeature(Window.FEATURE_NO_TITLE);
         setTitle("Select town");
         
         m_activity = parent;
@@ -56,13 +58,13 @@ public class DialogSelectTown extends Dialog {
             public void onClick(View v) 
             {
             	m_activity.mainMenu().setTownID((Integer)v.getTag());            	
-                //m_activity.runGame();
+                m_activity.runGame();
             	
-            	DialogAvatarSelect avatarSelect = new DialogAvatarSelect(m_activity);
+            	/*DialogAvatarSelect avatarSelect = new DialogAvatarSelect(m_activity);
             	avatarSelect.show();
             	int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 350, m_activity.getResources().getDisplayMetrics());
                 int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 500, m_activity.getResources().getDisplayMetrics());
-                avatarSelect.getWindow().setLayout(width, height);
+                avatarSelect.getWindow().setLayout(width, height);*/
                 
                 dismiss();
             }

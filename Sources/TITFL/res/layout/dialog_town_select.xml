@@ -17,7 +17,7 @@
             android:background="@drawable/green_button"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:gravity="center"
             android:scaleType="fitXY" />
 
@@ -27,7 +27,7 @@
             android:background="@drawable/green_button"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:gravity="center"
             android:scaleType="fitXY" />
 
@@ -37,7 +37,7 @@
             android:background="@drawable/green_button"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:gravity="center"
             android:scaleType="fitXY" />
     </LinearLayout>
@@ -54,7 +54,7 @@
             android:background="@drawable/green_button"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:gravity="center"
             android:scaleType="fitXY" />
 
@@ -64,7 +64,7 @@
             android:background="@drawable/green_button"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:gravity="center"
             android:scaleType="fitXY" />
     </LinearLayout>
