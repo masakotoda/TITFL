@@ -1827,6 +1827,6 @@ public class TITFLPlayer
                 lotteries.add(x);
             }
         }
-        belongings().remove(lotteries);
+        belongings().removeAll(lotteries);
     }
 }
